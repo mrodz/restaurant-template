@@ -86,7 +86,7 @@ export default function BottomBanner(): React.ReactElement {
 				{locations}
 			</div>
 			<div className={`${LOCATIONS.length > 1 ? 'tilted-location-label' : 'location-label'}`} style={{display: 'flex' }}>
-				<Important weight={LOCATIONS.length > 3 ? 6 : LOCATIONS.length > 2 ? 5 : 4}>{LOCATIONS.length === 1 ? <>Find Us&hellip;</> : <>Locations</>}</Important>
+				<Important weight={LOCATIONS.length > 3 ? 6 : LOCATIONS.length > 2 ? 5 : 4}>{LOCATIONS.length === 1 ? <>Find Us In&hellip;</> : <>Locations</>}</Important>
 			</div>
 			
 		</div>

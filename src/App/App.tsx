@@ -1,9 +1,11 @@
-import './App.css';
+import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import TopBanner from '../TopBanner/TopBanner';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import About from '../About/About';
 import Landing from '../Landing/Landing';
+import Menu from '../Menu/Menu';
+import Delivery from '../Delivery/Delivery';
 import React from 'react';
 import BottomBanner from '../BottomBanner/BottomBanner';
 
@@ -14,33 +16,39 @@ export function arrayEquals(a: any[], b: any[]) {
 		&& a.every((val, index) => val === b[index]);
 }
 
-const ROUTE_MAPPINGS: { url: string, page: Page }[] = [
+export const ROUTE_MAPPINGS: { url: string, page: Page, name?: string }[] = [
 	{
 		url: '*',
 		page: NotFoundPage // << REQUIRED!!!!!
 	},
 	{
 		url: '/',
-		page: Landing      // << REQUIRED!!!!!
+		page: Landing,     // << REQUIRED!!!!!
+		name: 'Home'
 	},
 	{
 		url: '/about',
-		page: About
+		page: About,
+		name: 'About'
 	},
-	// POSIBLE IDEAS:
-	/*
 	{
 		url: '/menu',
-		page: Menu
+		page: Menu,
+		name: 'Menu'
 	},
+	{
+		url: '/delivery',
+		page: Delivery,
+		name: 'Delivery'
+	}
+
+	// POSIBLE IDEAS:
+	/*
 	{
 		url: '/kitchen',
 		page: Kitchen
 	},
-	{
-		url: '/delivery',
-		page: Delivery
-	}
+	
 	*/
 ];
 

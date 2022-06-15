@@ -78,12 +78,12 @@ export const LOCATIONS: Location[] = [
 		address: '1234 W. Pico Avenue, Los Angeles, CA.',
 		phone: '+1 (123) 456-7890'
 	},
-	{
-		city: 'Marina Del Rey',
-		hours: constantHours('9AM', '10PM'),
-		address: '4321 E. Sepulveda Avenue, Marina Del Ray, Ca.',
-		phone: '+1 (321) 654-0987'
-	},
+	// {
+	// 	city: 'Marina Del Rey',
+	// 	hours: constantHours('9AM', '10PM'),
+	// 	address: '4321 E. Sepulveda Avenue, Marina Del Ray, Ca.',
+	// 	phone: '+1 (321) 654-0987'
+	// },
 	// ADD LOCATIONS HERE AS YOU WISH
 ]
 

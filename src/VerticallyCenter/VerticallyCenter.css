@@ -1,0 +1,11 @@
+.vertically-center-container::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.vertically-center-child {
+    display: inline-block;
+    vertical-align: middle;
+}
