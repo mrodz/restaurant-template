@@ -1,0 +1,241 @@
+@use "sass:map";
+@use "sass:math";
+@use "../designs.scss";
+@use "../index.scss";
+
+$padding: 2rem;
+
+@mixin default-tilted-location-label {
+	writing-mode: vertical-rl;
+	padding-left: $padding;
+	justify-content: center;
+}
+
+@mixin media-tilted-location-label {
+	writing-mode: initial;
+	justify-content: left;
+	padding-left: 0;
+}
+
+.tilted-location-label {
+	@include default-tilted-location-label;
+}
+
+.location-wrapper {
+	display: grid;
+	width: 90vw;
+	grid-template-columns: 3fr 2fr;
+}
+
+.location-wrapper+ :not(.location-wrapper:first-of-type) {
+	padding-top: math.div($padding, 1.5);
+}
+
+.location-li {
+	text-align: center;
+}
+
+.location-li::before {
+	content: '• ';
+}
+
+.bottom-banner-wrapper {
+	font-size: 12pt;
+	background-color: designs.primary-color();
+	color: designs.accented-font-color();
+
+	display: flex;
+
+	padding: $padding;
+
+	flex-direction: row;
+
+	&[data-length="1"] {
+		flex-direction: column-reverse;
+	}
+}
+
+.bottom-banner {
+	display: flex;
+	flex-direction: column;
+
+	& .bottom-banner-location {
+		display: flex;
+		align-items: center;
+		flex-grow: 1;
+
+
+		& .bottom-banner-name {
+			font-weight: bold;
+			// flex-grow: 1;
+			white-space: nowrap; // this is to ensure that the name of the business
+			// never cuts out.
+		}
+
+		& ul {
+			align-items: end;
+			margin-left: $padding;
+		}
+
+		& ul>li:nth-child(1) {
+			padding-bottom: math.div($padding, 2);
+		}
+
+		padding-right: $padding;
+
+		border-right: 3px solid designs.accented-font-color();
+	}
+
+	& .bottom-banner-hours {
+		padding-left: $padding;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		// flex-shrink: 1;
+	}
+}
+
+.schedule-ul {
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+
+	& li {
+		padding-top: math.div($padding, 4);
+	}
+}
+
+/////////////////////
+/// MEDIA QUERIES ///
+///////////////////// 
+
+@media only screen and (min-width: 2200px) {
+	.bottom-banner-wrapper {
+		font-size: 1.2rem;
+
+		& .bottom-banner-location {
+			border-right: 6px solid designs.accented-font-color();
+		}
+	}
+}
+
+@media only screen and (min-width: 2800px) {
+	.bottom-banner-wrapper {
+		font-size: 1.5rem;
+
+		& .bottom-banner-location {
+			border-right: 10px solid designs.accented-font-color();
+		}
+	}
+
+	.location-wrapper {
+		width: 92.5vw;
+	}
+}
+
+@media only screen and (min-width: 3500px) {
+	.bottom-banner-wrapper {
+		font-size: 2rem;
+	}
+}
+
+///
+/// BIGGER SCREENS ABOVE ^^^
+///
+/// SMALLER SCREENS BELOW...
+/// 
+
+@media only screen and (max-width: 1150px) {
+	.bottom-banner-wrapper {
+		font-size: .8rem;
+	}
+}
+
+@media only screen and (max-width: 930px) {
+	.bottom-banner-wrapper {
+		font-size: .65rem;
+	}
+}
+
+@media only screen and (max-width: 890px) {
+	.bottom-banner-wrapper {
+		font-size: .65rem;
+		flex-direction: column-reverse;
+	}
+
+	div.tilted-location-label {
+		@include media-tilted-location-label;
+	}
+
+	div.tilted-location-label,
+	div.location-label {
+		padding-bottom: math.div($padding, 3);
+	}
+}
+
+@media only screen and (max-width: 620px) {
+	.bottom-banner-wrapper {
+		font-size: .5rem;
+	}
+}
+
+
+@media only screen and (max-width: 500px) {
+	.bottom-banner-wrapper {
+		font-size: .6rem;
+
+		.tilted-location-label,
+		.location-label {
+			font-size: .6rem;
+		}
+	}
+
+	span.location-li::before {
+		content: '';
+	}
+
+	.location-wrapper {
+		grid-template-columns: 1fr 1fr;
+
+		& .bottom-banner-location {
+			flex-direction: column;
+			align-items: unset;
+
+			& .bottom-banner-name {
+				margin-bottom: math.div($padding, 4);
+			}
+
+			& ul {
+				margin-left: 0;
+			}
+		}
+	}
+}
+
+
+@media only screen and (max-width: 450px) {
+	.bottom-banner-wrapper {
+		font-size: .4rem;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	.bottom-banner-wrapper {
+		font-size: .3rem;
+	}
+
+	.location-wrapper {
+		.bottom-banner-location {
+			padding-right: math.div($padding, 2);
+		}
+
+		.bottom-banner-hours {
+			padding-left: math.div($padding, 2);
+		}
+	}
+}
+
+@media only screen and (max-width: 320px) {
+	.bottom-banner-wrapper {
+		padding: math.div($padding, 2);
+	}
+}

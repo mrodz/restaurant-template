@@ -1,0 +1,24 @@
+@use "sass:map";
+
+$DESIGN-NUMBER: 1;
+
+@mixin default-font {
+	font-family: 'Oswald', sans-serif;
+}
+
+@function primary-color() {
+	@if $DESIGN-NUMBER == 1 {
+		@return rgb(128, 141, 153);
+	}
+}
+
+@function accented-font-color() {
+	@if $DESIGN-NUMBER == 1 {
+		@return rgb(255, 253, 253);
+	}
+}
+
+:export {
+	primaryColor: primary-color();
+	accentedFontColor: accented-font-color();
+}

@@ -1,0 +1,9 @@
+.all-encapsulating-element {
+	display: flex;
+	flex-direction: column;
+	min-height: inherit;
+}
+
+.routes-wrapper {
+	flex-grow: 1
+}

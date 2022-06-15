@@ -1,0 +1,32 @@
+.important-text {
+	font-size: 110%;
+	font-weight: bold;
+
+	&[data-important-weight="1"] {
+		font-size: 120%;
+	}
+
+	&[data-important-weight="2"] {
+		font-size: 130%;
+	}
+
+	&[data-important-weight="3"] {
+		font-size: 140%;
+		text-transform: uppercase;
+	}
+
+	&[data-important-weight="4"] {
+		font-size: 150%;
+		text-transform: uppercase;
+	}
+
+	&[data-important-weight="5"] {
+		font-size: 200%;
+		text-transform: uppercase;
+	}
+
+	&[data-important-weight="6"] {
+		font-size: 300%;
+		text-transform: uppercase;
+	}
+}
