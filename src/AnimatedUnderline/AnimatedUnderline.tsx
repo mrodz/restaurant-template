@@ -41,10 +41,10 @@ const AnimatedUnderline: FC<AnimatedUnderlineProps> = (props) => {
     })();
 
     return (
-        <span style={style} className={'fancy-underline ' + (props?.className ?? '')}>
+        <div style={style} className={'fancy-underline ' + (props?.className ?? '')}>
             {props.children}
             
-        </span>
+        </div>
     );
 }
 

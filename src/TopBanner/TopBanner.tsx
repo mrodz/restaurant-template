@@ -7,6 +7,7 @@ import Important from "../Important/Important";
 
 import {
 	RESTAURANT_NAME,
+	BANNER_TOP_DESC
 } from '../RESTAURANT_CONFIG';
 
 import { ROUTE_MAPPINGS } from '../App/App';
@@ -72,7 +73,10 @@ const TopBanner: FC<{}> = () => {
 						</Link>
 					</AnimatedUnderline>
 					<div className='other-info'>
-						<i className="fa-solid fa-angles-right"></i>
+						{BANNER_TOP_DESC.map((e, i) => {
+							return <div key={i} className="other-info-item"><i className="fa-solid fa-angles-right"></i>{e}</div>
+						})}
+
 						{ /* TODO - Add more options here, take into account that you'll have to use @media querries to fix for mobile :D */}
 					</div>
 					<div className='mobile-view'>
@@ -101,6 +105,7 @@ const TopBanner: FC<{}> = () => {
 						<Link to="/" onClick={closeBurger}>
 							<svg id="map-img" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 113.97">
 								<path fill={styles.popColor} d={SVG_DATA} />
+								Home {/* This will render if inline SVGs are not supported. */}
 							</svg>
 						</Link>
 					</div>

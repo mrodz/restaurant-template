@@ -1,6 +1,6 @@
 @use "sass:map";
 
-$DESIGN-NUMBER: 1;
+$DESIGN-NUMBER: 4;
 
 @font-face {
 	font-family: 'Regal';
@@ -29,6 +29,8 @@ $FONTS: 'Artsy', 'Regal';
 		@return rgb(255, 242, 0);
 	} @else if $DESIGN-NUMBER ==3 {
 		@return rgb(119, 117, 169);
+	} @else if $DESIGN-NUMBER ==4 {
+		@return rgb(47, 34, 6);
 	}
 }
 
@@ -39,16 +41,20 @@ $FONTS: 'Artsy', 'Regal';
 		@return rgb(217, 160, 221);
 	} @else if $DESIGN-NUMBER ==3 {
 		@return rgb(35, 37, 38);
+	} @else if $DESIGN-NUMBER ==4 {
+		@return rgb(220, 212, 199);
 	}
 }
 
 @function accented-font-color() {
 	@if $DESIGN-NUMBER ==1 {
 		@return rgb(255, 253, 253);
-	} @else if $DESIGN-NUMBER ==2 {
+	} @else if $DESIGN-NUMBER ==2  {
 		@return rgb(33, 29, 29);
 	} @else if $DESIGN-NUMBER ==3 {
 		@return rgb(191, 193, 196);
+	} @else if $DESIGN-NUMBER ==4 {
+		@return pop-color();
 	}
 }
 
@@ -59,11 +65,13 @@ $FONTS: 'Artsy', 'Regal';
 		@return white;
 	} @else if $DESIGN-NUMBER ==3 {
 		@return rgb(65, 62, 62);
+	} @else if $DESIGN-NUMBER ==4 {
+		@return rgb(193, 211, 218);
 	}
 }
 
 @function font-color() {
-	@if $DESIGN-NUMBER ==1 or $DESIGN-NUMBER ==2 {
+	@if $DESIGN-NUMBER ==1 or $DESIGN-NUMBER ==2 or $DESIGN-NUMBER ==4 {
 		@return #000000;
 	} @else if $DESIGN-NUMBER ==3 {
 		@return rgb(255, 250, 250);

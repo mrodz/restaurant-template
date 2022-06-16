@@ -1,10 +1,11 @@
 .fancy-underline {
-    background-size: 0% 3px;
+    background-size: 0% 4px;
     background-repeat: no-repeat;
-    background-position: left bottom;
+    background-position: 100% 80%;
     transition: background-size 300ms ease;
+    height: 100%;
 }
 
 .fancy-underline:hover {
-    background-size: 100% 3px;
+    background-size: 100% 4px;
 }

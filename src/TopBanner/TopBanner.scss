@@ -4,14 +4,32 @@
 $padding: 1rem;
 
 .other-info {
-	font-size: 120%;	
+	// font-size: 120%;
+	display: flex;
+	flex-direction: row;
+}
+
+.other-info-item {
+	display: flex;
+	flex-direction: row;
+	font-size: 120%;
+
+	&>i {
+		margin-right: $padding;
+	}
+}
+
+.other-info-item:not(:first-of-type) {
+	margin-left: $padding;
 }
 
 .logo-underliner {
 	margin: {
 		left: $padding * 2;
 		right: $padding * 2;
-	};
+	}
+
+	;
 }
 
 .burger-wrapper {
@@ -37,7 +55,7 @@ $padding: 1rem;
 
 .nav-home-link {
 	text-align: center;
-	
+
 	border-radius: 50%;
 	padding: math.div($padding, 1.5);
 	max-width: 2.5rem;
@@ -52,7 +70,11 @@ $padding: 1rem;
 
 @keyframes nav-home-fade-in {
 	to {
-		background-color: designs.accented-font-color();
+		@if designs.accented-font-color()==designs.pop-color() {
+			background-color: #fff;
+		} @else {
+			background-color: designs.accented-font-color();
+		}
 	}
 }
 
@@ -81,6 +103,7 @@ $padding: 1rem;
 		// text-decoration: none;
 		color: designs.pop-color();
 		margin-bottom: math.div($padding, 2);
+
 		&:hover {
 			animation: burger-link-hover .25s forwards;
 		}

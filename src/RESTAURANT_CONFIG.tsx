@@ -1,9 +1,23 @@
 import React from "react";
 
 /**
+ * Standard assertion function.
+ * @param bool a condition.
+ */
+const _assert: (arg0: boolean) => void = (bool: boolean) => {
+	if (!bool) throw new Error("AssertionError");
+}
+
+/**
  * Set the business' name here.
  */
-export const RESTAURANT_NAME: string = 'The Spot'
+export const RESTAURANT_NAME: string = 'The Spot';
+
+
+export const BANNER_TOP_DESC: React.ReactElement[] = [
+	<div>Cafe &amp; Lounge</div>,
+	<div>Culver City <i className="fa-solid fa-phone" style={{ marginLeft: '.2rem' }}></i> {buildPhoneNumber(1, 310, 5598868)}</div>,
+];
 
 /**
  * Whether to use the shorthand version of days or not. (ie. "Monday" turns into "Mon")
@@ -14,14 +28,6 @@ export const PREFER_SHORTENED_DAYS_OF_WEEK: boolean = true;
  * If the business has ony main phone number they take all their calls with.
  */
 export const HAS_MAIN_PHONE: [boolean, string] = [false, '']
-
-/**
- * Standard assertion function.
- * @param bool a condition.
- */
-const _assert: (arg0: boolean) => void = (bool: boolean) => {
-	if (!bool) throw new Error("AssertionError");
-}
 
 /**
  * Build a phone number to this website's standards.
@@ -68,47 +74,115 @@ export interface Hours extends OperatingHours {
  */
 export type day = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
 
-export const weekdays: day[]   = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+export const weekdays: day[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 export const weekdaysShortened = weekdays.map(day => day.substring(0, 2));
 
-
+/**
+ * Factory class for building a business' schedule.
+ */
 class DaysOfWeekBuilder {
 	_hours?: Hours[];
 
+	/**
+	 * Private, shouldn't really be touched.
+	 * Enter the factory via {@link startScheduling startScheduling()} 
+	 * instead.
+	 * @param prev an already-existing {@link DaysOfWeekBuilder}.
+	 */
 	constructor(prev?: DaysOfWeekBuilder) {
 		this._hours = prev?._hours ?? [];
 	}
 
+	/**
+	 * Supply a valid {@link day}
+	 * @param day is the day of the week you'll be working with.
+	 * @returns a chain to {@link OpensBuilder}. (it's expected that 
+	 * you'll call {@link OpensBuilder.opens opens()} or {@link OpensBuilder.closes closes()}
+	 * on this chained object).
+	 */
 	every(day: day) {
 		return new OpensBuilder(this, day)
 	}
 
+	/**
+	 * Collect all days added thus far.
+	 * @returns an array of {@link Hours}
+	 */
 	thatsAll(): Hours[] {
-		if (this?._hours === undefined) throw new Error(); 
+		if (this?._hours === undefined) throw new Error();
 		return this._hours;
 	}
 }
 
+/**
+ * Factory class for getting a day's opening and closing times.
+ * This serves as a link in the {@link DaysOfWeekBuilder} production chain.
+ * 
+ * Meant to read like a sentence:
+ * 
+ * "every Monday opens at 10:00AM and closes at 10:00PM,
+ * while every Tuesday opens at 9:15AM and closes at 12:00AM."
+ * 
+ * Translates to:
+ * 
+ * every("Monday").opens("10:00AM").and().closes("10:00PM")
+ * .while().every("Tuesday").opens("9:15AM").and().closes("12:00AM")
+ * .while().thatsAll();
+ */
 class OpensBuilder {
 	_opens: string | undefined;
 	_closes: string | undefined;
 	_oldDaysOfWeekBuilder: DaysOfWeekBuilder;
 	_day: day;
 
+	/**
+	 * PRIVATE - called EXCLUSIVELY through {@link DaysOfWeekBuilder}
+	 * @param daysOfWeekBuilder origin
+	 * @param day the day that was selected
+	 */
 	constructor(daysOfWeekBuilder: DaysOfWeekBuilder, day: day) {
 		this._oldDaysOfWeekBuilder = daysOfWeekBuilder;
 		this._day = day;
 	}
 
+	/**
+	 * Set the time a business opens.
+	 * @param at any time.
+	 * @returns this object to continue the chain.
+	 */
 	opens(at: string) {
 		this._opens = at;
 		return this;
 	}
 
+	/**
+	 * Set the time a business closes.
+	 * @param at any time.
+	 * @returns this object to continue the chain.
+	 */
+	closes(at: string) {
+		this._closes = at;
+		return this;
+	}
+
+	/**
+	 * Syntactic Sugar :)
+	 * 
+	 * I added this just so you could do:
+	 * - every("Monday").opens("10AM").and().closes("10PM");
+	 * Even though the following works as well.
+	 * - every("Monday").opens("10AM").closes("10PM");
+	 * @returns this
+	 */
 	and(): OpensBuilder {
 		return this;
 	}
 
+	/**
+	 * Exit this branching-off of the {@link DaysOfWeekBuilder}; insert the 
+	 * days back into the original chain.
+	 * @returns {@link _oldDaysOfWeekBuilder}
+	 */
 	while(): DaysOfWeekBuilder {
 		if (this._opens !== undefined && this._closes !== undefined) {
 			this._oldDaysOfWeekBuilder._hours?.push({
@@ -118,16 +192,14 @@ class OpensBuilder {
 			});
 			return this._oldDaysOfWeekBuilder;
 		} else {
-			throw Error('set an opening and closing time first.');
+			throw Error('set both an opening and closing time first.');
 		}
-	}
-
-	closes(at: string) {
-		this._closes = at;
-		return this;
 	}
 }
 
+/**
+ * Create a schedule factory
+ */
 const startScheduling = () => new DaysOfWeekBuilder();
 
 /**
@@ -136,6 +208,7 @@ const startScheduling = () => new DaysOfWeekBuilder();
  * @param close 
  * @returns 
  */
+// eslint-disable-next-line
 function mondayThroughFriday(open: string, close: string): Hours[] {
 	let result: Hours[] = [];
 	for (let day of PREFER_SHORTENED_DAYS_OF_WEEK ? weekdaysShortened : weekdays) {
@@ -148,15 +221,16 @@ function mondayThroughFriday(open: string, close: string): Hours[] {
 	return result;
 }
 
-export const weekends: day[]   = ['Saturday', 'Sunday'];
+export const weekends: day[] = ['Saturday', 'Sunday'];
 export const weekendsShortened = weekends.map(day => day.substring(0, 2));
 
 /**
  * Set the start time and closing time for the weekend.
- * @param open 
- * @param close 
- * @returns 
+ * @param open opening time
+ * @param close closing time
+ * @returns an array of {@link Hours}
  */
+// eslint-disable-next-line
 function saturdayAndSunday(open: string, close: string): Hours[] {
 	let result: Hours[] = [];
 	for (let day of PREFER_SHORTENED_DAYS_OF_WEEK ? weekendsShortened : weekends) {
@@ -173,8 +247,9 @@ function saturdayAndSunday(open: string, close: string): Hours[] {
  * Every day of the week has the same start and close times
  * @param open the time at which this establishment opens
  * @param close the time at which this establishment closes
- * @returns an 
+ * @returns an array of {@link Hours} with said times.
  */
+// eslint-disable-next-line
 function constantWeeklyHours(open: string, close: string): Hours[] {
 	let result: Hours[] = [];
 	for (let day of PREFER_SHORTENED_DAYS_OF_WEEK ? weekendsShortened.concat(weekdaysShortened) : weekends.concat(weekdays)) {
@@ -189,25 +264,34 @@ function constantWeeklyHours(open: string, close: string): Hours[] {
 
 export const LOCATIONS: Location[] = [
 	{
-		city: 'Westchester',
-		hours: startScheduling()
-				.every("Monday").opens('8AM').and().closes('9PM').while()
-				.every("Tuesday").opens('8AM').and().closes('9PM').while()
-				.every("Wednesday").opens('8AM').and().closes('9PM').while()
-				.every("Thursday").opens('8AM').and().closes('9PM').while()
-				.every("Friday").opens('10AM').and().closes('12AM').while()
-				.every("Saturday").opens('10AM').and().closes('12AM').while()
-				.every("Sunday").opens('9AM').and().closes('10PM').while()
-				.thatsAll(),
-		address: '1234 W. Pico Avenue, Los Angeles, CA.',
-		phone: buildPhoneNumber(1, 123, 4567890)
-	},
-	{
-		city: 'Marina Del Rey',
-		hours: constantWeeklyHours('9AM', '10PM'),
-		address: '4321 E. Sepulveda Avenue, Marina Del Ray, Ca.',
-		phone: '+1 (321) 654-0987'
-	},
+		city: 'Culver City',
+		hours: mondayThroughFriday('7AM', '5PM').concat(startScheduling()
+			.every('Saturday').opens('8AM').and().closes('3PM').while()
+			.every('Sunday').opens('8AM').and().closes('2:30PM').while()
+			.thatsAll()),
+		address: '4455 Overland Ave, Culver City, CA',
+		phone: buildPhoneNumber(1, 310, 5598868)
+	}
+	// {
+	// 	city: 'Westchester',
+	// 	hours: startScheduling()
+	// 			.every("Monday").opens('8AM').and().closes('9PM').while()
+	// 			.every("Tuesday").opens('8AM').and().closes('9PM').while()
+	// 			.every("Wednesday").opens('8AM').and().closes('9PM').while()
+	// 			.every("Thursday").opens('8AM').and().closes('9PM').while()
+	// 			.every("Friday").opens('10AM').and().closes('12AM').while()
+	// 			.every("Saturday").opens('10AM').and().closes('12AM').while()
+	// 			.every("Sunday").opens('9AM').and().closes('10PM').while()
+	// 			.thatsAll(),
+	// 	address: '1234 W. Pico Avenue, Los Angeles, CA.',
+	// 	phone: buildPhoneNumber(1, 123, 4567890)
+	// },
+	// {
+	// 	city: 'Marina Del Rey',
+	// 	hours: constantWeeklyHours('9AM', '10PM'),
+	// 	address: '4321 E. Sepulveda Avenue, Marina Del Ray, Ca.',
+	// 	phone: '+1 (321) 654-0987'
+	// },
 	// ADD LOCATIONS HERE AS YOU WISH
 ]
 
