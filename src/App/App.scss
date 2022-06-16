@@ -1,3 +1,5 @@
+@use "../TopBanner/TopBanner.scss";
+@use "sass:math";
 
 .all-encapsulating-element {
 	display: flex;
@@ -5,6 +7,75 @@
 	min-height: inherit;
 }
 
-.routes-wrapper {
+.focus-screen {
+	background-color: black;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	z-index: 10;
+	opacity: 0;
+	display: none;
+
+	&[data-focusing="true"] {
+		display: block;
+		opacity: .5;
+	}
+	&[data-focusing="false"] {
+		display: none;
+	}
+}
+
+$padding: 5rem;
+
+@mixin route-wrapper($factor: 1) {
 	flex-grow: 1;
+	margin-top: TopBanner.$banner-height;
+
+	padding: {
+		left: $padding * (math.div(3, $factor));
+		right: $padding * (math.div(3, $factor));
+		top: $padding;
+		bottom: $padding;
+	}
+}
+
+.routes-wrapper {
+	@include route-wrapper()
+}
+
+@media only screen and (max-width: 1500px) {
+	.routes-wrapper {
+		@include route-wrapper(2);
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+	.routes-wrapper {
+		@include route-wrapper(3);
+	}
+}
+
+@media only screen and (max-width: 750px) {
+	.routes-wrapper {
+		@include route-wrapper(4);
+	}
+}
+
+@media only screen and (max-width: 475px) {
+	.routes-wrapper {
+		font-size: .8rem;
+		@include route-wrapper(5);
+	}
+}
+
+@media only screen and (max-width: 345px) {
+	.routes-wrapper {
+		@include route-wrapper(7);
+	}
+}
+
+@media only screen and (max-width: 250px) {
+	.routes-wrapper {
+		font-size: .7rem;
+	}
 }

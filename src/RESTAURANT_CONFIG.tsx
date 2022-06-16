@@ -1,6 +1,21 @@
 import React from "react";
+// export { ROUTE_MAPPINGS } from './App/App';
 
-export const PREFER_SHORTENED_DAYS_OF_WEEK = true;
+export const RESTAURANT_NAME: string = 'Compari\'s'
+export const PREFER_SHORTENED_DAYS_OF_WEEK: boolean = true;
+export const HAS_MAIN_PHONE: [boolean, string] = [false, '']
+
+const _assert: (arg0: boolean) => void = (bool: boolean) => {
+	if (!bool) throw new Error("AssertionError");
+}
+export function buildPhoneNumber(countryCode: number = 1, areaCode: number, number: number) {
+	_assert(number > 0);
+	_assert(areaCode.toString().length === 3);
+	_assert(number.toString().length === 7);
+
+	let str: string = number.toString();
+	return `+${countryCode} (${areaCode}) ${str.substring(0, 3)}-${str.substring(3, 7)}`;
+}
 
 export interface Location {
 	city: string,
@@ -15,10 +30,10 @@ export interface Hours {
 	closes: string
 }
 
-export declare type day = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+export type day = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
 
-const weekdays: day[]   = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-const weekdaysShortened = weekdays.map(day => day.substring(0, 2));
+export const weekdays: day[]   = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+export const weekdaysShortened = weekdays.map(day => day.substring(0, 2));
 
 function mondayThroughFriday(open: string, close: string): Hours[] {
 	let result: Hours[] = [];
@@ -32,8 +47,8 @@ function mondayThroughFriday(open: string, close: string): Hours[] {
 	return result;
 }
 
-const weekends: day[]   = ['Saturday', 'Sunday'];
-const weekendsShortened = weekends.map(day => day.substring(0, 2));
+export const weekends: day[]   = ['Saturday', 'Sunday'];
+export const weekendsShortened = weekends.map(day => day.substring(0, 2));
 
 /**
  * Set the start time and closing time for the weekend.
@@ -76,14 +91,14 @@ export const LOCATIONS: Location[] = [
 		city: 'Westchester',
 		hours: mondayThroughFriday('8AM', '9PM').concat(saturdayAndSunday('10AM', '12PM')),
 		address: '1234 W. Pico Avenue, Los Angeles, CA.',
-		phone: '+1 (123) 456-7890'
+		phone: buildPhoneNumber(1, 123, 4567890)
 	},
-	// {
-	// 	city: 'Marina Del Rey',
-	// 	hours: constantHours('9AM', '10PM'),
-	// 	address: '4321 E. Sepulveda Avenue, Marina Del Ray, Ca.',
-	// 	phone: '+1 (321) 654-0987'
-	// },
+	{
+		city: 'Marina Del Rey',
+		hours: constantHours('9AM', '10PM'),
+		address: '4321 E. Sepulveda Avenue, Marina Del Ray, Ca.',
+		phone: '+1 (321) 654-0987'
+	},
 	// ADD LOCATIONS HERE AS YOU WISH
 ]
 

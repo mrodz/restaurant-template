@@ -17,6 +17,13 @@ $padding: 2rem;
 	padding-left: 0;
 }
 
+.fa-map-icon {
+	margin-right: 1rem;
+	&:before {
+		content: "\f041";
+	}
+}
+
 .tilted-location-label {
 	@include default-tilted-location-label;
 }
@@ -35,15 +42,7 @@ $padding: 2rem;
 	text-align: center;
 }
 
-.location-li::before {
-	content: '• ';
-}
-
 .bottom-banner-wrapper {
-	font-size: 12pt;
-	background-color: designs.primary-color();
-	color: designs.accented-font-color();
-
 	display: flex;
 
 	padding: $padding;
@@ -102,6 +101,15 @@ $padding: 2rem;
 	& li {
 		padding-top: math.div($padding, 4);
 	}
+}
+
+.bottom-banner-wrapper-2 {
+	font-size: 12pt;
+	background-color: designs.primary-color();
+	color: designs.accented-font-color();
+	
+	display: flex;
+	flex-direction: column;
 }
 
 /////////////////////

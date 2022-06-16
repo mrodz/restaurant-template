@@ -4,15 +4,62 @@
 
 $padding: 1rem;
 
+.other-info {
+	font-size: 120%;	
+}
+
+.logo-underliner {
+	margin: {
+		left: $padding * 2;
+		right: $padding * 2;
+	};
+}
+
+.burger-wrapper {
+	display: flex;
+	flex-direction: row;
+
+	align-content: center;
+
+
+	&>.burger-label {
+		display: inline-flex;
+		align-items: center;
+
+		margin-right: $padding;
+	}
+}
+
 .burger-link-wrapper {
 	display: flex;
 	flex-grow: 1;
 	flex-direction: column;
 }
 
+.nav-home-link {
+	text-align: center;
+	
+	border-radius: 50%;
+	padding: math.div($padding, 1.5);
+	max-width: 2.5rem;
+	max-height: 2.5rem;
+
+	align-self: center;
+
+	&:hover {
+		animation: nav-home-fade-in .2s forwards;
+	}
+}
+
+@keyframes nav-home-fade-in {
+	to {
+		background-color: designs.accented-font-color();
+	}
+}
+
 #map-img {
-	width: 3rem;
-	height: 3rem;
+	width: 2.5rem;
+	height: 2.5rem;
 }
 
 .mobile-view {
@@ -35,28 +82,39 @@ $padding: 1rem;
 		// text-decoration: none;
 		color: inherit;
 		margin-bottom: math.div($padding, 2);
+		&:hover {
+			animation: burger-link-hover .25s forwards;
+		}
+	}
+}
+
+@keyframes burger-link-hover {
+	to {
+		color: white;
 	}
 }
 
 .burger-nav-open {
 	animation: nav-slide-in .5s forwards;
 }
+
 .burger-nav-close {
 	animation: nav-slide-out 1s forwards;
 }
 
 .burger-nav-wrapper {
 	max-height: 60vh;
+	z-index: 10000;
 
 	position: fixed;
-    top:0;
-    bottom: 0;
-    right: math.div($padding, 3);
-    
-    margin: auto;
-	
+	top: 0;
+	bottom: 0;
+	right: math.div($padding, 3);
+
+	margin: auto;
+
 	display: flex;
-	
+
 	// right: $padding;
 	justify-content: center;
 }
@@ -85,13 +143,18 @@ $padding: 1rem;
 	}
 }
 
-.logo-text {
+@mixin logo-text {
 	font-family: 'Satisfy', cursive;
-	font-size: 325%;
 	color: #e32626;
 }
 
-// $banner-height: 4rem;
+.logo-text {
+	font-size: 325%;
+	font-family: 'Satisfy', cursive;
+	@include logo-text();
+}
+
+$banner-height: 4rem;
 
 .top-banner {
 	background-color: designs.primary-color();
@@ -99,11 +162,27 @@ $padding: 1rem;
 	padding: $padding;
 	width: 100vw;
 	position: fixed;
-	z-index: 1000;
-	// height: $banner-height;
+	height: $banner-height;
+	display: flex;
+	align-content: center;
 
 	.top-banner-elements {
 		display: flex;
 		flex-direction: row;
+		align-items: center;
+	}
+}
+
+@media only screen and (max-width: 450px) {
+	.logo-text {
+		font-size: 250%;
+		@include logo-text()
+	}
+}
+
+@media only screen and (max-width: 250px) {
+	.logo-text {
+		font-size: 200%;
+		@include logo-text()
 	}
 }
