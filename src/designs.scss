@@ -1,6 +1,6 @@
 @use "sass:map";
 
-$DESIGN-NUMBER: 4;
+$DESIGN-NUMBER: 1;
 
 @font-face {
 	font-family: 'Regal';
@@ -25,11 +25,17 @@ $FONTS: 'Artsy', 'Regal';
 @function pop-color() {
 	@if $DESIGN-NUMBER ==1 {
 		@return #000000;
-	} @else if $DESIGN-NUMBER ==2 {
+	}
+
+	@else if $DESIGN-NUMBER ==2 {
 		@return rgb(255, 242, 0);
-	} @else if $DESIGN-NUMBER ==3 {
+	}
+
+	@else if $DESIGN-NUMBER ==3 {
 		@return rgb(119, 117, 169);
-	} @else if $DESIGN-NUMBER ==4 {
+	}
+
+	@else if $DESIGN-NUMBER ==4 {
 		@return rgb(47, 34, 6);
 	}
 }
@@ -37,11 +43,17 @@ $FONTS: 'Artsy', 'Regal';
 @function primary-color() {
 	@if $DESIGN-NUMBER ==1 {
 		@return rgb(68, 105, 99);
-	} @else if $DESIGN-NUMBER ==2 {
+	}
+
+	@else if $DESIGN-NUMBER ==2 {
 		@return rgb(217, 160, 221);
-	} @else if $DESIGN-NUMBER ==3 {
+	}
+
+	@else if $DESIGN-NUMBER ==3 {
 		@return rgb(35, 37, 38);
-	} @else if $DESIGN-NUMBER ==4 {
+	}
+
+	@else if $DESIGN-NUMBER ==4 {
 		@return rgb(220, 212, 199);
 	}
 }
@@ -49,11 +61,17 @@ $FONTS: 'Artsy', 'Regal';
 @function accented-font-color() {
 	@if $DESIGN-NUMBER ==1 {
 		@return rgb(255, 253, 253);
-	} @else if $DESIGN-NUMBER ==2  {
+	}
+
+	@else if $DESIGN-NUMBER ==2 {
 		@return rgb(33, 29, 29);
-	} @else if $DESIGN-NUMBER ==3 {
+	}
+
+	@else if $DESIGN-NUMBER ==3 {
 		@return rgb(191, 193, 196);
-	} @else if $DESIGN-NUMBER ==4 {
+	}
+
+	@else if $DESIGN-NUMBER ==4 {
 		@return pop-color();
 	}
 }
@@ -61,11 +79,17 @@ $FONTS: 'Artsy', 'Regal';
 @function page-bg() {
 	@if $DESIGN-NUMBER ==1 {
 		@return accented-font-color();
-	} @else if $DESIGN-NUMBER ==2 {
+	}
+
+	@else if $DESIGN-NUMBER ==2 {
 		@return white;
-	} @else if $DESIGN-NUMBER ==3 {
+	}
+
+	@else if $DESIGN-NUMBER ==3 {
 		@return rgb(65, 62, 62);
-	} @else if $DESIGN-NUMBER ==4 {
+	}
+
+	@else if $DESIGN-NUMBER ==4 {
 		@return rgb(193, 211, 218);
 	}
 }
@@ -73,11 +97,262 @@ $FONTS: 'Artsy', 'Regal';
 @function font-color() {
 	@if $DESIGN-NUMBER ==1 or $DESIGN-NUMBER ==2 or $DESIGN-NUMBER ==4 {
 		@return #000000;
-	} @else if $DESIGN-NUMBER ==3 {
+	}
+
+	@else if $DESIGN-NUMBER ==3 {
 		@return rgb(255, 250, 250);
 	}
 }
 
 :export {
 	popColor: pop-color();
+	primaryColor: primary-color();
+}
+
+// MEDIAS - see GemerateMediaQuerries.java
+
+@media only screen and (max-width: 4000px) {
+	[data-hide-on="4000"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 3900px) {
+	[data-hide-on="3900"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 3800px) {
+	[data-hide-on="3800"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 3700px) {
+	[data-hide-on="3700"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 3600px) {
+	[data-hide-on="3600"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 3500px) {
+	[data-hide-on="3500"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 3400px) {
+	[data-hide-on="3400"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 3300px) {
+	[data-hide-on="3300"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 3200px) {
+	[data-hide-on="3200"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 3100px) {
+	[data-hide-on="3100"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 3000px) {
+	[data-hide-on="3000"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 2900px) {
+	[data-hide-on="2900"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 2800px) {
+	[data-hide-on="2800"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 2700px) {
+	[data-hide-on="2700"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 2600px) {
+	[data-hide-on="2600"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 2500px) {
+	[data-hide-on="2500"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 2400px) {
+	[data-hide-on="2400"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 2300px) {
+	[data-hide-on="2300"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 2200px) {
+	[data-hide-on="2200"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 2100px) {
+	[data-hide-on="2100"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 2000px) {
+	[data-hide-on="2000"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1900px) {
+	[data-hide-on="1900"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1800px) {
+	[data-hide-on="1800"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1700px) {
+	[data-hide-on="1700"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1600px) {
+	[data-hide-on="1600"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1500px) {
+	[data-hide-on="1500"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1400px) {
+	[data-hide-on="1400"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1300px) {
+	[data-hide-on="1300"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1200px) {
+	[data-hide-on="1200"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1100px) {
+	[data-hide-on="1100"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+	[data-hide-on="1000"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 900px) {
+	[data-hide-on="900"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	[data-hide-on="800"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+	[data-hide-on="700"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	[data-hide-on="600"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	[data-hide-on="500"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	[data-hide-on="400"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 300px) {
+	[data-hide-on="300"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 200px) {
+	[data-hide-on="200"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 100px) {
+	[data-hide-on="100"] {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 0px) {
+	[data-hide-on="0"] {
+		display: none;
+	}
 }

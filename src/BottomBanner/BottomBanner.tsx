@@ -3,7 +3,6 @@ import React, { FC } from 'react';
 import {
 	LOCATIONS, 
 	Location as L, 
-	CUSTOM_HOURS_REQUIRED
 } from '../RESTAURANT_CONFIG';
 
 import './BottomBanner.scss';
@@ -39,7 +38,7 @@ const Location: FC<LocationProps> = (props) => {
 				</ul>
 			</>
 		);
-	} else if (!CUSTOM_HOURS_REQUIRED[0]) {
+	} else if (!props.location.specialHoursJSX) {
 		hours = (
 			<>
 				<ul className='schedule-ul'>
@@ -53,7 +52,7 @@ const Location: FC<LocationProps> = (props) => {
 			</>
 		)
 	} else {
-		hours = CUSTOM_HOURS_REQUIRED[1];
+		hours = (props.location?.hoursJSX ?? <div></div> as React.ReactElement);
 	}
 
 	return (

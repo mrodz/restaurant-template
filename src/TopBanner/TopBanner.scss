@@ -14,13 +14,16 @@ $padding: 1rem;
 	flex-direction: row;
 	font-size: 120%;
 
-	&>i {
-		margin-right: $padding;
+	& i.fa-angles-right {
+		margin: {
+			left: $padding;
+			right: $padding;
+		}
 	}
 }
 
-.other-info-item:not(:first-of-type) {
-	margin-left: $padding;
+.other-info-item:not(:last-of-type) {
+	// margin-right: $padding;
 }
 
 .logo-underliner {
@@ -195,10 +198,14 @@ $banner-height: 4rem;
 	}
 }
 
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 400px) {
 	.logo-text {
-		font-size: 250%;
 		@include logo-text()
+	}
+
+	.logo-underliner {
+		margin-left: $padding;
+		margin-right: $padding;
 	}
 }
 

@@ -15,8 +15,8 @@ export const RESTAURANT_NAME: string = 'The Spot';
 
 
 export const BANNER_TOP_DESC: React.ReactElement[] = [
-	<div>Cafe &amp; Lounge</div>,
-	<div>Culver City <i className="fa-solid fa-phone" style={{ marginLeft: '.2rem' }}></i> {buildPhoneNumber(1, 310, 5598868)}</div>,
+	<div data-hide-on="1000"><i className="fa-solid fa-angles-right"></i> Cafe &amp; Lounge</div>,
+	<div><i className="fa-solid fa-angles-right" data-hide-on="800"></i> <span data-hide-on="1100">Culver City</span> <i className="fa-solid fa-phone" style={{ marginLeft: '.2rem' }} data-hide-on="800"></i> <span data-hide-on="800">{buildPhoneNumber(1, 310, 5598868)}</span></div>,
 ];
 
 /**
@@ -55,6 +55,8 @@ export interface Location {
 	hours: Hours[],
 	address: string,
 	phone: string,
+	specialHoursJSX: boolean,
+	hoursJSX?: React.ReactElement
 }
 
 interface OperatingHours {
@@ -62,11 +64,13 @@ interface OperatingHours {
 	closes: string
 }
 
+const DEFAULT_OPERATING_HOURS = { opens: 'Never', closes: 'Never' }
+
 /**
  * Information about a place's operating hours.
  */
 export interface Hours extends OperatingHours {
-	day?: day | string
+	day: day | string
 }
 
 /**
@@ -262,6 +266,13 @@ function constantWeeklyHours(open: string, close: string): Hours[] {
 	return result;
 }
 
+function findHoursFromDay(day: day, ...hours: Hours[]): OperatingHours | undefined {
+	for (let hour of hours) {
+		if (hour.day === day) return { opens: hour.opens, closes: hour.closes }
+	}
+	return undefined;
+}
+
 export const LOCATIONS: Location[] = [
 	{
 		city: 'Culver City',
@@ -269,35 +280,26 @@ export const LOCATIONS: Location[] = [
 			.every('Saturday').opens('8AM').and().closes('3PM').while()
 			.every('Sunday').opens('8AM').and().closes('2:30PM').while()
 			.thatsAll()),
+		specialHoursJSX: true,
+		get hoursJSX() {
+			const monday: OperatingHours = findHoursFromDay('Monday', ...this.hours) ?? DEFAULT_OPERATING_HOURS
+			const saturday: OperatingHours = findHoursFromDay('Saturday', ...this.hours) ?? DEFAULT_OPERATING_HOURS
+			const sunday: OperatingHours = findHoursFromDay('Sunday', ...this.hours) ?? DEFAULT_OPERATING_HOURS
+
+			return (
+				<>
+					<ul className='schedule-ul'>
+						<li>Opens</li>
+						<li>@ {monday.opens} (Mon-Fri), {saturday.opens} (Sat-Sun)</li>
+					</ul>
+					<ul className='schedule-ul'>
+						<li>Closes</li>
+						<li>@ {monday.closes} (Mon-Fri), {saturday.closes} (Sat), {sunday.closes} (Sun)</li>
+					</ul>
+				</>
+			);
+		},
 		address: '4455 Overland Ave, Culver City, CA',
 		phone: buildPhoneNumber(1, 310, 5598868)
 	}
-	// {
-	// 	city: 'Westchester',
-	// 	hours: startScheduling()
-	// 			.every("Monday").opens('8AM').and().closes('9PM').while()
-	// 			.every("Tuesday").opens('8AM').and().closes('9PM').while()
-	// 			.every("Wednesday").opens('8AM').and().closes('9PM').while()
-	// 			.every("Thursday").opens('8AM').and().closes('9PM').while()
-	// 			.every("Friday").opens('10AM').and().closes('12AM').while()
-	// 			.every("Saturday").opens('10AM').and().closes('12AM').while()
-	// 			.every("Sunday").opens('9AM').and().closes('10PM').while()
-	// 			.thatsAll(),
-	// 	address: '1234 W. Pico Avenue, Los Angeles, CA.',
-	// 	phone: buildPhoneNumber(1, 123, 4567890)
-	// },
-	// {
-	// 	city: 'Marina Del Rey',
-	// 	hours: constantWeeklyHours('9AM', '10PM'),
-	// 	address: '4321 E. Sepulveda Avenue, Marina Del Ray, Ca.',
-	// 	phone: '+1 (321) 654-0987'
-	// },
-	// ADD LOCATIONS HERE AS YOU WISH
 ]
-
-/**
- * You MUST update the JSX here if either:
- * 1. the business' hours are not consistent every day of the week.
- * 2. Mon-Fri are not consistent or Sat & Sun are not consistent.
- */
-export const CUSTOM_HOURS_REQUIRED: [boolean, React.ReactElement] = [false, <div></div>];
