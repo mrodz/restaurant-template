@@ -3,7 +3,7 @@ import React from "react";
 /**
  * Set the business' name here.
  */
-export const RESTAURANT_NAME: string = 'Compari\'s'
+export const RESTAURANT_NAME: string = 'The Spot'
 
 /**
  * Whether to use the shorthand version of days or not. (ie. "Monday" turns into "Mon")

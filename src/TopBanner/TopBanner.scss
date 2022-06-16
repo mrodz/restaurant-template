@@ -1,6 +1,5 @@
 @use "../designs.scss";
 @use "sass:math";
-@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
 $padding: 1rem;
 
@@ -80,7 +79,7 @@ $padding: 1rem;
 
 	& a {
 		// text-decoration: none;
-		color: inherit;
+		color: designs.pop-color();
 		margin-bottom: math.div($padding, 2);
 		&:hover {
 			animation: burger-link-hover .25s forwards;
@@ -144,13 +143,12 @@ $padding: 1rem;
 }
 
 @mixin logo-text {
-	font-family: 'Satisfy', cursive;
-	color: #e32626;
+	font-family: 'Regal', cursive;
+	color: designs.pop-color();
 }
 
 .logo-text {
 	font-size: 325%;
-	font-family: 'Satisfy', cursive;
 	@include logo-text();
 }
 
@@ -165,6 +163,7 @@ $banner-height: 4rem;
 	height: $banner-height;
 	display: flex;
 	align-content: center;
+	z-index: 10;
 
 	.top-banner-elements {
 		display: flex;

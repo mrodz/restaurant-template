@@ -150,7 +150,8 @@ html {
 	min-height: 100vh;
 	font-size: 110%;
 	@include designs.default-font;
-	background-color: designs.accented-font-color();
+	background-color: designs.page-bg();
+	color: designs.font-color();
 	overflow-x: hidden;
 }
 

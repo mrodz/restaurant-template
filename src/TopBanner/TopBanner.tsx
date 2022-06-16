@@ -11,8 +11,10 @@ import {
 
 import { ROUTE_MAPPINGS } from '../App/App';
 
-import homepage from './homepage.png';
 import './TopBanner.scss';
+import styles from '../designs.scss';
+
+const SVG_DATA: string = "M18.69,73.37,59.18,32.86c2.14-2.14,2.41-2.23,4.63,0l40.38,40.51V114h-30V86.55a3.38,3.38,0,0,0-3.37-3.37H52.08a3.38,3.38,0,0,0-3.37,3.37V114h-30V73.37ZM60.17.88,0,57.38l14.84,7.79,42.5-42.86c3.64-3.66,3.68-3.74,7.29-.16l43.41,43,14.84-7.79L62.62.79c-1.08-1-1.24-1.13-2.45.09Z";
 
 /**
  * The topmost banner. It is static and sticks to the top of the page.
@@ -28,14 +30,15 @@ import './TopBanner.scss';
  */
 const TopBanner: FC<{}> = () => {
 	const [isHamburgerOpen, setHamburgerOpen] = useState(false);
+	const [hamburgerCloses, setHamburgerCloses] = useState(0);
 
 	useEffect(() => {
 		const forceOpen = () => setHamburgerOpen(true);
 		const foreClose = () => setHamburgerOpen(false);
 
 		// Add an event listener
-		document.addEventListener('burgernav:forceopen', forceOpen)
-		document.addEventListener('burgernav:forceclose', foreClose)
+		document.addEventListener('burgernav:forceopen', forceOpen);
+		document.addEventListener('burgernav:forceclose', foreClose);
 
 		//Finally, remember to unbind the event listener on unmount
 		return () => {
@@ -50,17 +53,27 @@ const TopBanner: FC<{}> = () => {
 		.filter(m => m?.name !== undefined && m.url !== '/') // get rid of hidden routes (no name) and the home route
 		.map((mapping, i) => <Link to={mapping.url} key={i} onClick={closeBurger} className='burger-link'>{mapping?.name}</Link>);
 
+	const getBurgerClass = () => {
+		if (isHamburgerOpen) {
+			return 'burger-nav-open';
+		} else if (hamburgerCloses === 0) {
+			return '';
+		}
+		return 'burger-nav-close';
+	}
+
 	return (
 		<>
 			<div className='top-banner'>
 				<div className='top-banner-elements'>
-					<AnimatedUnderline colors={{ from: '#e32626', to: '#e32626' }} className="logo-underliner">
-						<Link to='/' style={{ textDecoration: 'none', color: 'unset' }}>
+					<AnimatedUnderline colors={{ from: styles.popColor, to: styles.popColor }} className="logo-underliner">
+						<Link to="/" style={{ textDecoration: 'none', color: 'unset' }}>
 							<div className='logo-text'>{RESTAURANT_NAME}</div>
 						</Link>
 					</AnimatedUnderline>
 					<div className='other-info'>
 						<i className="fa-solid fa-angles-right"></i>
+						{ /* TODO - Add more options here, take into account that you'll have to use @media querries to fix for mobile :D */}
 					</div>
 					<div className='mobile-view'>
 						<div className='burger-wrapper'>
@@ -72,21 +85,23 @@ const TopBanner: FC<{}> = () => {
 									document.dispatchEvent(new Event('maincontent:focus'));
 								} else {
 									document.dispatchEvent(new Event('maincontent:loosefocus'));
+									setHamburgerCloses(hamburgerCloses + 1);
 								}
 							}} />
 						</div>
 					</div>
-
 				</div>
 			</div>
 			<div className='burger-nav-wrapper'>
-				<nav className={`hamburger-nav ${isHamburgerOpen ? 'burger-nav-open' : 'burger-nav-close'}`} style={!isHamburgerOpen ? { opacity: '0', zIndex: '-100' } : {}}>
+				<nav className={`hamburger-nav ${getBurgerClass()}`} style={!isHamburgerOpen ? { opacity: '0', zIndex: '-100' } : {}}>
 					<div className='burger-link-wrapper' style={{ textAlign: 'center' }}>
 						{burgerRoutes}
 					</div>
 					<div className='nav-home-link'>
 						<Link to="/" onClick={closeBurger}>
-							<img src={homepage} id='map-img' alt='nav' />
+							<svg id="map-img" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 113.97">
+								<path fill={styles.popColor} d={SVG_DATA} />
+							</svg>
 						</Link>
 					</div>
 				</nav>
