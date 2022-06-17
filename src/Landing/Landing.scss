@@ -1,0 +1,82 @@
+@use "../designs.scss";
+
+$padding: 1rem;
+
+.parralax-image-wrapper {
+	display: flex;
+	flex-direction: row;
+	/* overflow-y: scroll; */
+	overflow: hidden;
+	justify-content: center;
+	width: fit-content;
+	margin: auto;
+
+	/* width: 90vw; */
+
+}
+
+.main-landing-intro {
+	display: flex;
+	flex-direction: column;
+
+	padding: $padding * 2;
+	border: solid designs.pop-color() 10px;
+
+	& [data-discover-label],
+	& [data-business-name-label],
+	& [data-business-description-label] {
+		align-self: center;
+		text-align: center;
+	}
+
+	& [data-discover-label] {
+		font-family: 'Artsy';
+		font-size: 275%;
+	}
+
+	& [data-business-name-label] {
+		font-size: 800%;
+		font-family: 'Regal';
+		text-transform: uppercase;
+	}
+
+	& [data-business-description-label] {
+		margin-top: $padding;
+	}
+}
+
+@media only screen and (min-width: 2200px) {
+	.main-landing-intro {
+		font-size: 150%;
+	}	
+}
+
+@media only screen and (min-width: 2800px) {
+	.main-landing-intro {
+		font-size: 200%;
+	}	
+}
+
+@media only screen and (min-width: 3500px) {
+	.main-landing-intro {
+		font-size: 250%;
+	}	
+}
+
+///
+/// BIGGER SCREENS ABOVE ^^^
+///
+/// SMALLER SCREENS BELOW...
+/// 
+
+@media only screen and (max-width: 1050px) {
+	.main-landing-intro {
+		font-size: 75%;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.main-landing-intro {
+		font-size: 50%;
+	}
+}

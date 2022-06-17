@@ -1,37 +1,107 @@
-import React from 'react';
-import './Landing.css';
+import React, { CSSProperties, FC, useState } from 'react';
 import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
+import { RESTAURANT_NAME, RESTAURANT_DESCRIPTION } from '../RESTAURANT_CONFIG';
+import boba from './pictures/boba.jpeg';
+import './Landing.scss';
+
+interface ParallaxImageSplitProps {
+	fileName: string,
+	alt: string[] | string,
+}
+
+interface ParallaxImageSplitPropsWidth extends ParallaxImageSplitProps {
+	width?: string
+}
+
+interface ParallaxImageSplitPropsHeight extends ParallaxImageSplitProps {
+	height?: string
+}
+
+const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPropsHeight> = (props) => {
+	const [leftProduct, setLeftProduct] = useState('');
+	const [rightProduct, setRightProduct] = useState('');
+
+	let result: number[] = [0, 0];
+
+	var img = new Image();
+	img.src = props.fileName;
+
+	img.onload = function () {
+		result[0] = img.width;
+		result[1] = img.height;
+
+		function createCanvas(placement: 'l' | 'r') {
+			const canvas = document.createElement('canvas');
+
+			canvas.width = img.width / 2;
+			canvas.height = img.height;
+
+			const ctx = canvas.getContext('2d');
+			if (ctx === null) throw new Error();
+
+			ctx.setTransform(1, 0, 0, 1, 0, 0);
+			ctx.imageSmoothingQuality = 'high';
+
+			ctx.drawImage(
+				img,
+				placement === 'l' ? 0 : img.width / 2,
+				0,
+				img.width,
+				img.height,
+				0,
+				0,
+				img.width,
+				img.height,
+			);
+
+			// Converting to base64
+			const base64Image = canvas.toDataURL('image/jpeg');
+			(placement === 'l' ? setLeftProduct : setRightProduct)(base64Image);
+		}
+
+		createCanvas('l');
+		createCanvas('r');
+	};
+
+	const style: CSSProperties = {
+		maxWidth: ('width' in props && props?.width !== undefined) ? `calc(${props.width} / 2)` : 'unset',
+		maxHeight: ('height' in props && props?.height !== undefined) ? `calc(${props.height} / 2)` : 'unset'
+
+	}
+
+	return (
+		<ParallaxProvider>
+			<div className='parralax-image-wrapper'>
+				<Parallax speed={100}>
+					<img src={leftProduct} loading='lazy' alt={Array.isArray(props.alt) ? props.alt[0] : 'Left' + props.alt} style={style} />
+				</Parallax>
+				<Parallax speed={-100}>
+					<img src={rightProduct} loading='lazy' alt={Array.isArray(props.alt) ? props.alt[1] : 'Right' + props.alt} style={style} />
+				</Parallax>
+			</div>
+		</ParallaxProvider>
+	);
+
+}
 
 export default function Landing(): React.ReactElement {
+
 	return (
 		<div>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra maecenas accumsan lacus vel facilisis volutpat. Ornare arcu dui vivamus arcu felis. Proin nibh nisl condimentum id venenatis a condimentum vitae. Risus pretium quam vulputate dignissim suspendisse in est ante in. Aenean pharetra magna ac placerat vestibulum lectus mauris ultrices. Amet consectetur adipiscing elit ut aliquam purus. Diam quam nulla porttitor massa id neque aliquam. Non tellus orci ac auctor augue mauris augue neque gravida. Leo urna molestie at elementum. Tristique senectus et netus et malesuada fames ac. Eu sem integer vitae justo eget magna. Fames ac turpis egestas integer eget aliquet nibh.
+			<div className='main-landing-intro'>
+				<span data-discover-label>
+					Discover
+				</span>
+				<span data-business-name-label>
+					{RESTAURANT_NAME}
+				</span>
+				<span data-business-description-label>
+					{RESTAURANT_DESCRIPTION}
+				</span>
+			</div>
 
-Dolor purus non enim praesent elementum facilisis leo vel. Tortor id aliquet lectus proin nibh. Nascetur ridiculus mus mauris vitae. In arcu cursus euismod quis viverra nibh cras. Mi sit amet mauris commodo quis. Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Morbi tincidunt ornare massa eget. In dictum non consectetur a erat nam at. Sit amet nisl purus in. Eget felis eget nunc lobortis mattis aliquam faucibus purus in.
-
-Dapibus ultrices in iaculis nunc sed augue. Nam libero justo laoreet sit amet cursus sit amet dictum. Dolor sed viverra ipsum nunc aliquet bibendum enim facilisis gravida. Risus at ultrices mi tempus imperdiet. Mi in nulla posuere sollicitudin. Quam id leo in vitae turpis massa. Ornare suspendisse sed nisi lacus sed viverra tellus in hac. Tempor commodo ullamcorper a lacus vestibulum sed arcu non. Laoreet non curabitur gravida arcu ac tortor. Rutrum quisque non tellus orci ac auctor. Eu facilisis sed odio morbi quis commodo odio aenean. Ut diam quam nulla porttitor massa. Non odio euismod lacinia at quis risus sed vulputate odio. Augue eget arcu dictum varius duis at.
-
-Gravida dictum fusce ut placerat orci nulla pellentesque. Donec ac odio tempor orci dapibus ultrices in. Orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt. Tristique risus nec feugiat in fermentum posuere. Netus et malesuada fames ac turpis egestas sed tempus. Sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque eu. Amet risus nullam eget felis eget. In ante metus dictum at tempor commodo. Netus et malesuada fames ac turpis egestas maecenas. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper. Quis eleifend quam adipiscing vitae proin sagittis nisl. Luctus accumsan tortor posuere ac ut. Vitae et leo duis ut diam. Mauris pellentesque pulvinar pellentesque habitant morbi tristique.
-
-Duis at tellus at urna condimentum mattis pellentesque. Condimentum id venenatis a condimentum vitae sapien pellentesque habitant. Aliquam faucibus purus in massa tempor nec feugiat nisl. Eget nunc lobortis mattis aliquam faucibus purus in massa. Pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus et. Amet dictum sit amet justo donec enim diam vulputate ut. Eget mi proin sed libero enim. Adipiscing elit ut aliquam purus. Arcu vitae elementum curabitur vitae nunc sed velit dignissim. Proin sed libero enim sed faucibus turpis. Nulla facilisi nullam vehicula ipsum a arcu cursus. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus. Quam viverra orci sagittis eu volutpat odio facilisis. Risus nec feugiat in fermentum. Felis eget velit aliquet sagittis. Varius quam quisque id diam vel quam.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra maecenas accumsan lacus vel facilisis volutpat. Ornare arcu dui vivamus arcu felis. Proin nibh nisl condimentum id venenatis a condimentum vitae. Risus pretium quam vulputate dignissim suspendisse in est ante in. Aenean pharetra magna ac placerat vestibulum lectus mauris ultrices. Amet consectetur adipiscing elit ut aliquam purus. Diam quam nulla porttitor massa id neque aliquam. Non tellus orci ac auctor augue mauris augue neque gravida. Leo urna molestie at elementum. Tristique senectus et netus et malesuada fames ac. Eu sem integer vitae justo eget magna. Fames ac turpis egestas integer eget aliquet nibh.
-
-Dolor purus non enim praesent elementum facilisis leo vel. Tortor id aliquet lectus proin nibh. Nascetur ridiculus mus mauris vitae. In arcu cursus euismod quis viverra nibh cras. Mi sit amet mauris commodo quis. Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Morbi tincidunt ornare massa eget. In dictum non consectetur a erat nam at. Sit amet nisl purus in. Eget felis eget nunc lobortis mattis aliquam faucibus purus in.
-
-Dapibus ultrices in iaculis nunc sed augue. Nam libero justo laoreet sit amet cursus sit amet dictum. Dolor sed viverra ipsum nunc aliquet bibendum enim facilisis gravida. Risus at ultrices mi tempus imperdiet. Mi in nulla posuere sollicitudin. Quam id leo in vitae turpis massa. Ornare suspendisse sed nisi lacus sed viverra tellus in hac. Tempor commodo ullamcorper a lacus vestibulum sed arcu non. Laoreet non curabitur gravida arcu ac tortor. Rutrum quisque non tellus orci ac auctor. Eu facilisis sed odio morbi quis commodo odio aenean. Ut diam quam nulla porttitor massa. Non odio euismod lacinia at quis risus sed vulputate odio. Augue eget arcu dictum varius duis at.
-
-Gravida dictum fusce ut placerat orci nulla pellentesque. Donec ac odio tempor orci dapibus ultrices in. Orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt. Tristique risus nec feugiat in fermentum posuere. Netus et malesuada fames ac turpis egestas sed tempus. Sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque eu. Amet risus nullam eget felis eget. In ante metus dictum at tempor commodo. Netus et malesuada fames ac turpis egestas maecenas. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper. Quis eleifend quam adipiscing vitae proin sagittis nisl. Luctus accumsan tortor posuere ac ut. Vitae et leo duis ut diam. Mauris pellentesque pulvinar pellentesque habitant morbi tristique.
-
-Duis at tellus at urna condimentum mattis pellentesque. Condimentum id venenatis a condimentum vitae sapien pellentesque habitant. Aliquam faucibus purus in massa tempor nec feugiat nisl. Eget nunc lobortis mattis aliquam faucibus purus in massa. Pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus et. Amet dictum sit amet justo donec enim diam vulputate ut. Eget mi proin sed libero enim. Adipiscing elit ut aliquam purus. Arcu vitae elementum curabitur vitae nunc sed velit dignissim. Proin sed libero enim sed faucibus turpis. Nulla facilisi nullam vehicula ipsum a arcu cursus. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus. Quam viverra orci sagittis eu volutpat odio facilisis. Risus nec feugiat in fermentum. Felis eget velit aliquet sagittis. Varius quam quisque id diam vel quam.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra maecenas accumsan lacus vel facilisis volutpat. Ornare arcu dui vivamus arcu felis. Proin nibh nisl condimentum id venenatis a condimentum vitae. Risus pretium quam vulputate dignissim suspendisse in est ante in. Aenean pharetra magna ac placerat vestibulum lectus mauris ultrices. Amet consectetur adipiscing elit ut aliquam purus. Diam quam nulla porttitor massa id neque aliquam. Non tellus orci ac auctor augue mauris augue neque gravida. Leo urna molestie at elementum. Tristique senectus et netus et malesuada fames ac. Eu sem integer vitae justo eget magna. Fames ac turpis egestas integer eget aliquet nibh.
-
-Dolor purus non enim praesent elementum facilisis leo vel. Tortor id aliquet lectus proin nibh. Nascetur ridiculus mus mauris vitae. In arcu cursus euismod quis viverra nibh cras. Mi sit amet mauris commodo quis. Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Morbi tincidunt ornare massa eget. In dictum non consectetur a erat nam at. Sit amet nisl purus in. Eget felis eget nunc lobortis mattis aliquam faucibus purus in.
-
-Dapibus ultrices in iaculis nunc sed augue. Nam libero justo laoreet sit amet cursus sit amet dictum. Dolor sed viverra ipsum nunc aliquet bibendum enim facilisis gravida. Risus at ultrices mi tempus imperdiet. Mi in nulla posuere sollicitudin. Quam id leo in vitae turpis massa. Ornare suspendisse sed nisi lacus sed viverra tellus in hac. Tempor commodo ullamcorper a lacus vestibulum sed arcu non. Laoreet non curabitur gravida arcu ac tortor. Rutrum quisque non tellus orci ac auctor. Eu facilisis sed odio morbi quis commodo odio aenean. Ut diam quam nulla porttitor massa. Non odio euismod lacinia at quis risus sed vulputate odio. Augue eget arcu dictum varius duis at.
-
-Gravida dictum fusce ut placerat orci nulla pellentesque. Donec ac odio tempor orci dapibus ultrices in. Orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt. Tristique risus nec feugiat in fermentum posuere. Netus et malesuada fames ac turpis egestas sed tempus. Sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque eu. Amet risus nullam eget felis eget. In ante metus dictum at tempor commodo. Netus et malesuada fames ac turpis egestas maecenas. Quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper. Quis eleifend quam adipiscing vitae proin sagittis nisl. Luctus accumsan tortor posuere ac ut. Vitae et leo duis ut diam. Mauris pellentesque pulvinar pellentesque habitant morbi tristique.
-
-Duis at tellus at urna condimentum mattis pellentesque. Condimentum id venenatis a condimentum vitae sapien pellentesque habitant. Aliquam faucibus purus in massa tempor nec feugiat nisl. Eget nunc lobortis mattis aliquam faucibus purus in massa. Pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus et. Amet dictum sit amet justo donec enim diam vulputate ut. Eget mi proin sed libero enim. Adipiscing elit ut aliquam purus. Arcu vitae elementum curabitur vitae nunc sed velit dignissim. Proin sed libero enim sed faucibus turpis. Nulla facilisi nullam vehicula ipsum a arcu cursus. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus. Quam viverra orci sagittis eu volutpat odio facilisis. Risus nec feugiat in fermentum. Felis eget velit aliquet sagittis. Varius quam quisque id diam vel quam.
+			<ParallaxImageSplit fileName={boba} alt="Boba" width="40vw" />
+			Cool Shit :)
 		</div>
 	);
 }

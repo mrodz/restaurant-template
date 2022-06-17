@@ -199,6 +199,28 @@ $banner-height: 4rem;
 	}
 }
 
+@media only screen and (min-width: 1800px) {
+	.top-banner {
+		font-size: 150%;
+	}
+}
+
+@media only screen and (min-width: 2500px) {
+	.top-banner {
+		font-size: 200%;
+	}
+
+	div.routes-wrapper {
+		padding-top: $banner-height * 2;
+	}
+}
+
+///
+/// BIGGER SCREENS ABOVE ^^^
+///
+/// SMALLER SCREENS BELOW...
+/// 
+
 @media only screen and (max-width: 400px) {
 	.logo-underliner {
 		margin-left: $padding;

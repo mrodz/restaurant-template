@@ -4,6 +4,7 @@
 @use "../index.scss";
 
 $padding: 2rem;
+$switch-to-mobile-at: 500px;
 
 @mixin default-tilted-location-label {
 	writing-mode: vertical-rl;
@@ -208,7 +209,7 @@ $padding: 2rem;
 	}
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: $switch-to-mobile-at) {
 
 	.tilted-location-label,
 	.location-label {
