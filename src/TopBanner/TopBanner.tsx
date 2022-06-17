@@ -118,7 +118,7 @@ const TopBanner: FC<{}> = () => {
 					<div className='mobile-view'>
 						<div className='burger-wrapper'>
 							<Important className='burger-label'>
-								<span data-hide-on="500">EXPLORE</span>
+								<span data-hide-on="1000">EXPLORE</span>
 							</Important>
 							<Hamburger toggled={isHamburgerOpen} toggle={setHamburgerOpen} onToggle={() => {
 								if (!isHamburgerOpen) {

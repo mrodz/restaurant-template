@@ -12,22 +12,23 @@ const _assert: (arg0: boolean) => void = (bool: boolean) => {
 
 /**
  * Set the business' name here.
+ * Works out-of-the-box if set to a string shorter than or equal to 9 characters. 
  */
 export const RESTAURANT_NAME: string = 'The Spot';
 
 
 export const BANNER_TOP_DESC: React.ReactElement[] = [
 	(
-		<div data-hide-on="1000">
+		<div data-hide-on="600">
 			<i className="fa-solid fa-angles-right"></i> Cafe &amp; Lounge
 		</div>
 	),
 	(
 		<div>
-			<i className="fa-solid fa-angles-right" data-hide-on="750"></i>&nbsp;
+			<i className="fa-solid fa-angles-right" data-hide-on="850"></i>&nbsp;
 			<span data-hide-on="1100">Culver City</span>&nbsp;
-			<i className="fa-solid fa-phone" style={{ marginLeft: '1rem' }} data-hide-on="800"></i>&nbsp;
-			<span data-hide-on="750">{buildPhoneNumber(1, 310, 5598868)}</span>
+			<i className="fa-solid fa-phone" style={{ marginLeft: '1rem' }} data-hide-on="900"></i>&nbsp;
+			<span data-hide-on="850">{buildPhoneNumber(1, 310, 5598868)}</span>
 		</div>
 	)
 ];
@@ -35,7 +36,7 @@ export const BANNER_TOP_DESC: React.ReactElement[] = [
 /**
  * Whether to use the shorthand version of days or not. (ie. "Monday" turns into "Mon")
  */
-export const PREFER_SHORTENED_DAYS_OF_WEEK: boolean = true;
+export const PREFER_SHORTENED_DAYS_OF_WEEK: boolean = false;
 
 /**
  * If the business has ony main phone number they take all their calls with.

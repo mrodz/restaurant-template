@@ -84,8 +84,8 @@ function getRoutes(): React.ReactElement[] {
  * Root component.
  * 
  * Supplies these event listeners:
- * - 'burgernav:forceopen'
- * - 'burgernav:forceclose'
+ * - 'maincontent:focus'
+ * - 'maincontent:loosefocus'
  * 
  * These events do as their names suggest.
  * @returns JSX that will be inserted into the HTML at div#root.
