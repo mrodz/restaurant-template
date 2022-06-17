@@ -1,4 +1,7 @@
 @use "sass:map";
+@use "sass:list";
+@use "sass:math";
+
 
 $DESIGN-NUMBER: 1;
 
@@ -24,7 +27,7 @@ $FONTS: 'Artsy', 'Regal';
 
 @function pop-color() {
 	@if $DESIGN-NUMBER ==1 {
-		@return #000000;
+		@return #f2d968;
 	}
 
 	@else if $DESIGN-NUMBER ==2 {
@@ -104,6 +107,7 @@ $FONTS: 'Artsy', 'Regal';
 	}
 }
 
+// to use vars in JS/TS
 :export {
 	popColor: pop-color();
 	primaryColor: primary-color();
@@ -111,248 +115,23 @@ $FONTS: 'Artsy', 'Regal';
 
 // MEDIAS - see GemerateMediaQuerries.java
 
-@media only screen and (max-width: 4000px) {
-	[data-hide-on="4000"] {
-		display: none;
+
+@mixin generate-media-queries($range-top, $range-bottom, $account-for-every) {
+	$range-top: math.div($range-top, 1px);
+	$range-bottom: math.div($range-bottom, 1px);
+	$account-for-every: math.div($account-for-every, 1px);
+
+	$corrected: math.div($range-top, $account-for-every) math.div($range-bottom, $account-for-every);
+
+	@for $i from list.nth($corrected, 1) to list.nth($corrected, 2) {
+		$pixels: $i * $account-for-every;
+
+		@media only screen and (max-width: #{$pixels}px) {
+			[data-hide-on="#{$pixels}"] {
+				display: none !important; // this should override EVERYTHING
+			}
+		}
 	}
 }
 
-@media only screen and (max-width: 3900px) {
-	[data-hide-on="3900"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 3800px) {
-	[data-hide-on="3800"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 3700px) {
-	[data-hide-on="3700"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 3600px) {
-	[data-hide-on="3600"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 3500px) {
-	[data-hide-on="3500"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 3400px) {
-	[data-hide-on="3400"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 3300px) {
-	[data-hide-on="3300"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 3200px) {
-	[data-hide-on="3200"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 3100px) {
-	[data-hide-on="3100"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 3000px) {
-	[data-hide-on="3000"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 2900px) {
-	[data-hide-on="2900"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 2800px) {
-	[data-hide-on="2800"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 2700px) {
-	[data-hide-on="2700"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 2600px) {
-	[data-hide-on="2600"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 2500px) {
-	[data-hide-on="2500"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 2400px) {
-	[data-hide-on="2400"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 2300px) {
-	[data-hide-on="2300"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 2200px) {
-	[data-hide-on="2200"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 2100px) {
-	[data-hide-on="2100"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 2000px) {
-	[data-hide-on="2000"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 1900px) {
-	[data-hide-on="1900"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 1800px) {
-	[data-hide-on="1800"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 1700px) {
-	[data-hide-on="1700"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 1600px) {
-	[data-hide-on="1600"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 1500px) {
-	[data-hide-on="1500"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 1400px) {
-	[data-hide-on="1400"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 1300px) {
-	[data-hide-on="1300"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 1200px) {
-	[data-hide-on="1200"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 1100px) {
-	[data-hide-on="1100"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 1000px) {
-	[data-hide-on="1000"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 900px) {
-	[data-hide-on="900"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 800px) {
-	[data-hide-on="800"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 700px) {
-	[data-hide-on="700"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 600px) {
-	[data-hide-on="600"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 500px) {
-	[data-hide-on="500"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 400px) {
-	[data-hide-on="400"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 300px) {
-	[data-hide-on="300"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 200px) {
-	[data-hide-on="200"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 100px) {
-	[data-hide-on="100"] {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 0px) {
-	[data-hide-on="0"] {
-		display: none;
-	}
-}
+@include generate-media-queries(4000px, 0px, 50px);

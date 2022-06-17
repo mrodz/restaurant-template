@@ -1,13 +1,15 @@
 import React, { FC } from 'react';
 
 import {
-	LOCATIONS, 
-	Location as L, 
+	LOCATIONS,
+	Location as L,
 } from '../RESTAURANT_CONFIG';
 
 import './BottomBanner.scss';
 
 import Important from "../Important/Important";
+
+export const AT = <span data-mobile-label-hidden>@</span>;
 
 interface LocationProps {
 	location: L,
@@ -16,6 +18,10 @@ interface LocationProps {
 function arrayEquals(a: any[], b: any[]): boolean {
 	return Array.isArray(a) && Array.isArray(b) && a.length === b.length
 		&& a.every((val, index) => val === b[index]);
+}
+
+const PhoneCallable = (props: any) => {
+	return <a href={`tel:${props?.number}`} style={{ color: 'unset', fontSize: '120%' }}>{props?.children}</a>
 }
 
 const Location: FC<LocationProps> = (props) => {
@@ -29,12 +35,12 @@ const Location: FC<LocationProps> = (props) => {
 		hours = (
 			<>
 				<ul className='schedule-ul'>
-					<li>Opens</li>
-					<li>@ {opens[0]}</li>
+					<li data-mobile-label-hidden>Opens</li>
+					<li>{AT} {opens[0]}</li>
 				</ul>
 				<ul className='schedule-ul'>
-					<li>Closes</li>
-					<li>@ {closes[0]}</li>
+					<li data-mobile-label-hidden>Closes</li>
+					<li>{AT} {closes[0]}</li>
 				</ul>
 			</>
 		);
@@ -42,12 +48,12 @@ const Location: FC<LocationProps> = (props) => {
 		hours = (
 			<>
 				<ul className='schedule-ul'>
-					<li>Opens</li>
-					<li>@ {opens[0]} (Mon-Fri), {opens[5]} (Sat-Sun)</li>
+					<li data-mobile-label-hidden>Opens</li>
+					<li>{AT} {opens[0]} (Mon-Fri), {opens[5]} (Sat-Sun)</li>
 				</ul>
 				<ul className='schedule-ul'>
-					<li>Closes</li>
-					<li>@ {closes[0]} (Mon-Fri), {closes[5]} (Sat-Sun)</li>
+					<li data-mobile-label-hidden>Closes</li>
+					<li>{AT} {closes[0]} (Mon-Fri), {closes[5]} (Sat-Sun)</li>
 				</ul>
 			</>
 		)
@@ -61,23 +67,22 @@ const Location: FC<LocationProps> = (props) => {
 				<div className='bottom-banner-name'>
 					<Important weight={2}>
 						<span className='location-li'>
-							<i className='fa fa-map-icon'>
-							</i>
+							<i className="fa-solid fa-location-dot"></i>
 							{props.location.city}
 						</span>
 					</Important>
 				</div>
 				<ul>
 					<li>
-						Call Us: {props.location.phone}
+						<span data-mobile-label-hidden>Call Us:&nbsp;</span><PhoneCallable number={props.location.phone.replaceAll(/[-()]/g, '')}>{props.location.phone}</PhoneCallable>
 					</li>
 					<li>
-						Visit Us: {props.location.address}
+						<span data-mobile-label-hidden>Visit Us:&nbsp;</span>{props.location.address}
 					</li>
 				</ul>
 			</div>
 			<div className='bottom-banner-hours'>
-				<div>
+				<div data-mobile-label-hidden>
 					<Important>Hours:</Important>
 				</div>
 				<div>
@@ -92,19 +97,18 @@ export default function BottomBanner(): React.ReactElement {
 	const locations = LOCATIONS.map((l, i) => <Location location={l} key={i}></Location>)
 
 	return (
-		<div className='bottom-banner-wrapper-2'>
+		<footer className='bottom-banner-wrapper-2'>
 			<div className='bottom-banner-wrapper' data-length={LOCATIONS.length}>
-
 				<div className='bottom-banner'>
 					{locations}
 				</div>
-				<div className={`${LOCATIONS.length > 1 ? 'tilted-location-label' : 'location-label'}`} style={{ display: 'flex' }}>
-					<Important weight={LOCATIONS.length > 3 ? 6 : LOCATIONS.length > 2 ? 5 : 4}>{LOCATIONS.length === 1 ? <>Find Us In&hellip;</> : <>Locations</>}</Important>
+				<div className={`${LOCATIONS.length > 1 ? 'tilted-location-label' : 'location-label'}`}>
+					<Important weight={LOCATIONS.length > 3 ? 6 : LOCATIONS.length > 2 ? 5 : 4}>{LOCATIONS.length === 1 ? <>Find Us In<span data-mobile-label-hidden>&hellip;</span></> : <>Locations</>}</Important>
 				</div>
 			</div>
 			<div className='website-info'>
-				{}
+				{ }
 			</div>
-		</div>
+		</footer>
 	);
 }

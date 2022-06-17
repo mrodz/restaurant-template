@@ -17,15 +17,13 @@ $padding: 2rem;
 	padding-left: 0;
 }
 
-.fa-map-icon {
-	margin-right: 1rem;
-	&:before {
-		content: "\f041";
-	}
-}
-
 .tilted-location-label {
 	@include default-tilted-location-label;
+}
+
+.tilted-location-label,
+.location-label {
+	display: inline;
 }
 
 .location-wrapper {
@@ -40,6 +38,11 @@ $padding: 2rem;
 
 .location-li {
 	text-align: center;
+	color: designs.pop-color();
+
+	&>i.fa-solid {
+		margin-right: 1rem;
+	}
 }
 
 .bottom-banner-wrapper {
@@ -66,9 +69,9 @@ $padding: 2rem;
 
 		& .bottom-banner-name {
 			font-weight: bold;
-			// flex-grow: 1;
-			white-space: nowrap; // this is to ensure that the name of the business
-			// never cuts out.
+
+			// this is to ensure that the name of the business never cuts out.
+			white-space: nowrap;
 		}
 
 		& ul {
@@ -107,7 +110,7 @@ $padding: 2rem;
 	font-size: 12pt;
 	background-color: designs.primary-color();
 	color: designs.accented-font-color();
-	
+
 	display: flex;
 	flex-direction: column;
 }
@@ -159,14 +162,14 @@ $padding: 2rem;
 }
 
 @media only screen and (max-width: 930px) {
-	.bottom-banner-wrapper {
-		font-size: .65rem;
-	}
+	// .bottom-banner-wrapper {
+	// font-size: .65rem;
+	// }
 }
 
-@media only screen and (max-width: 890px) {
+@media only screen and (max-width: 930px) {
 	.bottom-banner-wrapper {
-		font-size: .65rem;
+		font-size: .7rem;
 		flex-direction: column-reverse;
 	}
 
@@ -180,31 +183,13 @@ $padding: 2rem;
 	}
 }
 
-@media only screen and (max-width: 620px) {
-	.bottom-banner-wrapper {
-		font-size: .5rem;
-	}
-}
-
-
-@media only screen and (max-width: 500px) {
-	.bottom-banner-wrapper {
-		font-size: .6rem;
-
-		.tilted-location-label,
-		.location-label {
-			font-size: .6rem;
-		}
-	}
-
-	span.location-li::before {
-		content: '';
-	}
-
+@media only screen and (max-width: 630px) {
 	.location-wrapper {
 		grid-template-columns: 1fr 1fr;
 
 		& .bottom-banner-location {
+			padding-right: math.div($padding, 2);
+
 			flex-direction: column;
 			align-items: unset;
 
@@ -216,34 +201,47 @@ $padding: 2rem;
 				margin-left: 0;
 			}
 		}
-	}
-}
 
-
-@media only screen and (max-width: 450px) {
-	.bottom-banner-wrapper {
-		font-size: .4rem;
-	}
-}
-
-@media only screen and (max-width: 400px) {
-	.bottom-banner-wrapper {
-		font-size: .3rem;
-	}
-
-	.location-wrapper {
-		.bottom-banner-location {
-			padding-right: math.div($padding, 2);
-		}
-
-		.bottom-banner-hours {
+		& .bottom-banner-hours {
 			padding-left: math.div($padding, 2);
 		}
 	}
 }
 
-@media only screen and (max-width: 320px) {
-	.bottom-banner-wrapper {
-		padding: math.div($padding, 2);
+@media only screen and (max-width: 500px) {
+
+	.tilted-location-label,
+	.location-label {
+		display: inline;
+		text-align: center;
+		font-size: 150%;
+	}
+
+	.location-wrapper {
+		display: flex;
+		flex-direction: column;
+		grid-template-columns: none;
+		text-align: center;
+		width: unset;
+	}
+
+	.location-wrapper .bottom-banner-location {
+		padding-right: 0;
+	}
+
+	[data-mobile-label-hidden] {
+		display: none;
+	}
+
+	.bottom-banner .bottom-banner-location {
+		border: none;
+	}
+
+	.location-wrapper>div.bottom-banner-hours {
+		padding-left: 0;
+	}
+
+	ul.schedule-ul {
+		display: inline
 	}
 }

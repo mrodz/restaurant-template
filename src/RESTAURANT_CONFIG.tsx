@@ -1,5 +1,7 @@
 import React from "react";
 
+import { AT } from "./BottomBanner/BottomBanner";
+
 /**
  * Standard assertion function.
  * @param bool a condition.
@@ -15,8 +17,19 @@ export const RESTAURANT_NAME: string = 'The Spot';
 
 
 export const BANNER_TOP_DESC: React.ReactElement[] = [
-	<div data-hide-on="1000"><i className="fa-solid fa-angles-right"></i> Cafe &amp; Lounge</div>,
-	<div><i className="fa-solid fa-angles-right" data-hide-on="800"></i> <span data-hide-on="1100">Culver City</span> <i className="fa-solid fa-phone" style={{ marginLeft: '.2rem' }} data-hide-on="800"></i> <span data-hide-on="800">{buildPhoneNumber(1, 310, 5598868)}</span></div>,
+	(
+		<div data-hide-on="1000">
+			<i className="fa-solid fa-angles-right"></i> Cafe &amp; Lounge
+		</div>
+	),
+	(
+		<div>
+			<i className="fa-solid fa-angles-right" data-hide-on="750"></i>&nbsp;
+			<span data-hide-on="1100">Culver City</span>&nbsp;
+			<i className="fa-solid fa-phone" style={{ marginLeft: '1rem' }} data-hide-on="800"></i>&nbsp;
+			<span data-hide-on="750">{buildPhoneNumber(1, 310, 5598868)}</span>
+		</div>
+	)
 ];
 
 /**
@@ -289,17 +302,17 @@ export const LOCATIONS: Location[] = [
 			return (
 				<>
 					<ul className='schedule-ul'>
-						<li>Opens</li>
-						<li>@ {monday.opens} (Mon-Fri), {saturday.opens} (Sat-Sun)</li>
+						<li data-mobile-label-hidden>Opens</li>
+						<li>{AT} {monday.opens} (Mon-Fri), {saturday.opens} (Sat-Sun)</li>
 					</ul>
 					<ul className='schedule-ul'>
-						<li>Closes</li>
-						<li>@ {monday.closes} (Mon-Fri), {saturday.closes} (Sat), {sunday.closes} (Sun)</li>
+						<li data-mobile-label-hidden>Closes</li>
+						<li>{AT} {monday.closes} (Mon-Fri), {saturday.closes} (Sat), {sunday.closes} (Sun)</li>
 					</ul>
 				</>
 			);
 		},
 		address: '4455 Overland Ave, Culver City, CA',
 		phone: buildPhoneNumber(1, 310, 5598868)
-	}
+	},
 ]

@@ -54,7 +54,11 @@ const TopBanner: FC<{}> = () => {
 		}
 	}, [/* run ONLY on component mount/unmount */]);
 
-	const closeBurger = () => { setHamburgerOpen(false); document.dispatchEvent(new Event('maincontent:loosefocus')) };
+	const closeBurger = () => {
+		setHamburgerOpen(false); 
+		document.dispatchEvent(new Event('maincontent:loosefocus'));
+
+	};
 
 	const burgerRoutes = ROUTE_MAPPINGS
 		.filter(m => m?.name !== undefined && m.url !== '/') // get rid of hidden routes (no name) and the home route
@@ -77,7 +81,7 @@ const TopBanner: FC<{}> = () => {
 	 */
 	const Nav: FC<{}> = () => {
 		return (
-			<div className='burger-nav-wrapper'>
+			<div className='burger-nav-wrapper' style={{ pointerEvents: !isHamburgerOpen ? 'none' : 'all' }}>
 				<nav className={`hamburger-nav ${getBurgerClass()}`} style={!isHamburgerOpen ? { opacity: '0', zIndex: '-100' } : {}}>
 					<div className='burger-link-wrapper' style={{ textAlign: 'center' }}>
 						{burgerRoutes}
@@ -97,7 +101,7 @@ const TopBanner: FC<{}> = () => {
 
 	return (
 		<>
-			<div className='top-banner'>
+			<header className='top-banner'>
 				<div className='top-banner-elements'>
 					<AnimatedUnderline colors={{ from: styles.popColor, to: styles.popColor }} className="logo-underliner">
 						<Link to="/" style={{ textDecoration: 'none', color: 'unset' }}>
@@ -127,7 +131,7 @@ const TopBanner: FC<{}> = () => {
 						</div>
 					</div>
 				</div>
-			</div>
+			</header>
 			<Nav/>
 		</>
 	);
