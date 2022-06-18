@@ -1,4 +1,4 @@
-import {
+import React, {
 	FC,
 	useState,
 	useEffect
@@ -35,7 +35,7 @@ const SVG_DATA: string = "M18.69,73.37,59.18,32.86c2.14-2.14,2.41-2.23,4.63,0l40
  * 
  * @returns JSX
  */
-const TopBanner: FC<{}> = () => {
+const TopBanner: FC<{}> = React.memo(() => {
 	const [isHamburgerOpen, setHamburgerOpen] = useState(false);
 	const [hamburgerCloses, setHamburgerCloses] = useState(0);
 
@@ -135,6 +135,6 @@ const TopBanner: FC<{}> = () => {
 			<Nav/>
 		</>
 	);
-}
+});
 
 export default TopBanner;

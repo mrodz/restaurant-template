@@ -40,7 +40,7 @@ export const PhoneCallable = (props: any) => {
 	);
 }
 
-const Location: FC<LocationProps> = (props) => {
+const Location: FC<LocationProps> = React.memo((props) => {
 	const opens = props.location.hours.map(a => a.opens);
 	const closes = props.location.hours.map(a => a.closes);
 
@@ -107,9 +107,9 @@ const Location: FC<LocationProps> = (props) => {
 			</div>
 		</div>
 	);
-}
+});
 
-export default function BottomBanner(): React.ReactElement {
+const BottomBanner: FC<{}> = React.memo(() => {
 	const locations = LOCATIONS.map((l, i) => <Location location={l} key={i}></Location>)
 
 	return (
@@ -128,4 +128,6 @@ export default function BottomBanner(): React.ReactElement {
 			</div> */}
 		</footer>
 	);
-}
+});
+
+export default BottomBanner;

@@ -1,4 +1,4 @@
-import { useState, FC, CSSProperties } from 'react';
+import React, { useState, FC, CSSProperties } from 'react';
 import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
 import './ParallaxImageSplit.scss';
 
@@ -40,7 +40,7 @@ interface ParallaxImageSplitProps {
 		 */
 		leading: number,
 		/**
-		 * The converse to leading.
+		 * The opposite of leading.
 		 * Defaults to -100
 		 */
 		lagging: number
@@ -64,13 +64,13 @@ interface ParallaxImageSplitPropsHeight extends ParallaxImageSplitProps {
 /**
  * Component that accepts an image, splits it in half, and applies the 
  * parallax effect to each part. The final effect is one image whose halves,
- * when scrolled, slide apart from eachother rather aesthetically.
+ * when scrolled, slide apart from each other rather aesthetically.
  * 
  * @author Mateo
  * @param props {@link ParallaxImageSplitProps} plus either a width or height (not both!)
  * @returns JSX.
  */
-const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPropsHeight> = (props) => {
+const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPropsHeight> = React.memo((props) => {
 	const [leftProduct, setLeftProduct] = useState('');
 	const [rightProduct, setRightProduct] = useState('');
 
@@ -134,6 +134,6 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 			</div>
 		</ParallaxProvider>
 	);
-}
+});
 
 export default ParallaxImageSplit;
