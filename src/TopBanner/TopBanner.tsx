@@ -83,9 +83,9 @@ const TopBanner: FC<{}> = () => {
 		return (
 			<div className='burger-nav-wrapper' style={{ pointerEvents: !isHamburgerOpen ? 'none' : 'all' }}>
 				<nav className={`hamburger-nav ${getBurgerClass()}`} style={!isHamburgerOpen ? { opacity: '0', zIndex: '-100' } : {}}>
-					<div className='burger-link-wrapper' style={{ textAlign: 'center' }}>
+					<nav className='burger-link-wrapper' style={{ textAlign: 'center' }}>
 						{burgerRoutes}
-					</div>
+					</nav>
 					<div className='nav-home-link'>
 						<Link to="/" onClick={closeBurger}>
 							<svg id="map-img" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 113.97">

@@ -2,17 +2,25 @@
 
 $padding: 1rem;
 
-.parralax-image-wrapper {
-	display: flex;
-	flex-direction: row;
-	/* overflow-y: scroll; */
-	overflow: hidden;
-	justify-content: center;
-	width: fit-content;
-	margin: auto;
+#second>.first-description {
+	text-align: right;
+}
 
-	/* width: 90vw; */
+.business-blurbs {
+	&>div {
+		display: flex;
+		flex-direction: row;
 
+		& .first-description {
+			flex-grow: 1;
+			// min-width: 50%;
+		}
+
+	}
+
+	&>:not(:last-child) {
+		padding-bottom: $padding * 8;
+	}
 }
 
 .main-landing-intro {
@@ -20,6 +28,13 @@ $padding: 1rem;
 	flex-direction: column;
 
 	padding: $padding * 2;
+
+	margin: {
+		left: $padding * 4;
+		right: $padding * 4;
+		bottom: $padding * 6;
+	}
+
 	border: solid designs.pop-color() 10px;
 
 	& [data-discover-label],
@@ -48,19 +63,19 @@ $padding: 1rem;
 @media only screen and (min-width: 2200px) {
 	.main-landing-intro {
 		font-size: 150%;
-	}	
+	}
 }
 
 @media only screen and (min-width: 2800px) {
 	.main-landing-intro {
 		font-size: 200%;
-	}	
+	}
 }
 
 @media only screen and (min-width: 3500px) {
 	.main-landing-intro {
 		font-size: 250%;
-	}	
+	}
 }
 
 ///

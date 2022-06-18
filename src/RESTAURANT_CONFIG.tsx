@@ -1,6 +1,7 @@
 import React from "react";
 
 import { AT } from "./BottomBanner/BottomBanner";
+import { PhoneCallable } from './BottomBanner/BottomBanner';
 
 /**
  * Standard assertion function.
@@ -17,6 +18,11 @@ const _assert: (arg0: boolean) => void = (bool: boolean) => {
 export const RESTAURANT_NAME: string = 'The Spot';
 export const RESTAURANT_DESCRIPTION: string = 'Locally Owned Cafe and Lounge'
 
+/**
+ * If the business has ony main phone number they take all their calls with.
+ */
+export const HAS_MAIN_PHONE: [boolean, string] = [true, buildPhoneNumber(1, 310, 5598868)]
+
 export const BANNER_TOP_DESC: React.ReactElement[] = [
 	(
 		<div data-hide-on="600">
@@ -25,10 +31,15 @@ export const BANNER_TOP_DESC: React.ReactElement[] = [
 	),
 	(
 		<div>
-			<i className="fa-solid fa-angles-right" data-hide-on="850"></i>&nbsp;
-			<span data-hide-on="1100">Culver City</span>&nbsp;
-			<i className="fa-solid fa-phone" style={{ marginLeft: '1rem' }} data-hide-on="900"></i>&nbsp;
-			<span data-hide-on="850">{buildPhoneNumber(1, 310, 5598868)}</span>
+			<i className="fa-solid fa-angles-right" data-hide-on="850"></i>
+			<span data-hide-on="1100">&nbsp;Culver City&nbsp;</span>
+			<PhoneCallable number={HAS_MAIN_PHONE[1]} data-hide-on="850">
+				<span data-hide-on="900">
+					<i className="fa-solid fa-phone" style={{ marginLeft: '1rem' }}></i>
+					&nbsp;
+				</span>
+				<span data-hide-on="850">{HAS_MAIN_PHONE[1]}</span>
+			</PhoneCallable>
 		</div>
 	)
 ];
@@ -37,11 +48,6 @@ export const BANNER_TOP_DESC: React.ReactElement[] = [
  * Whether to use the shorthand version of days or not. (ie. "Monday" turns into "Mon")
  */
 export const PREFER_SHORTENED_DAYS_OF_WEEK: boolean = false;
-
-/**
- * If the business has ony main phone number they take all their calls with.
- */
-export const HAS_MAIN_PHONE: [boolean, string] = [false, '']
 
 /**
  * Build a phone number to this website's standards.

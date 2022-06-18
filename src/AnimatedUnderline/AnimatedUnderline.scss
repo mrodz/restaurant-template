@@ -1,9 +1,16 @@
 .fancy-underline {
     background-size: 0% 4px;
     background-repeat: no-repeat;
-    background-position: 100% 80%;
     transition: background-size 300ms ease;
     height: 100%;
+
+    &[data-direction="ltr"] {
+        background-position: left 90%;
+    }
+
+    &[data-direction="rtl"] {
+        background-position: right 90%;
+    }
 }
 
 .fancy-underline:hover {

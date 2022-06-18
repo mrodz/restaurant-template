@@ -20,8 +20,24 @@ function arrayEquals(a: any[], b: any[]): boolean {
 		&& a.every((val, index) => val === b[index]);
 }
 
-const PhoneCallable = (props: any) => {
-	return <a href={`tel:${props?.number}`} style={{ color: 'unset', fontSize: '120%' }}>{props?.children}</a>
+export const PhoneCallable = (props: any) => {
+	const styles = {
+		custom: {
+			color: 'unset', 
+			fontSize: '120%'
+		},
+		none: {
+			color: 'unset', 
+			textDecoration: 'none'
+		}
+	}
+
+	return (
+		<a href={`tel:${props?.number}`}
+			{...props?.style ?? false ? { style: styles.custom } : { style: styles.none }}>
+			{props?.children}
+		</a>
+	);
 }
 
 const Location: FC<LocationProps> = (props) => {
@@ -74,7 +90,7 @@ const Location: FC<LocationProps> = (props) => {
 				</div>
 				<ul>
 					<li>
-						<span data-mobile-label-hidden>Call Us:&nbsp;</span><PhoneCallable number={props.location.phone.replaceAll(/[-()]/g, '')}>{props.location.phone}</PhoneCallable>
+						<span data-mobile-label-hidden>Call Us:&nbsp;</span><PhoneCallable number={props.location.phone.replaceAll(/[-()]/g, '')} style={true}>{props.location.phone}</PhoneCallable>
 					</li>
 					<li>
 						<span data-mobile-label-hidden>Visit Us:&nbsp;</span>{props.location.address}
@@ -106,9 +122,10 @@ export default function BottomBanner(): React.ReactElement {
 					<Important weight={LOCATIONS.length > 3 ? 6 : LOCATIONS.length > 2 ? 5 : 4}>{LOCATIONS.length === 1 ? <>Find Us In<span data-mobile-label-hidden>&hellip;</span></> : <>Locations</>}</Important>
 				</div>
 			</div>
-			<div className='website-info'>
-				{ }
-			</div>
+			{/* <div className='website-info'>
+			TODO - Add tag here :D
+				Template Design by Mateo Rodriguez (<a href="https://github.com/mrodz" target="_blank" rel="noopener noreferrer">@mrodz</a>)
+			</div> */}
 		</footer>
 	);
 }

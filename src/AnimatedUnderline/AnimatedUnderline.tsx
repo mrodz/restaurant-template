@@ -1,5 +1,5 @@
 import { CSSProperties, FC } from 'react';
-import './AnimatedUnderline.css';
+import './AnimatedUnderline.scss';
 
 /**
  * Props for {@link AnimatedUnderline}
@@ -17,8 +17,8 @@ interface AnimatedUnderlineProps {
      */
     children: React.ReactNode,
     style?: React.CSSProperties,
-    className?: string
-    
+    className?: string,
+    direction?: 'rtl' | 'ltr'   
 }
 
 /**
@@ -41,9 +41,8 @@ const AnimatedUnderline: FC<AnimatedUnderlineProps> = (props) => {
     })();
 
     return (
-        <div style={style} className={'fancy-underline ' + (props?.className ?? '')}>
+        <div style={style} className={'fancy-underline ' + (props?.className ?? '')} data-direction={props?.direction ?? 'ltr'}>
             {props.children}
-            
         </div>
     );
 }
