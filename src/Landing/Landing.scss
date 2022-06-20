@@ -33,6 +33,13 @@ $padding: 1rem;
 	}
 }
 
+.landing-side-margins {
+	margin: {
+		left: $padding * 4;
+		right: $padding * 4;
+	};
+}
+
 .main-landing-intro {
 	display: flex;
 	flex-direction: column;
@@ -40,8 +47,6 @@ $padding: 1rem;
 	padding: $padding * 2;
 
 	margin: {
-		left: $padding * 4;
-		right: $padding * 4;
 		bottom: $padding * 6;
 	}
 
@@ -72,8 +77,6 @@ $padding: 1rem;
 
 .business-mission-statement {
 	margin: {
-		left: $padding * 4;
-		right: $padding * 4;
 		bottom: $padding * 6;
 		top: $padding * 6;
 	}
@@ -153,6 +156,11 @@ div.review-card-review:hover {
 	}
 }
 
+.landing-more-info {
+	padding: $padding * 2;
+	margin-bottom: 4rem;
+    margin-top: 4rem;
+}
 
 @mixin fade-to($property, $color, $name) {
 	@keyframes #{$name} {

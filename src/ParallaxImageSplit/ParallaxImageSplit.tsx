@@ -117,8 +117,8 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 	};
 
 	const style: CSSProperties = {
-		maxWidth: ('width' in props && props?.width !== undefined) ? props.width : 'unset',
-		maxHeight: ('height' in props && props?.height !== undefined) ? props.height : 'unset'
+		maxWidth: ('width' in props && props?.width !== undefined) ? `calc(${props.width} / 2)` : 'unset',
+		maxHeight: ('height' in props && props?.height !== undefined) ? `calc(${props.height} / 2)` : 'unset'
 	}
 
 	const leading = (props?.leading ?? 'L') === 'L';
@@ -129,13 +129,15 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 
 	return (
 		<ParallaxProvider>
-			<div className='parallax-image-wrapper' data-parallax-image-split>
-				<Parallax speed={leading ? speeds.leading : speeds.lagging}>
-					<img data-fade-first className='parallax-image' src={leftProduct} loading='lazy' alt={Array.isArray(props.alt) ? props.alt[0] : 'Left' + props.alt} style={style} />
-				</Parallax>
-				<Parallax speed={!(leading) ? speeds.leading : speeds.lagging}>
-					<img data-fade-second className='parallax-image' src={rightProduct} loading='lazy' alt={Array.isArray(props.alt) ? props.alt[1] : 'Right' + props.alt} style={style} />
-				</Parallax>
+			<div className='parallax-image-wrapper-1' style={'width' in props ? {minWidth: props.width} : 'height' in props ? {minHeight: props.height} : {}}>
+				<div className='parallax-image-wrapper' data-parallax-image-split>
+					<Parallax speed={leading ? speeds.leading : speeds.lagging}>
+						<img data-fade-first className='parallax-image' src={leftProduct} loading='lazy' alt={Array.isArray(props.alt) ? props.alt[0] : 'Left' + props.alt} style={style} />
+					</Parallax>
+					<Parallax speed={!(leading) ? speeds.leading : speeds.lagging}>
+						<img data-fade-second className='parallax-image' src={rightProduct} loading='lazy' alt={Array.isArray(props.alt) ? props.alt[1] : 'Right' + props.alt} style={style} />
+					</Parallax>
+				</div>
 			</div>
 		</ParallaxProvider>
 	);

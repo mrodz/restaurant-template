@@ -1,0 +1,19 @@
+.fade-in-section {
+	visibility: hidden;
+	will-change: opacity, visibility;
+}
+
+.fade-in-section.is-visible {
+	/* background-color: red; */
+	visibility: visible;
+	animation: fade-in-section-fade 2s forwards;
+}
+
+@keyframes fade-in-section-fade {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
