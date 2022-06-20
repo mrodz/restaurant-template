@@ -18,7 +18,7 @@ interface AnimatedUnderlineProps {
     children: React.ReactNode,
     style?: React.CSSProperties,
     className?: string,
-    direction?: 'rtl' | 'ltr'   
+    direction?: 'rtl' | 'ltr'
 }
 
 /**
@@ -35,7 +35,8 @@ const AnimatedUnderline: FC<AnimatedUnderlineProps> = (props) => {
 
     // Add the underline effect to the inline style.
     const style: CSSProperties = (() => {
-       let x: CSSProperties = props?.style ?? {};
+        // if component is padded custom styles, include these.
+        let x: CSSProperties = props?.style ?? {};
         x.backgroundImage = `linear-gradient(90deg, ${colorFrom}, ${colorTo})`;
         return x;
     })();

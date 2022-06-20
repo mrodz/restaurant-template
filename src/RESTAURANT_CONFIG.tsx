@@ -221,7 +221,7 @@ class OpensBuilder {
 			});
 			return this._oldDaysOfWeekBuilder;
 		} else {
-			throw Error('set both an opening and closing time first.');
+			throw new Error('set both an opening and closing time first.');
 		}
 	}
 }
@@ -298,6 +298,9 @@ function findHoursFromDay(day: day, ...hours: Hours[]): OperatingHours | undefin
 	return undefined;
 }
 
+/**
+ * Global list of {@link Location Locations}.
+ */
 export const LOCATIONS: Location[] = [
 	{
 		city: 'Culver City',

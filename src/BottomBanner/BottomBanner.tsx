@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { CSSProperties, FC } from 'react';
 
 import {
 	LOCATIONS,
@@ -15,26 +15,45 @@ interface LocationProps {
 	location: L,
 }
 
+/**
+ * @param a array1
+ * @param b array2
+ * @returns whether the arrays are equal to eachother (by length and elements)
+ */
 function arrayEquals(a: any[], b: any[]): boolean {
 	return Array.isArray(a) && Array.isArray(b) && a.length === b.length
 		&& a.every((val, index) => val === b[index]);
 }
 
-export const PhoneCallable = (props: any) => {
+interface PhoneCallableProps {
+	styled?: boolean,
+	children: React.ReactNode
+	number: string
+}
+
+/**
+ * Anchor element that uses the "tel:" protocol to call a number.
+ * @param props element properties.
+ * @returns JSX
+ */
+export const PhoneCallable = (props: PhoneCallableProps): JSX.Element => {
 	const styles = {
+		// Hard-coded style.
 		custom: {
-			color: 'unset', 
+			color: 'unset',
 			fontSize: '120%'
 		},
+		// get rid of basic <a> stylings.
 		none: {
-			color: 'unset', 
+			color: 'unset',
 			textDecoration: 'none'
 		}
 	}
 
+	const appliedStyles: CSSProperties = (props?.styled ?? false) ? styles.custom : styles.none;
+
 	return (
-		<a href={`tel:${props?.number}`}
-			{...props?.styled ?? false ? { style: styles.custom } : { style: styles.none }}>
+		<a href={`tel:${props.number}`} style={appliedStyles}>
 			{props?.children}
 		</a>
 	);
@@ -47,7 +66,10 @@ const Location: FC<LocationProps> = React.memo((props) => {
 	const areHoursConsistent = arrayEquals(opens, closes);
 
 	let hours: React.ReactElement;
-	if (areHoursConsistent) {
+
+	if (props.location.specialHoursJSX) {
+		hours = (props.location?.hoursJSX ?? <div></div> as React.ReactElement);
+	} if (areHoursConsistent) {
 		hours = (
 			<>
 				<ul className='schedule-ul'>
@@ -60,7 +82,7 @@ const Location: FC<LocationProps> = React.memo((props) => {
 				</ul>
 			</>
 		);
-	} else if (!props.location.specialHoursJSX) {
+	} else {
 		hours = (
 			<>
 				<ul className='schedule-ul'>
@@ -72,9 +94,7 @@ const Location: FC<LocationProps> = React.memo((props) => {
 					<li>{AT} {closes[0]} (Mon-Fri), {closes[5]} (Sat-Sun)</li>
 				</ul>
 			</>
-		)
-	} else {
-		hours = (props.location?.hoursJSX ?? <div></div> as React.ReactElement);
+		);
 	}
 
 	return (
@@ -90,10 +110,18 @@ const Location: FC<LocationProps> = React.memo((props) => {
 				</div>
 				<ul>
 					<li>
-						<span data-mobile-label-hidden>Call Us:&nbsp;</span><PhoneCallable number={props.location.phone.replaceAll(/[-()]/g, '')} styled={true}>{props.location.phone}</PhoneCallable>
+						<span data-mobile-label-hidden>
+							Call Us:&nbsp;
+						</span>
+						<PhoneCallable number={props.location.phone.replaceAll(/[-()]/g, '')} styled={true}>
+							{props.location.phone}
+						</PhoneCallable>
 					</li>
 					<li>
-						<span data-mobile-label-hidden>Visit Us:&nbsp;</span>{props.location.address}
+						<span data-mobile-label-hidden>
+							Visit Us:&nbsp;
+						</span>
+						{props.location.address}
 					</li>
 				</ul>
 			</div>
@@ -119,13 +147,16 @@ const BottomBanner: FC<{}> = React.memo(() => {
 					{locations}
 				</div>
 				<div className={`${LOCATIONS.length > 1 ? 'tilted-location-label' : 'location-label'}`}>
-					<Important weight={LOCATIONS.length > 3 ? 6 : LOCATIONS.length > 2 ? 5 : 4}>{LOCATIONS.length === 1 ? <>Find Us In<span data-mobile-label-hidden>&hellip;</span></> : <>Locations</>}</Important>
+					<Important weight={LOCATIONS.length > 3 ? 6 : LOCATIONS.length > 2 ? 5 : 4}>
+						{LOCATIONS.length === 1 ? <>
+							Find Us In
+							<span data-mobile-label-hidden>&hellip;</span>
+						</> : <>
+							Locations
+						</>}
+					</Important>
 				</div>
 			</div>
-			{/* <div className='website-info'>
-			TODO - Add tag here :D
-				Template Design by Mateo Rodriguez (<a href="https://github.com/mrodz" target="_blank" rel="noopener noreferrer">@mrodz</a>)
-			</div> */}
 		</footer>
 	);
 });

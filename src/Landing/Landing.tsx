@@ -8,8 +8,6 @@ import {
 	Rating,
 	Zoom,
 	Divider,
-	/*Snackbar, 
-	Alert,*/
 	styled
 } from '@mui/material';
 import styles from '../designs.scss';
@@ -26,6 +24,7 @@ interface ReviewCardProps {
 const LandingTooltip = styled(({ className, ...props }: TooltipProps) => (
 	<Tooltip {...props} classes={{ popper: className }} />
 ))(() => ({
+	// set the color of the tooltip
 	[`& .${tooltipClasses.arrow}::before, & .${tooltipClasses.tooltip}`]: {
 		backgroundColor: '#E3DCD5',
 		color: styles.fontColor,
@@ -34,29 +33,15 @@ const LandingTooltip = styled(({ className, ...props }: TooltipProps) => (
 }));
 
 const ReviewCard: FC<{ review: ReviewCardProps }> = (props) => {
-	/*const [open, setOpen] = React.useState(false);
-	const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-		if (reason === 'clickaway') {
-			return;
-		}
-
-		setOpen(false);
-	};*/
-
 	return (
 		<div className="review-card">
-			{/*<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-				<Alert onClose={handleClose} severity="info" sx={{ width: '100%' }}>
-					View {props.review.reviewer.split(/\s+/)[0]}'s Review
-				</Alert>
-			</Snackbar>*/}
 			<LandingTooltip title={`View ${props.review.reviewer.length > 0 ? props.review.reviewer.split(/\s/)[0] + '\'s ' : ''}Review`}
 				placement='top'
 				arrow
 				TransitionComponent={Zoom}
 				TransitionProps={{ timeout: 250 }}
 			>
-				<a href={props.review.url} target="_blank" rel="noopener noreferrer" /*onMouseEnter={() => setOpen(true)}*/>
+				<a href={props.review.url} target="_blank" rel="noopener noreferrer">
 					<div className="review-card-review">
 						<Rating name="read-only" value={props.review.rating} readOnly />
 					</div>
@@ -99,14 +84,17 @@ export default function Landing(): React.ReactElement {
 			<section className='business-blurbs'>
 				<div id="first">
 					<div className='first-description'>
-						{/* <FadeInSection> */}
-							<h1>
-								Community
-							</h1>
-							<section>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-							</section>
-						{/* </FadeInSection> */}
+						<h1>
+							Community
+						</h1>
+						<section>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+							incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+							nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+							Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+							fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+							culpa qui officia deserunt mollit anim id est laborum.
+						</section>
 					</div>
 					<ParallaxImageSplit fileName={boba} alt="Boba" width="36rem" leading="L" />
 				</div>
@@ -115,28 +103,33 @@ export default function Landing(): React.ReactElement {
 					<ParallaxImageSplit fileName={boba} alt="Boba" width="36rem" leading='R' />
 
 					<div className='first-description'>
-						{/* <FadeInSection> */}
-							<h1>
-								Family-Owned
-							</h1>
-							<section>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-							</section>
-						{/* </FadeInSection> */}
+						<h1>
+							Family-Owned
+						</h1>
+						<section>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+							incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+							nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+							Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+							fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+							culpa qui officia deserunt mollit anim id est laborum.
+						</section>
 					</div>
 				</div>
 
 				<div id="third">
 					<div className='first-description'>
-						{/* <FadeInSection> */}
-							<h1>
-								Quality Products
-							</h1>
-							<section>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-							</section>
-						{/* </FadeInSection> */}
+						<h1>
+							Quality Products
+						</h1>
+						<section>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+							incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+							nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+							Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+							fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+							culpa qui officia deserunt mollit anim id est laborum.
+						</section>
 					</div>
 					<ParallaxImageSplit fileName={boba} alt="Boba" width="36rem" leading="L" />
 				</div>

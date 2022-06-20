@@ -1,3 +1,4 @@
+import { string } from 'prop-types';
 import React, { useState, FC, CSSProperties } from 'react';
 import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
 import './ParallaxImageSplit.scss';
@@ -49,6 +50,8 @@ interface ParallaxImageSplitProps {
 
 /**
  * Allows the supplying of a width parameter, but not a height.
+ * 
+ * Sets the width of the container/rendering of the original image
  */
 interface ParallaxImageSplitPropsWidth extends ParallaxImageSplitProps {
 	width?: string
@@ -56,6 +59,8 @@ interface ParallaxImageSplitPropsWidth extends ParallaxImageSplitProps {
 
 /**
  * Allows the supplying of a height parameter, but not a width.
+ * 
+ * Sets the height of the container/rendering of the original image
  */
 interface ParallaxImageSplitPropsHeight extends ParallaxImageSplitProps {
 	height?: string
@@ -95,17 +100,11 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 			ctx.setTransform(1, 0, 0, 1, 0, 0);
 			ctx.imageSmoothingQuality = 'high';
 
-			ctx.drawImage(
-				img,
-				placement === 'L' ? (0 /* start of image */) : (img.width / 2 /* halfway across the image */),
-				0,
-				img.width,
-				img.height,
-				0,
-				0,
-				img.width,
-				img.height,
-			);
+			// if left, start at the origin; if right, start midway through.
+			const start = placement === 'L' ? 0 : img.width / 2;
+
+			// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
+			ctx.drawImage(img, start, 0, img.width, img.height, 0, 0, img.width, img.height);
 
 			// Converting to base64
 			const base64Image = canvas.toDataURL('image/jpeg');
@@ -122,20 +121,30 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 	}
 
 	const leading = (props?.leading ?? 'L') === 'L';
+	
 	const speeds = props?.speeds ?? {
 		leading: +100,
 		lagging: -100
 	}
 
+	const appliedStyles = 'width' in props ? {
+		minWidth: props.width
+	} : 'height' in props ? {
+		minHeight: props.height
+	} : {};
+
+	const prefixAlt = (prefix: string): string => Array.isArray(props.alt) ? props.alt[0] : prefix + props.alt;
+	const speed = (l: boolean) => l ? speeds.leading : speeds.lagging;
+
 	return (
 		<ParallaxProvider>
-			<div className='parallax-image-wrapper-1' style={'width' in props ? {minWidth: props.width} : 'height' in props ? {minHeight: props.height} : {}}>
+			<div className='parallax-image-wrapper-1' style={appliedStyles}>
 				<div className='parallax-image-wrapper' data-parallax-image-split>
-					<Parallax speed={leading ? speeds.leading : speeds.lagging}>
-						<img data-fade-first className='parallax-image' src={leftProduct} loading='lazy' alt={Array.isArray(props.alt) ? props.alt[0] : 'Left' + props.alt} style={style} />
+					<Parallax speed={speed(leading)}>
+						<img data-fade-first className='parallax-image' src={leftProduct} loading='lazy' alt={prefixAlt('Left')} style={style} />
 					</Parallax>
-					<Parallax speed={!(leading) ? speeds.leading : speeds.lagging}>
-						<img data-fade-second className='parallax-image' src={rightProduct} loading='lazy' alt={Array.isArray(props.alt) ? props.alt[1] : 'Right' + props.alt} style={style} />
+					<Parallax speed={speed(!leading)}>
+						<img data-fade-second className='parallax-image' src={rightProduct} loading='lazy' alt={prefixAlt('Right')} style={style} />
 					</Parallax>
 				</div>
 			</div>
