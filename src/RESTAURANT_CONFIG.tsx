@@ -16,7 +16,12 @@ const _assert: (arg0: boolean) => void = (bool: boolean) => {
  * Works out-of-the-box if set to a string shorter than or equal to 9 characters. 
  */
 export const RESTAURANT_NAME: string = 'The Spot';
-export const RESTAURANT_DESCRIPTION: string = 'Locally Owned Cafe and Lounge'
+export const RESTAURANT_DESCRIPTION: string = 'Locally Owned Cafe and Lounge';
+
+/**
+ * This is the value shown on the tab.
+ */
+export const WEBSITE_TITLE: string = 'The Spot';
 
 /**
  * If the business has ony main phone number they take all their calls with.

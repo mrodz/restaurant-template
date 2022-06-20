@@ -1,8 +1,31 @@
-.parralax-image-wrapper {
+.parallax-image-wrapper {
 	display: flex;
 	flex-direction: row;
 	overflow: hidden;
 	justify-content: center;
 	width: fit-content;
 	margin: 0;
+
+	& .parallax-image {
+		opacity: 0;
+
+		&[data-fade-first] {
+			animation: fade-in-parallax-image 1.5s forwards;
+		}
+
+		&[data-fade-second] {
+			animation: fade-in-parallax-image 3s .3s forwards;
+
+		}
+	}
+}
+
+@keyframes fade-in-parallax-image {
+	from {
+		opacity: 0%;
+	}
+
+	to {
+		opacity: 100%;
+	}
 }

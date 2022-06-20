@@ -34,7 +34,7 @@ export const PhoneCallable = (props: any) => {
 
 	return (
 		<a href={`tel:${props?.number}`}
-			{...props?.style ?? false ? { style: styles.custom } : { style: styles.none }}>
+			{...props?.styled ?? false ? { style: styles.custom } : { style: styles.none }}>
 			{props?.children}
 		</a>
 	);
@@ -90,7 +90,7 @@ const Location: FC<LocationProps> = React.memo((props) => {
 				</div>
 				<ul>
 					<li>
-						<span data-mobile-label-hidden>Call Us:&nbsp;</span><PhoneCallable number={props.location.phone.replaceAll(/[-()]/g, '')} style={true}>{props.location.phone}</PhoneCallable>
+						<span data-mobile-label-hidden>Call Us:&nbsp;</span><PhoneCallable number={props.location.phone.replaceAll(/[-()]/g, '')} styled={true}>{props.location.phone}</PhoneCallable>
 					</li>
 					<li>
 						<span data-mobile-label-hidden>Visit Us:&nbsp;</span>{props.location.address}

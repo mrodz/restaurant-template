@@ -2,11 +2,13 @@
 @use "sass:list";
 @use "sass:math";
 
-
 $DESIGN-NUMBER: 1;
 
 @font-face {
 	font-family: 'Regal';
+	font-style: normal;
+	font-display: swap;
+
 	src: local('Regal'), url(./fonts/ROCK.TTF) format('truetype');
 }
 
@@ -111,6 +113,8 @@ $FONTS: 'Artsy', 'Regal';
 :export {
 	popColor: pop-color();
 	primaryColor: primary-color();
+	pageBg: page-bg();
+	fontColor: font-color();
 }
 
 // MEDIAS - see GemerateMediaQuerries.java

@@ -99,6 +99,15 @@ const TopBanner: FC<{}> = React.memo(() => {
 		);
 	}
 
+	const hamburgerOpenToggle = () => {
+		if (!isHamburgerOpen) {
+			document.dispatchEvent(new Event('maincontent:focus'));
+		} else {
+			document.dispatchEvent(new Event('maincontent:loosefocus'));
+			setHamburgerCloses(hamburgerCloses + 1);
+		}
+	}
+
 	return (
 		<>
 			<header className='top-banner'>
@@ -115,19 +124,15 @@ const TopBanner: FC<{}> = React.memo(() => {
 
 						{ /* TODO - Add more options here, take into account that you'll have to use @media querries to fix for mobile :D */}
 					</div>
-					<div className='mobile-view'>
+					<div className='mobile-view' onFocus={() => {
+						setHamburgerOpen(true);
+						hamburgerOpenToggle();
+					}}>
 						<div className='burger-wrapper'>
 							<Important className='burger-label'>
 								<span data-hide-on="1000">EXPLORE</span>
 							</Important>
-							<Hamburger toggled={isHamburgerOpen} toggle={setHamburgerOpen} onToggle={() => {
-								if (!isHamburgerOpen) {
-									document.dispatchEvent(new Event('maincontent:focus'));
-								} else {
-									document.dispatchEvent(new Event('maincontent:loosefocus'));
-									setHamburgerCloses(hamburgerCloses + 1);
-								}
-							}} />
+							<Hamburger toggled={isHamburgerOpen} toggle={setHamburgerOpen} onToggle={hamburgerOpenToggle} />
 						</div>
 					</div>
 				</div>

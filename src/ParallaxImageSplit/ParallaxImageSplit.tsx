@@ -66,11 +66,14 @@ interface ParallaxImageSplitPropsHeight extends ParallaxImageSplitProps {
  * parallax effect to each part. The final effect is one image whose halves,
  * when scrolled, slide apart from each other rather aesthetically.
  * 
+ * CSS Selector: [data-parallax-image-split]
+ * 
  * @author Mateo
  * @param props {@link ParallaxImageSplitProps} plus either a width or height (not both!)
  * @returns JSX.
  */
 const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPropsHeight> = React.memo((props) => {
+	// need to use states because it takes time to get the images' dimensions.
 	const [leftProduct, setLeftProduct] = useState('');
 	const [rightProduct, setRightProduct] = useState('');
 
@@ -85,14 +88,16 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 			canvas.height = img.height;
 
 			const ctx = canvas.getContext('2d');
-			if (ctx === null) throw new Error();
+
+			// to get rid of typescript warnings.
+			if (ctx === null) throw new Error("this will never be thrown");
 
 			ctx.setTransform(1, 0, 0, 1, 0, 0);
 			ctx.imageSmoothingQuality = 'high';
 
 			ctx.drawImage(
 				img,
-				placement === 'L' ? 0 : img.width / 2,
+				placement === 'L' ? (0 /* start of image */) : (img.width / 2 /* halfway across the image */),
 				0,
 				img.width,
 				img.height,
@@ -124,12 +129,12 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 
 	return (
 		<ParallaxProvider>
-			<div className='parralax-image-wrapper'>
+			<div className='parallax-image-wrapper' data-parallax-image-split>
 				<Parallax speed={leading ? speeds.leading : speeds.lagging}>
-					<img src={leftProduct} loading='lazy' alt={Array.isArray(props.alt) ? props.alt[0] : 'Left' + props.alt} style={style} />
+					<img data-fade-first className='parallax-image' src={leftProduct} loading='lazy' alt={Array.isArray(props.alt) ? props.alt[0] : 'Left' + props.alt} style={style} />
 				</Parallax>
 				<Parallax speed={!(leading) ? speeds.leading : speeds.lagging}>
-					<img src={rightProduct} loading='lazy' alt={Array.isArray(props.alt) ? props.alt[1] : 'Right' + props.alt} style={style} />
+					<img data-fade-second className='parallax-image' src={rightProduct} loading='lazy' alt={Array.isArray(props.alt) ? props.alt[1] : 'Right' + props.alt} style={style} />
 				</Parallax>
 			</div>
 		</ParallaxProvider>

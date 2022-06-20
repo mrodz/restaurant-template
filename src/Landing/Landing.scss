@@ -6,14 +6,24 @@ $padding: 1rem;
 	text-align: right;
 }
 
+.landing-page {
+	& h1 {
+		font-size: 200%;
+		font-weight: bold;
+	}
+}
+
 .business-blurbs {
 	&>div {
 		display: flex;
 		flex-direction: row;
 
-		& .first-description {
-			flex-grow: 1;
-			// min-width: 50%;
+		&>.first-description {
+			padding: $padding;
+		}
+
+		&>[data-parallax-image-split] {
+			min-width: max-content;
 		}
 
 	}
@@ -45,19 +55,118 @@ $padding: 1rem;
 	}
 
 	& [data-discover-label] {
-		font-family: 'Artsy';
+		font-family: 'Artsy', arial;
 		font-size: 275%;
 	}
 
 	& [data-business-name-label] {
 		font-size: 800%;
-		font-family: 'Regal';
+		font-family: 'Regal', arial;
 		text-transform: uppercase;
 	}
 
 	& [data-business-description-label] {
 		margin-top: $padding;
 	}
+}
+
+.business-mission-statement {
+	margin: {
+		left: $padding * 4;
+		right: $padding * 4;
+		bottom: $padding * 6;
+		top: $padding * 6;
+	}
+
+	padding: $padding * 2;
+	background-color: designs.pop-color();
+
+	& .mission-statement-content {
+		display: flex;
+		align-items: center;
+
+		& h1 {
+			font-size: 150%;
+		}
+
+		& .fa-quote-left {
+			font-size: 200%;
+		}
+	}
+}
+
+.review-cards {
+	margin: {
+		top: $padding * 2;
+		bottom: $padding * 2;
+	}
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	width: 100%;
+
+	&>.review-card {
+		&>a {
+			color: unset;
+			text-decoration: unset;
+		}
+		
+		margin: {
+			left: $padding * 3;
+			right: $padding * 3;
+		}
+
+		& .review-card-review {
+			border: solid designs.primary-color() 4px;
+			display: flex;
+			justify-content: space-evenly;
+			padding: $padding;
+			border-radius: 100vmax;
+
+			& .MuiRating-icon {
+				color: designs.pop-color();
+			}
+		}
+
+		&>.review-card-info {
+			margin-top: $padding;
+		
+			&>.review-card-author {
+				font-weight: bold;
+				text-align: center;
+				padding-bottom: calc($padding / 2);
+			}
+		}
+	}
+}
+
+div.reviews-line {
+	// margin-top: $padding * 2;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+div.review-card-review:hover {
+	animation: toggle-card-bg .3s forwards;
+	& .MuiRating-icon {
+		animation: toggle-star-bg .3s forwards;
+		color: designs.page-bg();
+	}
+}
+
+
+@mixin fade-to($property, $color, $name) {
+	@keyframes #{$name} {
+		100% {
+			#{$property}: $color;
+		}
+	}
+}
+
+@include fade-to(background-color, designs.pop-color(), 'toggle-card-bg');
+@include fade-to(color, designs.page-bg(), 'toggle-star-bg');
+
+.fa-star {
+	color: designs.pop-color();
 }
 
 @media only screen and (min-width: 2200px) {
