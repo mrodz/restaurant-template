@@ -1,0 +1,30 @@
+{
+	"coffee": [
+		{
+			"name": "Expresso",
+			"description": "8oz of pure expresso",
+			"price": "$4.00",
+			"tags": ["thirsty", "coffee"]
+		}
+	],
+	"boba": [
+		{
+			"name": "Matcha Green Tea Boba",
+			"description": "16oz (M), 24oz (L)",
+			"price": "$4.50 (M), $5.00 (L)",
+			"tags": ["thirsty", "boba"]
+		}
+	],
+	"smoothie": [
+
+	],
+	"tea": [
+
+	],
+	"pastries": [
+
+	],
+	"snacks": [
+
+	]
+}

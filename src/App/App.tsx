@@ -10,6 +10,7 @@ import Delivery from "../Delivery/Delivery";
 import BottomBanner from "../BottomBanner/BottomBanner";
 
 import './App.scss';
+import ProductPicker from '../ProductPicker/ProductPicker';
 
 // quick shorthand
 export type Page = () => React.ReactNode;
@@ -63,6 +64,11 @@ const ROUTE_MAPPINGS: RouteMapping[] = [
 		url: '/delivery',
 		page: Delivery,
 		name: 'Delivery'
+	},
+	{
+		url: '/picker',
+		page: ProductPicker,
+		name: 'Product Picker'
 	}
 ];
 
