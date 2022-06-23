@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, FC } from 'react';
 import {
 	Stepper,
 	Step,
@@ -39,21 +39,70 @@ const MENU_MAPPED: {
 
 let cached = {};
 
+interface MenuItemCard {
+	item: MenuItem;
+}
+
+const MenuItemCard: FC<MenuItemCard> = (props) => {
+	return (
+		<div className='product-card'>
+			<div className='product-card-name'>{props.item.name}</div>
+			<div className='product-card-description'>{props.item.description}</div>
+		</div>
+	);
+}
+
+/**
+ * Check if an array has all the elements of another array.
+ * 
+ * Example:
+ * 
+ * arrayContains(['a', 'b', 'c'], ['b', 'c'])      // true
+ * 
+ * arrayContains(['a', 'b', 'c'], ['c', 'b', 'a']) // true
+ * 
+ * arrayContains(['a', 'b', 'c'], ['a', 'b', 'x']) // false
+ *
+ * @param array0 the source array
+ * @param array1 the items being searched for
+ * @returns Whether the first array contains all the elements in the second array
+ */
+function arrayContains<T>(array0: T[], array1: T[]): boolean {
+	// once an element is found, its index is stored here to skip checking it in future iterations.
+	let indexesToSkip = new Set<number>(); 
+
+	for (let i = 0, len0 = array0.length; i < len0; i++) {
+		for (let j = 0, len1 = array1.length; j < len1; j++) {
+			if (indexesToSkip.has(j) || array0[i] !== array1[j]) continue;
+			
+			indexesToSkip.add(j);
+			
+			const foundAllElements = indexesToSkip.size === len1;
+			if (foundAllElements) return true;
+		}
+	}
+
+	return false;
+}
+
 const TopicsOfInterest = (choices: string[]) => {
+	if (choices[choices.length - 1] === null) choices.pop();
+
+	const mappingFunction = (element: MenuItem, index: number) => <MenuItemCard key={index} item={element} />
+
 	if ((choices as any) in cached) {
-		return <span>
-			{/*@ts-ignore*/}
-			{cached[choices].map((e, i) => <div key={i}>{e.name}</div>)}
-		</span>;
+		return <div className='product-cards'>
+			{/* @ts-ignore */}
+			{cached[choices].map(mappingFunction)}
+		</div>;
 	}
 
 	let results: MenuItem[] = [];
 
 	for (const key in MENU_MAPPED) {
 		for (const item of MENU_MAPPED[key as keyof typeof MENU_MAPPED]) {
-			console.log(item.name, item.tags, choices);
 
-			if (item.tags.includes(choices[0]) && item.tags.includes(choices[1])) {
+			if (arrayContains(item.tags, choices) /*item.tags.includes(choices[0]) && item.tags.includes(choices[1])*/) {
 				results.push(item);
 			}
 		}
@@ -66,12 +115,12 @@ const TopicsOfInterest = (choices: string[]) => {
 		cached[choices] = results;
 	}
 
-	return <span>
+	return <>
 		{(() => {
-			if (found) return results.map((e, i) => <div key={i}>{e.name}</div>)
+			if (found) return <div className='product-cards'>{results.map(mappingFunction)}</div>;
 			return <>Sorry, I couldn't find any products under {choices[0]} and {choices[1]}</>
 		})()}
-	</span>
+	</>
 }
 
 const steps: {
@@ -103,10 +152,10 @@ const steps: {
 			),
 			allowPassthrough: true
 		},
-		{
-			label: 'Review Findings',
-			description: (choice) => TopicsOfInterest(choice),
-		},
+		// {
+		// 	label: 'Review Findings',
+		// 	description: (choice) => TopicsOfInterest(choice),
+		// },
 	];
 
 const CustomConnector = styled(StepConnector)(({ theme }) => ({
@@ -175,10 +224,6 @@ export default function ProductPicker(): JSX.Element {
 	const [activeStep, setActiveStep] = useState(0);
 	const [choices, setChoices] = useState<string[]>([]);
 
-	useEffect(() => {
-		console.log(choices);
-	}, [choices]);
-
 	const handleNext = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep + 1);
 	};
@@ -218,8 +263,7 @@ export default function ProductPicker(): JSX.Element {
 										return e; // should never happen
 									}
 								})()} control={<Radio />} label={e} key={i} />
-							})
-							: props.options
+							}) : props.options
 						}
 					</RadioGroup>
 				</FormControl>
@@ -228,13 +272,13 @@ export default function ProductPicker(): JSX.Element {
 						<Button
 							variant="text"
 							{
-								...(() => {
-									if (props.allowPassthrough) {
-										return {}
-									} else {
-										return {disabled: value === null}
-									}
-								})()
+							...(() => {
+								if (props.allowPassthrough) {
+									return {}
+								} else {
+									return { disabled: value === null }
+								}
+							})()
 							}
 							onClick={() => {
 								handleNext();
@@ -244,7 +288,7 @@ export default function ProductPicker(): JSX.Element {
 							}}
 							sx={{ mt: 1, mr: 1 }}
 						>
-							{props.index === steps.length - 1 ? 'Finish' : 'Continue'}
+							{props.index === steps.length - 1 ? 'Submit Query' : 'Continue'}
 						</Button>
 						<Button
 							variant="text"
@@ -267,8 +311,11 @@ export default function ProductPicker(): JSX.Element {
 
 	return (
 		<div className='product-picker-main'>
-			<Box>
-				<Stepper activeStep={activeStep} connector={<CustomConnector />} orientation="vertical">
+			{/* <Box> */}
+			<Stepper activeStep={activeStep} connector={<CustomConnector />} orientation="vertical" sx={{
+				height: 'min-content'
+			}}>
+				{/* <> */}
 					{steps.map((step, index) => (
 						<Step key={index}>
 							<StepLabel
@@ -287,19 +334,35 @@ export default function ProductPicker(): JSX.Element {
 							<CustomStepContent options={step.description(choices)} allowPassthrough={step.allowPassthrough} index={index} />
 						</Step>
 					))}
-				</Stepper>
-				{activeStep === steps.length && (
-					<Paper square elevation={0} sx={{ p: 3 }}>
-						All steps completed - you&apos;re finished<br />
-						<Button onClick={() => {
-							handleReset();
-							setChoices([]);
-						}} sx={{ mt: 1, mr: 1 }}>
-							Reset
-						</Button>
-					</Paper>
-				)}
-			</Box>
+					<>{(() => {
+						if (activeStep === steps.length) {
+							return (
+								<Button sx={{ marginTop: 1, marginRight: 1 }}
+								onClick={() => {
+									handleReset()
+									setChoices([])
+								}}
+								>
+									Reset
+								</Button>
+							);
+						} else {
+							return
+						}
+					})()}</>
+				{/* </> */}
+			</Stepper>
+			{activeStep === steps.length && (
+				<Paper square elevation={0} sx={{ p: 3 }}>
+					All steps completed! Here&apos;s what I found:
+					<br />
+
+					{TopicsOfInterest(choices)}
+
+					<br />
+				</Paper>
+			)}
+			{/* </Box> */}
 		</div>
 	);
 }

@@ -5,6 +5,18 @@
 			"description": "8oz of pure expresso",
 			"price": "$4.00",
 			"tags": ["thirsty", "coffee"]
+		},
+		{
+			"name": "Cappuccino",
+			"description": "12oz of an Italian classic",
+			"price": "$4.00",
+			"tags": ["thirsty", "coffee"]
+		},
+		{
+			"name": "Roasted Coffee",
+			"description": "Your favorite Cup of Joe!",
+			"price": "$4.50",
+			"tags": ["thirsty", "coffee"]
 		}
 	],
 	"boba": [
