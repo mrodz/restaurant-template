@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { RESTAURANT_NAME, RESTAURANT_DESCRIPTION } from '../RESTAURANT_CONFIG';
 import boba from './pictures/boba.jpeg';
 import ParallaxImageSplit from '../ParallaxImageSplit/ParallaxImageSplit';
-import './Landing.scss';
+import './Landing.sass';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import {
 	Rating,
@@ -11,7 +11,7 @@ import {
 	styled
 } from '@mui/material';
 import styles from '../designs.scss';
-import FadeInSection from '../FadeInSection/FadeInSection';
+import DetectView from '../DetectView/DetectView'
 
 interface ReviewCardProps {
 	rating: 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5,
@@ -148,73 +148,77 @@ export default function Landing(): React.ReactElement {
 				<Divider className='reviews-line'>
 					Reviews
 				</Divider>
-				<div className='review-cards'>
-					<ReviewCard review={{
-						rating: 5,
-						reviewer: 'Nancy Adzentoivich',
-						content: 'Wide selection of food from bagels and pastries to boba, panini and ice cream.',
-						url: 'https://goo.gl/maps/kw7ZiFJnp63HPLNq7',
-						id: '1'
-					}} />
-					<ReviewCard review={{
-						rating: 5,
-						reviewer: 'Ethan Cochard',
-						content: 'Love the service and friendly vibes from other customers and the staff.',
-						url: 'https://goo.gl/maps/bY9WhKFM33gZLLx1A',
-						id: '2'
-					}} />
-					<ReviewCard review={{
-						rating: 5,
-						reviewer: 'April Serrato',
-						content: 'Awesome food, price is legit and coolest staff!!!!',
-						url: 'https://goo.gl/maps/WevrSmRdny6Ei4pz9',
-						id: '3'
-					}} />
-				</div>
+				<DetectView>
+					<div className='review-cards'>
+						<ReviewCard review={{
+							rating: 5,
+							reviewer: 'Nancy Adzentoivich',
+							content: 'Wide selection of food from bagels and pastries to boba, panini and ice cream.',
+							url: 'https://goo.gl/maps/kw7ZiFJnp63HPLNq7',
+							id: '1'
+						}} />
+						<ReviewCard review={{
+							rating: 5,
+							reviewer: 'Ethan Cochard',
+							content: 'Love the service and friendly vibes from other customers and the staff.',
+							url: 'https://goo.gl/maps/bY9WhKFM33gZLLx1A',
+							id: '2'
+						}} />
+						<ReviewCard review={{
+							rating: 5,
+							reviewer: 'April Serrato',
+							content: 'Awesome food, price is legit and coolest staff!!!!',
+							url: 'https://goo.gl/maps/WevrSmRdny6Ei4pz9',
+							id: '3'
+						}} />
+					</div>
+				</DetectView>
 				<Divider />
 			</section>
 
 			<section className='landing-side-margins landing-more-info'>
-				<FadeInSection>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-						sed do eiusmod tempor incididunt ut labore et dolore magna
-						aliqua. Convallis aenean et tortor at risus viverra
-						adipiscing at. Facilisi cras fermentum odio eu. Sit amet
-						nulla facilisi morbi tempus iaculis urna. Tempor id eu nisl
-						nunc mi ipsum faucibus vitae. Interdum consectetur libero id
-						faucibus nisl tincidunt eget. Elit duis tristique
-						sollicitudin nibh sit amet. Diam maecenas sed enim ut sem
-						viverra aliquet. Adipiscing bibendum est ultricies integer.
-						Commodo quis imperdiet massa tincidunt nunc. Quam
-						pellentesque nec nam aliquam sem. Imperdiet dui accumsan
-						sit amet. Proin libero nunc consequat interdum varius sit
-						amet. Lorem donec massa sapien faucibus et molestie ac.
-					</p>
-				</FadeInSection>
+				{/* <FadeInSection> */}
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+					sed do eiusmod tempor incididunt ut labore et dolore magna
+					aliqua. Convallis aenean et tortor at risus viverra
+					adipiscing at. Facilisi cras fermentum odio eu. Sit amet
+					nulla facilisi morbi tempus iaculis urna. Tempor id eu nisl
+					nunc mi ipsum faucibus vitae. Interdum consectetur libero id
+					faucibus nisl tincidunt eget. Elit duis tristique
+					sollicitudin nibh sit amet. Diam maecenas sed enim ut sem
+					viverra aliquet. Adipiscing bibendum est ultricies integer.
+					Commodo quis imperdiet massa tincidunt nunc. Quam
+					pellentesque nec nam aliquam sem. Imperdiet dui accumsan
+					sit amet. Proin libero nunc consequat interdum varius sit
+					amet. Lorem donec massa sapien faucibus et molestie ac.
+				</p>
+				{/* </FadeInSection> */}
 				<br />
-				<FadeInSection>
-					<p>
-						Massa enim nec dui nunc mattis enim ut tellus. Faucibus
-						interdum posuere lorem ipsum dolor sit amet. Scelerisque
-						varius morbi enim nunc faucibus a pellentesque. Iaculis
-						nunc sed augue lacus. Nisl suscipit adipiscing bibendum
-						est ultricies integer quis auctor. Id consectetur purus ut
-						faucibus pulvinar elementum integer. Dolor sit amet
-						consectetur adipiscing elit pellentesque habitant morbi
-						tristique. Pulvinar elementum integer enim neque volutpat
-						ac tincidunt vitae. Blandit aliquam etiam erat velit
-						scelerisque in. Ultricies mi eget mauris pharetra et
-						ultrices. Vitae nunc sed velit dignissim sodales ut eu
-						sem. Sem et tortor consequat id porta nibh venenatis.
-						Viverra mauris in aliquam sem fringilla ut morbi tincidunt.
-						Convallis tellus id interdum velit laoreet id donec. Lacus
-						viverra vitae congue eu. Sed nisi lacus sed viverra tellus
-						in hac habitasse. Sed id semper risus in. Sit amet volutpat
-						consequat mauris.
-					</p>
-				</FadeInSection>
+				{/* <FadeInSection> */}
+				<p>
+					Massa enim nec dui nunc mattis enim ut tellus. Faucibus
+					interdum posuere lorem ipsum dolor sit amet. Scelerisque
+					varius morbi enim nunc faucibus a pellentesque. Iaculis
+					nunc sed augue lacus. Nisl suscipit adipiscing bibendum
+					est ultricies integer quis auctor. Id consectetur purus ut
+					faucibus pulvinar elementum integer. Dolor sit amet
+					consectetur adipiscing elit pellentesque habitant morbi
+					tristique. Pulvinar elementum integer enim neque volutpat
+					ac tincidunt vitae. Blandit aliquam etiam erat velit
+					scelerisque in. Ultricies mi eget mauris pharetra et
+					ultrices. Vitae nunc sed velit dignissim sodales ut eu
+					sem. Sem et tortor consequat id porta nibh venenatis.
+					Viverra mauris in aliquam sem fringilla ut morbi tincidunt.
+					Convallis tellus id interdum velit laoreet id donec. Lacus
+					viverra vitae congue eu. Sed nisi lacus sed viverra tellus
+					in hac habitasse. Sed id semper risus in. Sit amet volutpat
+					consequat mauris.
+				</p>
+				{/* </FadeInSection> */}
 			</section>
+
+			
 
 			{/*
 				TODO: 
