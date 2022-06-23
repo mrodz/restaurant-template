@@ -50,7 +50,7 @@ export const PhoneCallable = (props: PhoneCallableProps): JSX.Element => {
 		}
 	}
 
-	const appliedStyles: CSSProperties = (props?.styled ?? false) ? styles.custom : styles.none;
+	const appliedStyles: CSSProperties = (!!props.styled) ? styles.custom : styles.none;
 
 	return (
 		<a href={`tel:${props.number}`} style={appliedStyles}>

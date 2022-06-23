@@ -1,0 +1,181 @@
+@use "../designs.scss"
+@use "sass:string"
+
+$padding: 1rem
+
+@for $i from 1 through 3 // number of review cards!
+	[data-visible="true"] .review-card:nth-child(#{$i})
+		visibility: visible
+		animation: fade-in-review-card 1.2s calc(.3s * ($i - 1)) forwards
+
+@keyframes fade-in-review-card
+	0%
+		opacity: 0
+	100%
+		opacity: 1
+
+@-moz-keyframes fade-in-review-card
+	0%
+		opacity: 0
+	100% 
+		opacity: 1
+
+#second>.first-description
+	text-align: right
+
+.landing-page
+	& h1
+		font-size: 200%
+		font-weight: bold
+
+.business-blurbs
+	&>div
+		display: flex
+		flex-direction: row
+
+		&>.first-description
+			padding: $padding
+
+		&>[data-parallax-image-split]
+			min-width: max-content
+
+	&>:not(:last-child)
+		padding-bottom: $padding * 8
+
+.landing-side-margins
+	margin:
+		left: $padding * 4
+		right: $padding * 4
+
+.main-landing-intro
+	display: flex
+	flex-direction: column
+	padding: $padding * 2
+	border: solid designs.pop-color() 10px
+	margin:
+		bottom: $padding * 6
+
+	& [data-discover-label],
+	& [data-business-name-label],
+	& [data-business-description-label]
+		align-self: center
+		text-align: center
+
+	& [data-discover-label]
+		font-family: 'Artsy', arial
+		font-size: 275%
+
+	& [data-business-name-label]
+		font-size: 800%
+		font-family: 'Regal', arial
+		text-transform: uppercase
+
+	& [data-business-description-label]
+		margin-top: $padding
+
+.business-mission-statement
+	padding: $padding * 2
+	background-color: designs.pop-color()
+	margin:
+		bottom: $padding * 6
+		top: $padding * 6
+
+	& .mission-statement-content
+		display: flex
+		align-items: center
+
+		& h1
+			font-size: 150%
+
+		& .fa-quote-left
+			font-size: 200%
+
+.review-cards
+	display: grid
+	grid-template-columns: 1fr 1fr 1fr
+	width: 100%
+	margin:
+		top: $padding * 2
+		bottom: $padding * 2
+
+	&>.review-card
+		opacity: 0
+		margin:
+			left: $padding * 3
+			right: $padding * 3
+
+		&>a
+			color: unset
+			text-decoration: unset
+
+		& .review-card-review
+			border: solid designs.primary-color() 4px
+			display: flex
+			justify-content: space-evenly
+			padding: $padding
+			border-radius: 100vmax
+
+			& .MuiRating-icon
+				color: designs.pop-color()
+
+		&>.review-card-info
+			margin-top: $padding
+
+			&>.review-card-author
+				font-weight: bold
+				text-align: center
+				padding-bottom: calc($padding / 2)
+
+div.reviews-line
+	// margin-top: $padding * 2;
+	text-transform: uppercase
+	font-weight: bold
+
+div.review-card-review:hover
+	animation: toggle-card-bg .3s forwards
+
+	& .MuiRating-icon
+		animation: toggle-star-bg .3s forwards
+		color: designs.page-bg()
+
+.landing-more-info
+	padding: $padding * 2
+	margin-bottom: 4rem
+	margin-top: 4rem
+
+@mixin fade-to($property, $color, $name)
+	@keyframes #{$name}
+		100%
+			#{$property}: $color
+
+@include fade-to(background-color, designs.pop-color(), 'toggle-card-bg')
+@include fade-to(color, designs.page-bg(), 'toggle-star-bg')
+
+.fa-star
+	color: designs.pop-color()
+
+@media only screen and (min-width: 2200px)
+	.main-landing-intro
+		font-size: 150%
+
+@media only screen and (min-width: 2800px)
+	.main-landing-intro
+		font-size: 200%
+
+@media only screen and (min-width: 3500px)
+	.main-landing-intro
+		font-size: 250%
+
+///
+/// BIGGER SCREENS ABOVE ^^^
+///
+/// SMALLER SCREENS BELOW...
+/// 
+
+@media only screen and (max-width: 1050px)
+	.main-landing-intro
+		font-size: 75%
+
+@media only screen and (max-width: 800px)
+	.main-landing-intro
+		font-size: 50%

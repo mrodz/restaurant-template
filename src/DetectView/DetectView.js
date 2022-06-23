@@ -1,11 +1,17 @@
 import React from "react";
-import './FadeInSection.css';
+import './DetectView.css';
 
-// https://dev.to/selbekk/how-to-fade-in-content-as-it-scrolls-into-view-10j4
-export default function FadeInSection(props) {
+
+/**
+ * returns a div with a data attribute: [data-visible].
+ * this reactive attribute changes depending on whether the 
+ * component is visible (or not!).
+ */
+export default function DetectView(props) {
 	const [isVisible, setVisible] = React.useState(true);
 	const domRef = React.useRef();
 
+	// https://dev.to/selbekk/how-to-fade-in-content-as-it-scrolls-into-view-10j4
 	React.useEffect(() => {
 		const cleanUp = domRef.current;
 
@@ -19,7 +25,7 @@ export default function FadeInSection(props) {
 	}, []);
 
 	return (
-		<div className={`fade-in-section ${isVisible ? 'is-visible' : ''}`} ref={domRef}>
+		<div {...{ "data-visible": isVisible }} {...!!props.className ? {className: props.className} : {}} ref={domRef}>
 			{props.children}
 		</div>
 	);
