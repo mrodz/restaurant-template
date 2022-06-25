@@ -7,13 +7,16 @@ import React, {
 import { Link } from 'react-router-dom';
 import { Twirl as Hamburger } from 'hamburger-react'
 
-import AnimatedUnderline from "../AnimatedUnderline/AnimatedUnderline";
+import AnimatedUnderline from '../AnimatedUnderline/AnimatedUnderline';
+// import AnimatedUnderline from "../AnimatedUnderline/AnimatedUnderline";
 import Important from "../Important/Important";
 
 import {
 	RESTAURANT_NAME,
 	BANNER_TOP_DESC
 } from '../../RESTAURANT_CONFIG';
+
+// import { ROUTE_MAPPINGS } from '../App/App';
 
 import { ROUTE_MAPPINGS } from '../App/App';
 

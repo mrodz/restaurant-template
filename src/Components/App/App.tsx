@@ -8,10 +8,13 @@ import {
 	Menu,
 	NotFoundPage,
 	ProductPicker
-} from "../../Pages"
+} from "../../pages"
 
 import TopBanner from '../TopBanner/TopBanner';
-import BottomBanner from "../BottomBanner/BottomBanner";
+import BottomBanner from '../BottomBanner/BottomBanner';
+// import TopBanner from '../TopBanner/TopBanner';
+// import TopBanner from '../TopBanner/TopBanner';
+// import BottomBanner from "../BottomBanner/BottomBanner";
 
 import './App.scss';
 

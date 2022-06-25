@@ -1,8 +1,8 @@
 import React from "react";
 import { LinkProps } from "react-router-dom";
 
-import { AT } from "./Components/BottomBanner/BottomBanner";
-import { PhoneCallable } from './Components/BottomBanner/BottomBanner';
+import { AT } from "./components/BottomBanner/BottomBanner";
+import { PhoneCallable } from './components/BottomBanner/BottomBanner';
 import { Link as _Link } from "react-router-dom";
 
 /**

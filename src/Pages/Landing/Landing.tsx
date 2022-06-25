@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { RESTAURANT_NAME, RESTAURANT_DESCRIPTION } from '../../RESTAURANT_CONFIG';
 import boba from './pictures/boba.jpeg';
-import ParallaxImageSplit from '../../Components/ParallaxImageSplit/ParallaxImageSplit';
+import ParallaxImageSplit from '../../components/ParallaxImageSplit/ParallaxImageSplit';
 import './Landing.sass';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import {
@@ -11,7 +11,7 @@ import {
 	styled
 } from '@mui/material';
 import styles from '../../designs.scss';
-import DetectView from '../../Components/DetectView/DetectView';
+import DetectView from '../../components/DetectView/DetectView';
 
 interface ReviewCardProps {
 	rating: 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5,
