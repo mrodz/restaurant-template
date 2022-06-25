@@ -1,16 +1,19 @@
 import { Route, Routes } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 
+import {
+	About,
+	Delivery,
+	Landing,
+	Menu,
+	NotFoundPage,
+	ProductPicker
+} from "../../Pages"
+
 import TopBanner from '../TopBanner/TopBanner';
-import NotFoundPage from "../NotFoundPage/NotFoundPage";
-import About from "../About/About";
-import Landing from "../Landing/Landing";
-import Menu from "../Menu/Menu";
-import Delivery from "../Delivery/Delivery";
 import BottomBanner from "../BottomBanner/BottomBanner";
 
 import './App.scss';
-import ProductPicker from '../ProductPicker/ProductPicker';
 
 // quick shorthand
 export type Page = () => React.ReactNode;
@@ -30,7 +33,8 @@ interface RouteMapping {
 	/**
 	 * If a mapping does not have this property, it WILL NOT show up in menus and nav sections.
 	 */
-	name?: string
+	name?: string,
+	title: string
 }
 
 /**
@@ -39,12 +43,14 @@ interface RouteMapping {
 const ROUTE_MAPPINGS: RouteMapping[] = [
 	{
 		url: '*',
-		page: NotFoundPage
+		page: NotFoundPage,
+		title: '404'
 	},
 	{
 		url: '/',
 		page: Landing,
-		name: 'Home'
+		name: 'Home',
+		title: 'Home'
 	},
 	/* 
 	The components above are MANDATORY; sites will break without them.
@@ -53,22 +59,26 @@ const ROUTE_MAPPINGS: RouteMapping[] = [
 	{
 		url: '/about',
 		page: About,
-		name: 'About'
+		name: 'About',
+		title: 'About Us'
 	},
 	{
 		url: '/menu',
 		page: Menu,
-		name: 'Menu'
+		name: 'Menu',
+		title: 'Menu'
 	},
 	{
 		url: '/delivery',
 		page: Delivery,
-		name: 'Delivery'
+		name: 'Delivery',
+		title: 'Delivery Info'
 	},
 	{
 		url: '/picker',
 		page: ProductPicker,
-		name: 'Product Picker'
+		name: 'Product Picker',
+		title: 'Product Picker'
 	}
 ];
 

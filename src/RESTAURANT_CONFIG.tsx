@@ -1,7 +1,9 @@
 import React from "react";
+import { LinkProps } from "react-router-dom";
 
-import { AT } from "./BottomBanner/BottomBanner";
-import { PhoneCallable } from './BottomBanner/BottomBanner';
+import { AT } from "./Components/BottomBanner/BottomBanner";
+import { PhoneCallable } from './Components/BottomBanner/BottomBanner';
+import { Link as _Link } from "react-router-dom";
 
 /**
  * Standard assertion function.
@@ -10,6 +12,18 @@ import { PhoneCallable } from './BottomBanner/BottomBanner';
 const _assert: (arg0: boolean) => void = (bool: boolean) => {
 	if (!bool) throw new Error("AssertionError");
 }
+
+interface CustomLinkProps extends LinkProps {
+	newWebsiteTitle: string
+}
+
+// export const Link = (props: CustomLinkProps) => {
+// 	const { children, newWebsiteTitle, ...newProps } = props;
+
+// 	return <_Link {...newProps} >
+// 		{children}
+// 	</_Link>
+// }
 
 /**
  * Set the business' name here.
@@ -22,6 +36,7 @@ export const RESTAURANT_DESCRIPTION: string = 'Locally Owned Cafe and Lounge';
  * This is the value shown on the tab.
  */
 export const WEBSITE_TITLE: string = 'The Spot';
+export const NEEDS_WEBSITE_TITLE: boolean = true;
 
 /**
  * If the business has ony main phone number they take all their calls with.

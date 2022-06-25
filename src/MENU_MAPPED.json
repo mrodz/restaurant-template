@@ -4,19 +4,28 @@
 			"name": "Expresso",
 			"description": "8oz of pure expresso",
 			"price": "$4.00",
-			"tags": ["thirsty", "coffee"]
+			"tags": [
+				"thirsty",
+				"coffee"
+			]
 		},
 		{
 			"name": "Cappuccino",
 			"description": "12oz of an Italian classic",
 			"price": "$4.00",
-			"tags": ["thirsty", "coffee"]
+			"tags": [
+				"thirsty",
+				"coffee"
+			]
 		},
 		{
 			"name": "Roasted Coffee",
 			"description": "Your favorite Cup of Joe!",
 			"price": "$4.50",
-			"tags": ["thirsty", "coffee"]
+			"tags": [
+				"thirsty",
+				"coffee"
+			]
 		}
 	],
 	"boba": [
@@ -24,19 +33,50 @@
 			"name": "Matcha Green Tea Boba",
 			"description": "16oz (M), 24oz (L)",
 			"price": "$4.50 (M), $5.00 (L)",
-			"tags": ["thirsty", "boba"]
+			"tags": [
+				"thirsty",
+				"boba"
+			]
+		},
+		{
+			"name": "Milk Tea Boba",
+			"description": "16oz (M), 24oz (L)",
+			"price": "$4.50 (M), $5.00 (L)",
+			"tags": [
+				"thirsty",
+				"boba"
+			]
+		},
+		{
+			"name": "Honeydew Boba",
+			"description": "16oz (M), 24oz (L)",
+			"price": "$4.50 (M), $5.00 (L)",
+			"tags": [
+				"thirsty",
+				"boba"
+			]
+		},
+		{
+			"name": "Strawberry-Banana Boba",
+			"description": "16oz (M), 24oz (L)",
+			"price": "$4.50 (M), $5.00 (L)",
+			"tags": [
+				"thirsty",
+				"boba"
+			]
+		},
+		{
+			"name": "Taro Boba",
+			"description": "16oz (M), 24oz (L)",
+			"price": "$4.50 (M), $5.00 (L)",
+			"tags": [
+				"thirsty",
+				"boba"
+			]
 		}
 	],
-	"smoothie": [
-
-	],
-	"tea": [
-
-	],
-	"pastries": [
-
-	],
-	"snacks": [
-
-	]
+	"smoothie": [],
+	"tea": [],
+	"pastries": [],
+	"snacks": []
 }

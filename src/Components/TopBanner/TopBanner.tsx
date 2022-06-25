@@ -13,13 +13,13 @@ import Important from "../Important/Important";
 import {
 	RESTAURANT_NAME,
 	BANNER_TOP_DESC
-} from '../RESTAURANT_CONFIG';
+} from '../../RESTAURANT_CONFIG';
 
 import { ROUTE_MAPPINGS } from '../App/App';
 
 import './TopBanner.scss';
-import styles from '../designs.scss';
-import '../designs.scss';
+import styles from '../../designs.scss';
+import '../../designs.scss';
 
 // house SVG
 const SVG_DATA: string = "M18.69,73.37,59.18,32.86c2.14-2.14,2.41-2.23,4.63,0l40.38,40.51V114h-30V86.55a3.38,3.38,0,0,0-3.37-3.37H52.08a3.38,3.38,0,0,0-3.37,3.37V114h-30V73.37ZM60.17.88,0,57.38l14.84,7.79,42.5-42.86c3.64-3.66,3.68-3.74,7.29-.16l43.41,43,14.84-7.79L62.62.79c-1.08-1-1.24-1.13-2.45.09Z";
@@ -63,7 +63,7 @@ const TopBanner: FC<{}> = React.memo(() => {
 
 	const burgerRoutes = ROUTE_MAPPINGS
 		.filter(m => m?.name !== undefined && m.url !== '/') // get rid of hidden routes (no name) and the home route
-		.map((mapping, i) => <Link to={mapping.url} key={i} onClick={closeBurger} className='burger-link'>{mapping?.name}</Link>);
+		.map((mapping, i) => <Link /*newWebsiteTitle={mapping.title}*/ to={mapping.url} key={i} onClick={closeBurger} className='burger-link'>{mapping?.name}</Link>);
 
 	const getBurgerClass = () => {
 		if (isHamburgerOpen) {
@@ -88,7 +88,7 @@ const TopBanner: FC<{}> = React.memo(() => {
 						{burgerRoutes}
 					</nav>
 					<div className='nav-home-link'>
-						<Link to="/" onClick={closeBurger}>
+						<Link /*newWebsiteTitle='Home'*/ to="/" onClick={closeBurger}>
 							<svg id="map-img" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 113.97">
 								<path fill={styles.popColor} d={SVG_DATA} />
 								Home {/* This will render if inline SVGs are not supported. */}
@@ -114,7 +114,7 @@ const TopBanner: FC<{}> = React.memo(() => {
 			<header className='top-banner'>
 				<div className='top-banner-elements'>
 					<AnimatedUnderline colors={{ from: styles.popColor, to: styles.popColor }} className="logo-underliner">
-						<Link to="/" style={{ textDecoration: 'none', color: 'unset' }}>
+						<Link /*newWebsiteTitle='Home'*/ to="/" style={{ textDecoration: 'none', color: 'unset' }}>
 							<div className='logo-text'>{RESTAURANT_NAME}</div>
 						</Link>
 					</AnimatedUnderline>

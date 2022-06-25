@@ -1,7 +1,7 @@
 @use "sass:map";
 @use "sass:math";
-@use "../designs.scss";
-@use "../index.scss";
+@use "../../designs.scss";
+@use "../../index.scss";
 
 $padding: 2rem;
 $switch-to-mobile-at: 500px;

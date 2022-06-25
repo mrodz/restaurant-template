@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import Check from '@mui/icons-material/Check';
 import './ProductPicker.sass';
-import styles from '../designs.scss';
+import styles from '../../designs.scss';
 
 export interface MenuItem {
 	name: string,
@@ -27,16 +27,22 @@ export interface MenuItem {
 	tags: string[]
 }
 
-const MENU_MAPPED: {
+export interface Menu {
 	coffee: MenuItem[],
 	boba: MenuItem[],
 	smoothie: MenuItem[],
 	tea: MenuItem[],
 	pastries: MenuItem[],
 	snacks: MenuItem[]
-} = require('../MENU_MAPPED.json');
+}
 
+const MENU_MAPPED: Menu = require('../../MENU_MAPPED.json');
 
+/**
+ * {
+ *	string[]: string[]
+ * }
+ */
 let cached = {};
 
 interface MenuItemCard {
@@ -54,6 +60,7 @@ const MenuItemCard: FC<MenuItemCard> = (props) => {
 
 /**
  * Check if an array has all the elements of another array.
+ * I believe this algorithm runs in O of n + log(n) time.
  * 
  * Example:
  * 
@@ -69,14 +76,14 @@ const MenuItemCard: FC<MenuItemCard> = (props) => {
  */
 function arrayContains<T>(array0: T[], array1: T[]): boolean {
 	// once an element is found, its index is stored here to skip checking it in future iterations.
-	let indexesToSkip = new Set<number>(); 
+	let indexesToSkip = new Set<number>();
 
 	for (let i = 0, len0 = array0.length; i < len0; i++) {
 		for (let j = 0, len1 = array1.length; j < len1; j++) {
 			if (indexesToSkip.has(j) || array0[i] !== array1[j]) continue;
-			
+
 			indexesToSkip.add(j);
-			
+
 			const foundAllElements = indexesToSkip.size === len1;
 			if (foundAllElements) return true;
 		}
@@ -101,8 +108,7 @@ const TopicsOfInterest = (choices: string[]) => {
 
 	for (const key in MENU_MAPPED) {
 		for (const item of MENU_MAPPED[key as keyof typeof MENU_MAPPED]) {
-
-			if (arrayContains(item.tags, choices) /*item.tags.includes(choices[0]) && item.tags.includes(choices[1])*/) {
+			if (arrayContains(item.tags, choices)) {
 				results.push(item);
 			}
 		}
@@ -110,10 +116,8 @@ const TopicsOfInterest = (choices: string[]) => {
 
 	const found = results.length !== 0;
 
-	if (found) {
-		//@ts-ignore
-		cached[choices] = results;
-	}
+	//@ts-ignore
+	if (found) cached[choices] = results;
 
 	return <>
 		{(() => {
@@ -125,7 +129,7 @@ const TopicsOfInterest = (choices: string[]) => {
 
 const steps: {
 	label: string,
-	description: (choice: string[]) => string[] | JSX.Element,
+	description: (choices: string[]) => string[] | JSX.Element,
 	allowPassthrough?: boolean
 }[] = [
 		{
@@ -134,14 +138,14 @@ const steps: {
 		},
 		{
 			label: 'Okay, choose which of these fits your taste the most',
-			description: (choice) => {
-				switch (choice[0]) {
+			description: (choices) => {
+				switch (choices[0]) {
 					case 'hungry':
 						return ['Sweet', 'Salty'];
 					case 'thirsty':
 						return ['Boba', 'Tea', 'Coffee', 'Something else...'];
 					default:
-						return [`No choice mapped for ${choice}`];
+						return [`No choice mapped for ${choices[0]}`];
 				}
 			}
 		},
@@ -152,10 +156,6 @@ const steps: {
 			),
 			allowPassthrough: true
 		},
-		// {
-		// 	label: 'Review Findings',
-		// 	description: (choice) => TopicsOfInterest(choice),
-		// },
 	];
 
 const CustomConnector = styled(StepConnector)(({ theme }) => ({
@@ -247,23 +247,13 @@ export default function ProductPicker(): JSX.Element {
 			<StepContent>
 				<FormControl>
 					<RadioGroup
-						aria-labelledby="demo-radio-buttons-group-label"
-						name="radio-buttons-group"
-						onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-							setValue((event.target as HTMLInputElement).value);
-						}}
+						aria-labelledby="demo-radio-buttons-group-label" name="radio-buttons-group"
+						onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setValue((event.target as HTMLInputElement).value); }}
 					>
-
-						{(props.options instanceof Array)
-							? props.options.map((e, i) => {
-								return <FormControlLabel value={(() => {
-									try {
-										return e.toLowerCase();
-									} catch (e) {
-										return e; // should never happen
-									}
-								})()} control={<Radio />} label={e} key={i} />
-							}) : props.options
+						{
+							props.options instanceof Array
+								? props.options.map((e, i) => <FormControlLabel value={e.toLowerCase()} control={<Radio />} label={e} key={i} />)
+								: props.options
 						}
 					</RadioGroup>
 				</FormControl>
@@ -271,18 +261,10 @@ export default function ProductPicker(): JSX.Element {
 					<div>
 						<Button
 							variant="text"
-							{
-							...(() => {
-								if (props.allowPassthrough) {
-									return {}
-								} else {
-									return { disabled: value === null }
-								}
-							})()
-							}
+							{...(!props.allowPassthrough && { disabled: value === null })}
 							onClick={() => {
 								handleNext();
-								let copy = Array.from(choices);
+								let copy: string[] = Array.from(choices);
 								copy.push(value as string);
 								setChoices(copy);
 							}}
@@ -295,7 +277,7 @@ export default function ProductPicker(): JSX.Element {
 							disabled={props.index === 0}
 							onClick={() => {
 								handleBack();
-								let copy = Array.from(choices);
+								let copy: string[] = Array.from(choices);
 								copy.pop();
 								setChoices(copy);
 							}}
@@ -311,49 +293,41 @@ export default function ProductPicker(): JSX.Element {
 
 	return (
 		<div className='product-picker-main'>
-			{/* <Box> */}
 			<Stepper activeStep={activeStep} connector={<CustomConnector />} orientation="vertical" sx={{
 				height: 'min-content'
 			}}>
-				{/* <> */}
-					{steps.map((step, index) => (
-						<Step key={index}>
-							<StepLabel
-								optional={
-									index === steps.length - 1 ? (
-										<>Last Step</>
-									) : null
-								}
+				{steps.map((step, index) => (
+					<Step key={index}>
+						<StepLabel
+							optional={
+								index === steps.length - 1 ? (
+									<>Last Step</>
+								) : null
+							}
 
-								StepIconComponent={CustomCircle}
-							>
-								<span className='product-picker-step-title'>
-									{step.label}
-								</span>
-							</StepLabel>
-							<CustomStepContent options={step.description(choices)} allowPassthrough={step.allowPassthrough} index={index} />
-						</Step>
-					))}
-					<>{(() => {
-						if (activeStep === steps.length) {
-							return (
-								<Button sx={{ marginTop: 1, marginRight: 1 }}
-								onClick={() => {
-									handleReset()
-									setChoices([])
-								}}
-								>
-									Reset
-								</Button>
-							);
-						} else {
-							return
-						}
-					})()}</>
-				{/* </> */}
+							StepIconComponent={CustomCircle}
+						>
+							<span className='product-picker-step-title'>
+								{step.label}
+							</span>
+						</StepLabel>
+						<CustomStepContent options={step.description(choices)} allowPassthrough={step.allowPassthrough} index={index} />
+					</Step>
+				))}
+				<>
+					{
+						activeStep === steps.length &&
+						<Button sx={{ marginTop: 1, marginRight: 1 }} onClick={() => {
+							handleReset()
+							setChoices([])
+						}}>
+							Reset
+						</Button>
+					}
+				</>
 			</Stepper>
 			{activeStep === steps.length && (
-				<Paper square elevation={0} sx={{ p: 3 }}>
+				<Paper square elevation={0} sx={{ p: 3, width: "fit-content" }}>
 					All steps completed! Here&apos;s what I found:
 					<br />
 
@@ -362,7 +336,6 @@ export default function ProductPicker(): JSX.Element {
 					<br />
 				</Paper>
 			)}
-			{/* </Box> */}
 		</div>
 	);
 }

@@ -3,7 +3,7 @@ import React, { CSSProperties, FC } from 'react';
 import {
 	LOCATIONS,
 	Location as L,
-} from '../RESTAURANT_CONFIG';
+} from '../../RESTAURANT_CONFIG';
 
 import './BottomBanner.scss';
 
