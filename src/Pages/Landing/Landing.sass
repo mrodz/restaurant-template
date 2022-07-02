@@ -20,7 +20,7 @@ $padding: 1rem
 	100% 
 		opacity: 1
 
-#second>.first-description
+[data-even] > .first-description
 	text-align: right
 
 .landing-page
@@ -32,6 +32,9 @@ $padding: 1rem
 	&>div
 		display: flex
 		flex-direction: row
+
+		&[data-even]
+			flex-direction: row-reverse
 
 		&>.first-description
 			padding: $padding
@@ -52,8 +55,7 @@ $padding: 1rem
 	flex-direction: column
 	padding: $padding * 2
 	border: solid designs.pop-color() 10px
-	margin:
-		bottom: $padding * 6
+	margin-bottom: $padding * 6
 
 	& [data-discover-label],
 	& [data-business-name-label],
@@ -127,7 +129,6 @@ $padding: 1rem
 				padding-bottom: calc($padding / 2)
 
 div.reviews-line
-	// margin-top: $padding * 2;
 	text-transform: uppercase
 	font-weight: bold
 
@@ -142,6 +143,9 @@ div.review-card-review:hover
 	padding: $padding * 2
 	margin-bottom: 4rem
 	margin-top: 4rem
+
+.text-section-image
+	margin: auto
 
 @mixin fade-to($property, $color, $name)
 	@keyframes #{$name}
@@ -172,9 +176,21 @@ div.review-card-review:hover
 /// SMALLER SCREENS BELOW...
 /// 
 
-@media only screen and (max-width: 1050px)
+@media only screen and (max-width: 1200px)
+	.business-blurbs>div
+		flex-direction: column !important //@fixme
+
+	.first-description
+		text-align: center !important
+		margin-bottom: 5rem
+
 	.main-landing-intro
-		font-size: 75%
+		font-size: 60%
+
+
+// @media only screen and (max-width: 1050px)
+	// .main-landing-intro
+		// font-size: 60%
 
 @media only screen and (max-width: 800px)
 	.main-landing-intro
