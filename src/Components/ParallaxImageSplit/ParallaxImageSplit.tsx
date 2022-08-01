@@ -1,7 +1,8 @@
 import { string } from 'prop-types';
-import React, { useState, FC, CSSProperties } from 'react';
+import React, { useState, FC, CSSProperties, useEffect } from 'react';
 import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
 import './ParallaxImageSplit.scss';
+import styles from '../../designs.scss';
 
 /**
  * Denotes which half of the image you're referring to: L(eft) or R(ight).
@@ -82,6 +83,13 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 	// need to use states because it takes time to get the images' dimensions.
 	const [leftProduct, setLeftProduct] = useState('');
 	const [rightProduct, setRightProduct] = useState('');
+	const [loaded, setLoaded] = useState(false);
+	const [dim, setDim] = useState(window.screen.width);
+
+	// console.log(window.screen.width);
+	window.onresize = () => {
+		setDim(window.screen.width);
+	}
 
 	// const [width, setWidth] = useState('');
 	// const [height, setHeight] = useState('');
@@ -89,8 +97,8 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 	let img = new Image();
 	img.src = props.fileName;
 
-	img.onload = () => {
-		function createCanvas(placement: dir) {
+	img.onload = async () => {
+		async function createCanvas(placement: dir) {
 			const canvas = document.createElement('canvas');
 
 			canvas.width = img.width / 2;
@@ -113,50 +121,63 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 			// Converting to base64
 			const base64Image = canvas.toDataURL('image/jpeg');
 			(placement === 'L' ? setLeftProduct : setRightProduct)(base64Image);
+			return base64Image;
 		}
 
-		createCanvas('L');
-		createCanvas('R');
+		await createCanvas('L');
+		await createCanvas('R');
+
+		setLoaded(true);
+		// console.log(leftProduct, rightProduct)
 	};
 
-	function callIfFunction<T>(f: T | (() => T)): T {
-		return f instanceof Function ? f() : f;
-	}
+	// useEffect(() => {
+	// 	if (loaded) alert("image loaded!");
+	// }, [loaded]);
 
-	const style: CSSProperties = {
-		maxWidth: ('width' in props && props?.width !== undefined) ? `calc(${callIfFunction(props.width)} / 2)` : 'unset',
-		maxHeight: ('height' in props && props?.height !== undefined) ? `calc(${callIfFunction(props.height)} / 2)` : 'unset'
-	}
+	// function callIfFunction<T>(f: T | (() => T)): T {
+	// 	return f instanceof Function ? f() : f;
+	// }
+
+	// const style: CSSProperties = {
+	// 	maxWidth: ('width' in props && props?.width !== undefined) ? `calc(${callIfFunction(props.width)} / 2)` : 'unset',
+	// 	maxHeight: ('height' in props && props?.height !== undefined) ? `calc(${callIfFunction(props.height)} / 2)` : 'unset'
+	// }
 
 	const leading = (props?.leading ?? 'L') === 'L';
-	
+
 	const speeds = props?.speeds ?? {
-		leading: +100,
-		lagging: -100
+		leading: dim > styles.switchToMobileView ? +100 : +50,
+		lagging: dim > styles.switchToMobileView ? -100 : -50
 	}
 
-	const appliedStyles = 'width' in props ? {
+	const appliedStyles = {} /*'width' in props ? {
 		minWidth: callIfFunction(props.width)
 	} : 'height' in props ? {
 		minHeight: callIfFunction(props.height)
-	} : {};
+	} : {};*/
 
 	const prefixAlt = (prefix: string): string => Array.isArray(props.alt) ? props.alt[0] : prefix + props.alt;
 	const speed = (l: boolean) => l ? speeds.leading : speeds.lagging;
 
 	return (
-		<ParallaxProvider>
-			<div className={'parallax-image-wrapper-1 ' + (props?.className ?? '')} data-parallax-image-split style={appliedStyles}>
-				<div className='parallax-image-wrapper'>
-					<Parallax speed={speed(leading)}>
-						<img data-fade-first className='parallax-image' src={leftProduct} loading='lazy' alt={prefixAlt('Left')} style={style} />
-					</Parallax>
-					<Parallax speed={speed(!leading)}>
-						<img data-fade-second className='parallax-image' src={rightProduct} loading='lazy' alt={prefixAlt('Right')} style={style} />
-					</Parallax>
+		<>
+			{/*<div style={{backgroundColor: "red", width: '100%', height: '100%'}}>
+
+	</div>*/}
+			<ParallaxProvider>
+				<div className={'parallax-image-wrapper-1 ' + (props?.className ?? '')} data-parallax-image-split style={appliedStyles}>
+					<div className='parallax-image-wrapper'>
+						<Parallax speed={speed(leading)}>
+							<img data-fade-first className='parallax-image' src={leftProduct} loading='lazy' alt={prefixAlt('Left')} /*style={style}*/ />
+						</Parallax>
+						<Parallax speed={speed(!leading)}>
+							<img data-fade-second className='parallax-image' src={rightProduct} loading='lazy' alt={prefixAlt('Right')} /*style={style}*/ />
+						</Parallax>
+					</div>
 				</div>
-			</div>
-		</ParallaxProvider>
+			</ParallaxProvider>
+		</>
 	);
 });
 

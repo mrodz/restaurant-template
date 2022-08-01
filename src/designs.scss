@@ -109,12 +109,15 @@ $FONTS: 'Artsy', 'Regal';
 	}
 }
 
+$switch-to-mobile-view: 1200;
+
 // to use vars in JS/TS
 :export {
 	popColor: pop-color();
 	primaryColor: primary-color();
 	pageBg: page-bg();
 	fontColor: font-color();
+	switchToMobileView: $switch-to-mobile-view;
 }
 
 // MEDIAS - see GemerateMediaQuerries.java

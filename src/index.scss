@@ -148,15 +148,22 @@
 
 html {
 	min-height: 100vh;
+	// max-width: 100vw;
 	font-size: 110%;
 	@include designs.default-font;
 	background-color: designs.page-bg();
 	color: designs.font-color();
 	overflow-x: hidden;
+	// background-color: greenyellow;
 }
 
 body {
 	margin: 0;
+	// display:block;
+	// position: fixed;
+	// width: 100%;
+	// overflow-y: scroll;
+	// background-color: red;
 }
 
 #root {

@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, useState } from 'react';
 import { RESTAURANT_NAME, RESTAURANT_DESCRIPTION, LOREM_IPSUM } from '../../RESTAURANT_CONFIG';
 import boba from './pictures/boba.jpeg';
 import ParallaxImageSplit from '../../components/ParallaxImageSplit/ParallaxImageSplit';
@@ -57,35 +57,56 @@ const ReviewCard: FC<{ review: ReviewCardProps }> = (props) => {
 	);
 }
 
-type ParallaxImage = typeof ParallaxImageSplit;
+// type ParallaxImage = typeof ParallaxImageSplit;
 
 interface ParallaxImageTextSectionProps {
 	even?: boolean,
-	image: ParallaxImage,
+	image: React.ReactElement,
 	title: string,
 	content: string
 }
 
 function ParallaxImageTextSection(props: ParallaxImageTextSectionProps) {
-	return (
-		<div {...!props?.even && { "data-even": true }}>
+	const components = [
+		(
 			<div className='first-description'>
-				<h1>
-					{props.title}
-				</h1>
-				<section>
-					{props.content}
-				</section>
+				<div>
+					<h1>
+						{props.title}
+					</h1>
+					<section>
+						{props.content}
+					</section>
+				</div>
 			</div>
+		),
+		(
 			<div className='text-section-image'>
 				<>
 					{props.image}
 				</>
 			</div>
+		)
+	];
+
+	const [dim, setDim] = useState(window.screen.width);
+
+	// console.log(window.screen.width);
+	window.onresize = () => {
+		setDim(window.screen.width);
+	}
+	
+	// console.log(dim > styles.switchToMobileview, dim, styles.switchToMobileView)
+	if (!props?.even && dim > Number.parseInt(styles.switchToMobileView)) components.reverse();
+
+	return (
+		<div {...!props?.even && { "data-even": true }}>
+			{components}
 		</div>
 	);
 }
 
+/*
 const PARALLAX_IMAGE_WIDTH = () => {
 	let width = window.screen.width / 50;
 
@@ -93,11 +114,15 @@ const PARALLAX_IMAGE_WIDTH = () => {
 	
 	return width;
 }
+*/
+
 /**
  * @todo DON'T ADD PERSONALIZED CONTENT HERE - it is a template. Instead,
  * maybe add squares like the ones on your portfolio website and splash text.
  * 
  * <h1> elements HAVE A PURPOSE!
+ * 
+ * FUCK the boba shit doesn't work
  * 
  * @returns JSX 
  */
@@ -135,11 +160,13 @@ export default function Landing(): React.ReactElement {
 		}
 	];
 
+	/**
 	const parallaxImageSplitBuilder = (fileName: any, alt: any, width: any, leading: any): ParallaxImage => {
 		return (
 			<ParallaxImageSplit fileName={fileName} alt={alt} width={width} leading={leading}/>
 		) as unknown as ParallaxImage;
 	}
+	*/
 
 	return (
 		<div className='landing-page'>
@@ -159,7 +186,7 @@ export default function Landing(): React.ReactElement {
 			<section className='business-blurbs'>
 				{
 					blurbs.map((blurb, index) => <ParallaxImageTextSection image={
-						parallaxImageSplitBuilder(blurb.parallaxImageURL, blurb.parallaxImageAlt, PARALLAX_IMAGE_WIDTH, index % 2 == 0 ? 'L' : 'R')
+						<ParallaxImageSplit fileName={blurb.parallaxImageURL} alt={blurb.parallaxImageAlt} leading={index % 2 == 0 ? 'L' : 'R'} />
 					} title={blurb.title} content={blurb.description} even={index % 2 == 0} key={index} />)
 				}
 			</section>
@@ -213,6 +240,10 @@ export default function Landing(): React.ReactElement {
 				<p>
 					{LOREM_IPSUM}
 				</p>
+			</section>
+
+			<section>
+
 			</section>
 
 			{/*

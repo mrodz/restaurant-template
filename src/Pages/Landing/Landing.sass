@@ -30,14 +30,23 @@ $padding: 1rem
 
 .business-blurbs
 	&>div
-		display: flex
-		flex-direction: row
+		display: grid
+		grid-template-columns: 1fr 2fr
+		overflow: hidden
 
 		&[data-even]
-			flex-direction: row-reverse
+			grid-template-columns: 2fr 1fr
+			margin-right: 0
+
+			&>.first-description
+				display: block
+				width: fit-content
+				
 
 		&>.first-description
 			padding: $padding
+			width: 80%
+
 
 		&>[data-parallax-image-split]
 			min-width: max-content
@@ -146,6 +155,7 @@ div.review-card-review:hover
 
 .text-section-image
 	margin: auto
+	height: 100%
 
 @mixin fade-to($property, $color, $name)
 	@keyframes #{$name}
@@ -176,13 +186,20 @@ div.review-card-review:hover
 /// SMALLER SCREENS BELOW...
 /// 
 
-@media only screen and (max-width: 1200px)
+
+@media only screen and (max-width: #{designs.$switch-to-mobile-view}px)
 	.business-blurbs>div
-		flex-direction: column !important //@fixme
+		grid-template-rows: 1fr
+		grid-template-columns: 1fr !important
+		
+		// flex-direction: column !important //@fixme
 
 	.first-description
 		text-align: center !important
+		margin-left: auto
+		margin-right: auto
 		margin-bottom: 5rem
+		
 
 	.main-landing-intro
 		font-size: 60%
