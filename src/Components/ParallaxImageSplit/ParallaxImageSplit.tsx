@@ -48,7 +48,8 @@ interface ParallaxImageSplitProps {
 		 */
 		lagging: number
 	},
-	className?: string
+	className?: string,
+	onLoad?: () => void
 }
 
 /**
@@ -81,24 +82,23 @@ interface ParallaxImageSplitPropsHeight extends ParallaxImageSplitProps {
  * @returns JSX.
  */
 const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPropsHeight> = React.memo((props) => {
-	// need to use states because it takes time to get the images' dimensions.
+	// need to use states because images must load before we can 
+	// read dimensions, which takes time.
 	const [leftProduct, setLeftProduct] = useState('');
 	const [rightProduct, setRightProduct] = useState('');
-	const [loaded, setLoaded] = useState(false);
-	const [dim, setDim] = useState(window.screen.width);
+	const [dim, setDim] = useState(document.body.clientWidth);
 
-	// console.log(window.screen.width);
 	useEffect(() => {
 		onWindowResize(() => {
-			setDim(window.screen.width);
+			setDim(document.body.clientWidth);
 		})
 	}, [])
 
 	let img = new Image();
 	img.src = props.fileName;
 
-	img.onload = async () => {
-		async function createCanvas(placement: dir) {
+	img.onload = () => {
+		function createCanvas(placement: dir) {
 			const canvas = document.createElement('canvas');
 
 			canvas.width = img.width / 2;
@@ -115,19 +115,16 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 			// if left, start at the origin; if right, start midway through.
 			const start = placement === 'L' ? 0 : img.width / 2;
 
-			// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
 			ctx.drawImage(img, start, 0, img.width, img.height, 0, 0, img.width, img.height);
 
-			// Converting to base64
-			const base64Image = canvas.toDataURL('image/jpeg');
-			(placement === 'L' ? setLeftProduct : setRightProduct)(base64Image);
-			return base64Image;
+			// Convert to base64; return this
+			return canvas.toDataURL('image/jpeg');
 		}
 
-		await createCanvas('L');
-		await createCanvas('R');
+		setLeftProduct(createCanvas('L'));
+		setRightProduct(createCanvas('R'));
 
-		setLoaded(true);
+		props?.onLoad?.()
 	};
 
 	const leading = (props?.leading ?? 'L') === 'L';
@@ -146,10 +143,10 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 				<div className={'parallax-image-wrapper-1 ' + (props?.className ?? '')} data-parallax-image-split>
 					<div className='parallax-image-wrapper'>
 						<Parallax speed={speed(leading)}>
-							<img data-fade-first className='parallax-image' src={leftProduct} loading='lazy' alt={prefixAlt('Left')} /*style={style}*/ />
+							<img data-fade-first className='parallax-image' src={leftProduct} loading='lazy' alt={prefixAlt('Left')} />
 						</Parallax>
 						<Parallax speed={speed(!leading)}>
-							<img data-fade-second className='parallax-image' src={rightProduct} loading='lazy' alt={prefixAlt('Right')} /*style={style}*/ />
+							<img data-fade-second className='parallax-image' src={rightProduct} loading='lazy' alt={prefixAlt('Right')} />
 						</Parallax>
 					</div>
 				</div>

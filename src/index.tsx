@@ -38,9 +38,6 @@ if (head !== undefined && head !== null) {
   setHead()
 }
 
-type WindowResizeCallback = ((newDim: { width: number, height: number }) => void)
-let windowResizeFunctionCallbacks: WindowResizeCallback[] = []
-
 let throttlePause = false
 const throttle = (callback: () => void, time: number) => {
   if (throttlePause) return
@@ -52,6 +49,12 @@ const throttle = (callback: () => void, time: number) => {
   }, time)
 }
 
+/**
+ * Function that accepts an object containing the window's new `width` and `height`.
+ */
+type WindowResizeCallback = ((newDim: { width: number, height: number }) => void)
+
+let windowResizeFunctionCallbacks: WindowResizeCallback[] = []
 window.onresize = () => {
   // throttling ensures the site is more performant
   throttle(() => {
@@ -66,6 +69,11 @@ window.onresize = () => {
   }, 200)
 }
 
+/**
+ * If called in a Functional Component, do so in a `useEffect` hook so 
+ * the listener is added only once on mount (as opposed to every frame).
+ * @param fn callback function that will be called on window resize.
+ */
 export function onWindowResize(fn: WindowResizeCallback) {
   windowResizeFunctionCallbacks = [...windowResizeFunctionCallbacks, fn];
 }

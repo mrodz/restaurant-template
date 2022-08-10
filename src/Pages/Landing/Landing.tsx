@@ -1,8 +1,4 @@
 import React, { FC, ReactElement, useEffect, useState } from 'react';
-import { RESTAURANT_NAME, RESTAURANT_DESCRIPTION, LOREM_IPSUM } from '../../RESTAURANT_CONFIG';
-import boba from './pictures/boba.jpeg';
-import ParallaxImageSplit from '../../components/ParallaxImageSplit/ParallaxImageSplit';
-import './Landing.sass';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import {
 	Rating,
@@ -10,12 +6,20 @@ import {
 	Divider,
 	styled
 } from '@mui/material';
-import styles from '../../designs.scss';
+import { RESTAURANT_NAME, RESTAURANT_DESCRIPTION, LOREM_IPSUM } from '../../RESTAURANT_CONFIG';
+import ParallaxImageSplit from '../../components/ParallaxImageSplit/ParallaxImageSplit';
 import DetectView from '../../components/DetectView/DetectView';
+import styles from '../../designs.scss';
+import boba from './pictures/boba.jpeg';
+import reviews from './reviews.json';
+import './Landing.sass';
+
 import { onWindowResize } from '../..';
 
+type rating = 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5
+
 interface ReviewCardProps {
-	rating: 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5,
+	rating: rating,
 	reviewer: string,
 	content: string,
 	url: string,
@@ -89,6 +93,8 @@ function ParallaxImageTextSection(props: ParallaxImageTextSectionProps) {
 		)
 	];
 
+	// true if the device's width is less than a constant
+	// declared in `designs.scss`
 	const [mobile, setMobile] = useState(document.body.clientWidth <= styles.switchToMobileView);
 
 	useEffect(() => {
@@ -103,7 +109,8 @@ function ParallaxImageTextSection(props: ParallaxImageTextSectionProps) {
 
 	let fin: ReactElement[] = [...components];
 
-	// if the device is not mobile, select every "even" element.
+	// if the device is not mobile, select every "even" element
+	// and reverse the order (to fit with the grid columns).
 	if (!mobile && !props?.even) {
 		fin[0] = components[1];
 		fin[1] = components[0];
@@ -155,14 +162,6 @@ export default function Landing(): React.ReactElement {
 		}
 	];
 
-	/**
-	const parallaxImageSplitBuilder = (fileName: any, alt: any, width: any, leading: any): ParallaxImage => {
-		return (
-			<ParallaxImageSplit fileName={fileName} alt={alt} width={width} leading={leading}/>
-		) as unknown as ParallaxImage;
-	}
-	*/
-
 	return (
 		<div className='landing-page'>
 
@@ -201,27 +200,9 @@ export default function Landing(): React.ReactElement {
 				</Divider>
 				<DetectView>
 					<div className='review-cards'>
-						<ReviewCard review={{
-							rating: 5,
-							reviewer: 'Nancy Adzentoivich',
-							content: 'Wide selection of food from bagels and pastries to boba, panini and ice cream.',
-							url: 'https://goo.gl/maps/kw7ZiFJnp63HPLNq7',
-							id: '1'
-						}} />
-						<ReviewCard review={{
-							rating: 5,
-							reviewer: 'Ethan Cochard',
-							content: 'Love the service and friendly vibes from other customers and the staff.',
-							url: 'https://goo.gl/maps/bY9WhKFM33gZLLx1A',
-							id: '2'
-						}} />
-						<ReviewCard review={{
-							rating: 5,
-							reviewer: 'April Serrato',
-							content: 'Awesome food, price is legit and coolest staff!!!!',
-							url: 'https://goo.gl/maps/WevrSmRdny6Ei4pz9',
-							id: '3'
-						}} />
+						{reviews.map((r, i) =>
+							<ReviewCard key={i} review={{ ...r, rating: r.rating as rating }} />
+						)}
 					</div>
 				</DetectView>
 				<Divider />
