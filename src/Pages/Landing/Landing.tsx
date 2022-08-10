@@ -57,12 +57,11 @@ const ReviewCard: FC<{ review: ReviewCardProps }> = (props) => {
 		</div>
 	);
 }
+
 const lvar = function <T>(arg: T, name = 'unkown') {
-	// console.trace(`${name} = ${arg}`);
+	console.trace(`${name} = ${arg}`);
 	return arg;
 }
-
-// type ParallaxImage = typeof ParallaxImageSplit;
 
 interface ParallaxImageTextSectionProps {
 	even?: boolean,
@@ -99,118 +98,25 @@ function ParallaxImageTextSection(props: ParallaxImageTextSectionProps) {
 		)
 	];
 
-	// const [dim, setDim] = useState(window.screen.width);
-	// // const [rev, setRev] = useState(false);
+	const [mobile, setMobile] = useState(document.body.clientWidth <= styles.switchToMobileView);
 
-	// // console.log(window.screen.width);
-	// window.onresize = () => {
-	// 	console.log("ping");
-
-	// 	setDim(window.screen.width);
-	// 	// if (!rev && dim <= Number.parseInt(styles.switchToMobileView)) setRev(true);
-	// 	// if (rev && dim > Number.parseInt(styles.switchToMobileView)) setRev(false);
-	// }
-
-	// window.onresize = (ev) => console.log("woot")
-	const [mobile, setMobile] = useState(lvar(document.body.clientWidth) <= styles.switchToMobileView);
-
-	onWindowResize((d) => {
-
-		// console.log("here");
-		if (!mobile && d.width <= styles.switchToMobileView) {
-			setMobile(true)
-		} else if (mobile && d.width > styles.switchToMobileView) {
-			setMobile(false)
-		}
-
-		// setDim(d.width);
-	})
-
-	// useEffect(() => {
-	// 	console.log("dope2");
-
-	// }, [dim])
-
-
-	// useEffect(() => {
-	// 	// console.error(":)");
-	// 	window.onresize = function (this, e) {
-	// 		console.log(window.screen.width);
-
-	// 		setDim(window.screen.width)
-	// 	}
-	// }, []);
-
-	// useEffect(() => {
-	// 	alert(rev);
-	// }, [
-	// 	rev
-	// ]);
+	useEffect(() => {
+		onWindowResize((d) => {
+			if (!mobile && d.width <= styles.switchToMobileView) {
+				setMobile(true)
+			} else if (mobile && d.width > styles.switchToMobileView) {
+				setMobile(false)
+			}
+		})
+	}, [])
 
 	let fin: ReactElement[] = [...components];
 
-
-	if (props.id == 1) {
-		// lvar(!props?.even, "even")
-		// lvar(mobile, 'mobile')
-	}
-
+	// if the device is not mobile, select every "even" element.
 	if (!mobile && !props?.even) {
 		fin[0] = components[1];
 		fin[1] = components[0];
 	}
-
-	// if (lvar(window.screen.width) <= styles.switchToMobileView) {
-	// 	fin = [...components];
-	// } else {
-	// 	fin = [components[1], components[0]];
-	// }
-
-	// console.log(props);
-	// console.trace(props)
-	// if ((lvar(window.screen.width) > styles.switchToMobileView && !props?.even)) {
-	// 	fin = [components[1], components[0]]
-	// }
-
-	// if (dim < styles.switchToMobileView) {
-	// 	console.log("mobile in " + props.id);
-
-	// 	if (!props?.even) {
-	// 		// fin = [...components]
-	// 		console.log(props.id);
-	// 	}
-
-	// } else {
-	// 	console.log("nah from " + props.id);
-
-	// 	//  else {
-	// 	// if (dim < styles.switchToMobileView && !props?.even)
-	// 	// fin = [...components]
-	// 	// }
-	// }
-
-	// let reverses = 0
-	// FIXME!! this shit doesn't work :(
-	// console.log(dim > styles.switchToMobileview, dim, styles.switchToMobileView)
-	// if (!(dim > Number.parseInt(styles.switch)) && (!props?.even && dim <= Number.parseInt(styles.switchToMobileView))) {
-	// 	console.log("small", !props?.even, dim, styles.switchToMobileView);
-
-	// 	fin = [components[1], components[0]]
-	// 	// components.reverse();
-	// 	// reverses++;
-	// } else {
-	// 	console.log("big", !props?.even, dim, styles.switchToMobileView);
-
-	// 	fin = [...components]
-	// }
-
-	// if (dim < Number.parseInt(styles.switchToMobileView)) {
-	// 	fin = [components[0], components[1]]
-	// 	components.reverse();
-	// 	reverses++;
-	// }
-
-	// if (reverses === 2) throw new Error(":(");
 
 	return (
 		<div {...!props?.even && { "data-even": true }}>
@@ -299,8 +205,8 @@ export default function Landing(): React.ReactElement {
 			<section className='business-blurbs'>
 				{
 					blurbs.map((blurb, index) => <ParallaxImageTextSection id={index} image={
-						<ParallaxImageSplit fileName={blurb.parallaxImageURL} alt={blurb.parallaxImageAlt} leading={index % 2 == 0 ? 'L' : 'R'} />
-					} title={blurb.title} content={blurb.description} even={index % 2 == 0} key={index} />)
+						<ParallaxImageSplit fileName={blurb.parallaxImageURL} alt={blurb.parallaxImageAlt} leading={index % 2 === 0 ? 'L' : 'R'} />
+					} title={blurb.title} content={blurb.description} even={index % 2 === 0} key={index} />)
 				}
 			</section>
 

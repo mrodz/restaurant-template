@@ -88,9 +88,12 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 	const [dim, setDim] = useState(window.screen.width);
 
 	// console.log(window.screen.width);
-	onWindowResize(() => {
-		setDim(window.screen.width);
-	})
+	useEffect(() => {
+		onWindowResize(() => {
+			setDim(window.screen.width);
+		})
+	}, [])
+
 	// window.onresize = 
 
 	// const [width, setWidth] = useState('');
