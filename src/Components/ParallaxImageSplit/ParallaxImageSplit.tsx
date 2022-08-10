@@ -3,6 +3,7 @@ import React, { useState, FC, CSSProperties, useEffect } from 'react';
 import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
 import './ParallaxImageSplit.scss';
 import styles from '../../designs.scss';
+import { onWindowResize } from '../..';
 
 /**
  * Denotes which half of the image you're referring to: L(eft) or R(ight).
@@ -87,9 +88,10 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 	const [dim, setDim] = useState(window.screen.width);
 
 	// console.log(window.screen.width);
-	window.onresize = () => {
+	onWindowResize(() => {
 		setDim(window.screen.width);
-	}
+	})
+	// window.onresize = 
 
 	// const [width, setWidth] = useState('');
 	// const [height, setHeight] = useState('');

@@ -37,3 +37,23 @@ if (head !== undefined && head !== null) {
   if ('innerHTML' in head) head.innerHTML += `<meta name="theme-color" content="${styles.primaryColor}" />`;
   setHead()
 }
+
+type WindowResizeCallback = ((newDim: { width: number, height: number }) => void);
+let windowResizeFunctionCallbacks: WindowResizeCallback[] = [];
+
+window.onresize = (e) => {
+  for (let fn of windowResizeFunctionCallbacks) {
+    let dims = {
+      width: document.body.clientWidth,
+      height: document.body.clientHeight
+    }
+
+    fn(dims)
+  }
+}
+
+// Object.freeze(window.onresize)
+
+export function onWindowResize(fn: WindowResizeCallback) {
+  windowResizeFunctionCallbacks = [...windowResizeFunctionCallbacks, fn];
+}

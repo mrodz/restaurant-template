@@ -188,6 +188,18 @@ div.review-card-review:hover
 
 
 @media only screen and (max-width: #{designs.$switch-to-mobile-view}px)
+	.review-cards
+		grid-template-columns: 1fr
+		grid-template-rows: 1fr 1fr 1fr
+
+		.review-card
+			margin-left: $padding * 10
+			margin-right: $padding * 10
+			margin-bottom: $padding * 3
+
+			&:last-child
+				margin-bottom: unset
+
 	.business-blurbs>div
 		grid-template-rows: 1fr
 		grid-template-columns: 1fr !important
