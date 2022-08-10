@@ -1,18 +1,17 @@
-import React from "react";
+import {useState, useEffect, useRef } from "react";
 import './DetectView.css';
 
-
 /**
- * returns a div with a data attribute: [data-visible].
- * this reactive attribute changes depending on whether the 
+ * Returns a div with a data attribute: [data-visible].
+ * This reactive attribute changes depending on whether the 
  * component is visible (or not!).
  */
 export default function DetectView(props) {
-	const [isVisible, setVisible] = React.useState(true);
-	const domRef = React.useRef();
+	const [isVisible, setVisible] = useState(true);
+	const domRef = useRef();
 
 	// https://dev.to/selbekk/how-to-fade-in-content-as-it-scrolls-into-view-10j4
-	React.useEffect(() => {
+	useEffect(() => {
 		const cleanUp = domRef.current;
 
 		const observer = new IntersectionObserver(entries => {

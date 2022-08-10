@@ -95,7 +95,7 @@ export function lvar(strings: TemplateStringsArray, ...args: any[]) {
     for (let i = 1; i < filteredStrings.length; i++) {
       const str = filteredStrings[i];
       if (str.charAt(str.length - 1) === ':' && str.charAt(0) === ',')
-        result += `DEBUG ${str.slice(1, str.length - 1)} = ${args[i]}\n`
+        result += `DEBUG >> ${str.slice(1, str.length - 1)} = ${args[i]}\n`
     }
   } else {
     result = strings[0]

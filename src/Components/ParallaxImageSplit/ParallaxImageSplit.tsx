@@ -94,11 +94,6 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 		})
 	}, [])
 
-	// window.onresize = 
-
-	// const [width, setWidth] = useState('');
-	// const [height, setHeight] = useState('');
-
 	let img = new Image();
 	img.src = props.fileName;
 
@@ -133,21 +128,7 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 		await createCanvas('R');
 
 		setLoaded(true);
-		// console.log(leftProduct, rightProduct)
 	};
-
-	// useEffect(() => {
-	// 	if (loaded) alert("image loaded!");
-	// }, [loaded]);
-
-	// function callIfFunction<T>(f: T | (() => T)): T {
-	// 	return f instanceof Function ? f() : f;
-	// }
-
-	// const style: CSSProperties = {
-	// 	maxWidth: ('width' in props && props?.width !== undefined) ? `calc(${callIfFunction(props.width)} / 2)` : 'unset',
-	// 	maxHeight: ('height' in props && props?.height !== undefined) ? `calc(${callIfFunction(props.height)} / 2)` : 'unset'
-	// }
 
 	const leading = (props?.leading ?? 'L') === 'L';
 
@@ -156,22 +137,13 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 		lagging: dim > styles.switchToMobileView ? -100 : -50
 	}
 
-	const appliedStyles = {} /*'width' in props ? {
-		minWidth: callIfFunction(props.width)
-	} : 'height' in props ? {
-		minHeight: callIfFunction(props.height)
-	} : {};*/
-
 	const prefixAlt = (prefix: string): string => Array.isArray(props.alt) ? props.alt[0] : prefix + props.alt;
 	const speed = (l: boolean) => l ? speeds.leading : speeds.lagging;
 
 	return (
 		<>
-			{/*<div style={{backgroundColor: "red", width: '100%', height: '100%'}}>
-
-	</div>*/}
 			<ParallaxProvider>
-				<div className={'parallax-image-wrapper-1 ' + (props?.className ?? '')} data-parallax-image-split style={appliedStyles}>
+				<div className={'parallax-image-wrapper-1 ' + (props?.className ?? '')} data-parallax-image-split>
 					<div className='parallax-image-wrapper'>
 						<Parallax speed={speed(leading)}>
 							<img data-fade-first className='parallax-image' src={leftProduct} loading='lazy' alt={prefixAlt('Left')} /*style={style}*/ />
