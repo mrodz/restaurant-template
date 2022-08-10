@@ -58,21 +58,12 @@ const ReviewCard: FC<{ review: ReviewCardProps }> = (props) => {
 	);
 }
 
-const lvar = function <T>(arg: T, name = 'unkown') {
-	console.trace(`${name} = ${arg}`);
-	return arg;
-}
-
 interface ParallaxImageTextSectionProps {
 	even?: boolean,
 	image: React.ReactElement,
 	title: string,
 	content: string,
 	id?: number
-}
-
-function xor(a: boolean, b: boolean) {
-	return (a || b) && !(a && b)
 }
 
 function ParallaxImageTextSection(props: ParallaxImageTextSectionProps) {
@@ -125,16 +116,6 @@ function ParallaxImageTextSection(props: ParallaxImageTextSectionProps) {
 	);
 }
 
-/*
-const PARALLAX_IMAGE_WIDTH = () => {
-	let width = window.screen.width / 50;
-
-	console.log(width);
-	
-	return width;
-}
-*/
-
 /**
  * @todo DON'T ADD PERSONALIZED CONTENT HERE - it is a template. Instead,
  * maybe add squares like the ones on your portfolio website and splash text.
@@ -146,11 +127,6 @@ const PARALLAX_IMAGE_WIDTH = () => {
  * @returns JSX 
  */
 export default function Landing(): React.ReactElement {
-
-	// todo tomorrow - useState() to create reactive variable for screen width,
-	// 				   pass this to the child ParallaxImageSplit function.
-	// Maybe this works????
-
 	type blurb = {
 		parallaxImageURL: string,
 		title: string,
