@@ -2,7 +2,7 @@ import React, { useState, FC, useContext } from 'react';
 import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
 import './ParallaxImageSplit.scss';
 import styles from '../../designs.scss';
-import { AppDimensionContext } from '../App/App';
+import { AppDimensionContext } from '../..';
 
 /**
  * Denotes which half of the image you're referring to: L(eft) or R(ight).

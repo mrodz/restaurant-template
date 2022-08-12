@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
-import App, { DocumentDimensions } from './components/App/App';
+import App from './components/App/App';
 import { BrowserRouter } from 'react-router-dom';
 import styles from './designs.scss';
 import { WEBSITE_TITLE } from './RESTAURANT_CONFIG';
@@ -74,6 +74,36 @@ window.onresize = () => {
 export function onWindowResize(fn: WindowResizeCallback, trace: boolean = false) {
   if (trace) console.trace()
   windowResizeFunctionCallbacks.push(fn) // insert `fn` into `windowResizeFunctionCallbacks`
+}
+
+export type DocumentDimensions = {
+  width: number,
+  height: number
+}
+
+function getBodyDims(): DocumentDimensions {
+  return {
+    width: document.body.clientWidth,
+    height: document.body.clientHeight
+  }
+}
+
+export const AppDimensionContext = createContext<DocumentDimensions>(getBodyDims())
+
+export const AppDimensionProvider = (props: any) => {
+  const [dim, setDim] = useState(getBodyDims());
+
+  useEffect(() => {
+    onWindowResize(() => {
+      setDim(getBodyDims());
+    })
+  }, [])
+
+  return (
+    <AppDimensionContext.Provider value={dim}>
+      {props?.children}
+    </AppDimensionContext.Provider>
+  )
 }
 
 /**

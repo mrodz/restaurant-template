@@ -13,8 +13,7 @@ import styles from '../../designs.scss';
 import boba from './pictures/boba.jpeg';
 import reviews from './reviews.json';
 import './Landing.sass';
-
-import { AppDimensionContext } from '../../components/App/App';
+import { AppDimensionContext, AppDimensionProvider } from '../..';
 
 type rating = 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5
 
@@ -98,7 +97,7 @@ function ParallaxImageTextSection(props: ParallaxImageTextSectionProps) {
 
 	// if the device is not mobile, select every "even" element
 	// and reverse the order (to fit with the grid columns).
-	if (dim.width > styles.switchToMobileView && !props?.even) {
+	if (props?.even === false && dim.width > styles.switchToMobileView) {
 		fin[0] = components[1];
 		fin[1] = components[0];
 	}
@@ -118,7 +117,7 @@ function ParallaxImageTextSection(props: ParallaxImageTextSectionProps) {
  * 
  * @returns JSX 
  */
-export default function Landing(): React.ReactElement {
+function LandingInternal(): React.ReactElement {
 	type blurb = {
 		parallaxImageURL: string,
 		title: string,
@@ -149,7 +148,6 @@ export default function Landing(): React.ReactElement {
 
 	return (
 		<div className='landing-page'>
-
 			<section className='main-landing-intro landing-side-margins'>
 				<span data-discover-label>
 					Discover
@@ -216,4 +214,12 @@ export default function Landing(): React.ReactElement {
 			*/}
 		</div>
 	);
+}
+
+export default function Landing() {
+	return (
+		<AppDimensionProvider>
+			<LandingInternal />
+		</AppDimensionProvider>
+	)
 }

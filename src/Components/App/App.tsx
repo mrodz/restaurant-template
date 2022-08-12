@@ -100,37 +100,6 @@ function getRoutes(): React.ReactElement[] {
 	return result;
 }
 
-
-export type DocumentDimensions = {
-	width: number,
-	height: number
-}
-
-function getBodyDims(): DocumentDimensions {
-	return {
-		width: document.body.clientWidth,
-		height: document.body.clientHeight
-	}
-}
-
-export const AppDimensionContext = createContext<DocumentDimensions>(getBodyDims())
-
-const AppDimensionProvider = (props: any) => {
-	const [dim, setDim] = useState(getBodyDims());
-
-	useEffect(() => {
-		onWindowResize(() => {
-			setDim(getBodyDims());
-		})
-	}, [])
-
-	return (
-		<AppDimensionContext.Provider value={dim}>
-			{props?.children}
-		</AppDimensionContext.Provider>
-	)
-}
-
 /**
  * Root component.
  * 
@@ -162,21 +131,19 @@ function App() {
 
 	return (
 		<div className='all-encapsulating-element'>
-			<AppDimensionProvider>
-				<TopBanner />
-				<div className={`routes-wrapper`}>
-					<Routes>
-						{getRoutes()}
-					</Routes>
-				</div>
-				<div className='focus-screen' data-focusing={inFocusMode} onClick={() => {
-					document.dispatchEvent(new Event('maincontent:loosefocus'));
-					document.dispatchEvent(new Event('burgernav:forceclose'));
-				}}>
+			<TopBanner />
+			<div className={`routes-wrapper`}>
+				<Routes>
+					{getRoutes()}
+				</Routes>
+			</div>
+			<div className='focus-screen' data-focusing={inFocusMode} onClick={() => {
+				document.dispatchEvent(new Event('maincontent:loosefocus'));
+				document.dispatchEvent(new Event('burgernav:forceclose'));
+			}}>
 
-				</div>
-				<BottomBanner />
-			</AppDimensionProvider>
+			</div>
+			<BottomBanner />
 		</div >
 	);
 }
