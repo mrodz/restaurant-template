@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useContext, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useContext } from 'react';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import {
 	Rating,
@@ -213,8 +213,6 @@ export default function Landing(): React.ReactElement {
 				 - google maps embed
 				 - thank patrons who supported over covid (?)
 				 - get more inspo from other restaurant websites. 
-
-				DON'T CODE TOO MUCH ON 6/20 --> you have a lot of fucking homework to jump on. :(
 			*/}
 		</div>
 	);

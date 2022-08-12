@@ -1,9 +1,7 @@
-import { string } from 'prop-types';
-import React, { useState, FC, CSSProperties, useEffect, createContext, useContext } from 'react';
+import React, { useState, FC, useContext } from 'react';
 import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
 import './ParallaxImageSplit.scss';
 import styles from '../../designs.scss';
-import { onWindowResize } from '../..';
 import { AppDimensionContext } from '../App/App';
 
 /**
