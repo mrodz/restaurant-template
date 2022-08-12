@@ -1,9 +1,10 @@
 import { string } from 'prop-types';
-import React, { useState, FC, CSSProperties, useEffect } from 'react';
+import React, { useState, FC, CSSProperties, useEffect, createContext, useContext } from 'react';
 import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
 import './ParallaxImageSplit.scss';
 import styles from '../../designs.scss';
 import { onWindowResize } from '../..';
+import { AppDimensionContext } from '../App/App';
 
 /**
  * Denotes which half of the image you're referring to: L(eft) or R(ight).
@@ -86,13 +87,8 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 	// read dimensions, which takes time.
 	const [leftProduct, setLeftProduct] = useState('');
 	const [rightProduct, setRightProduct] = useState('');
-	const [dim, setDim] = useState(document.body.clientWidth);
 
-	useEffect(() => {
-		onWindowResize(() => {
-			setDim(document.body.clientWidth);
-		})
-	}, [])
+	let dim = useContext(AppDimensionContext);
 
 	let img = new Image();
 	img.src = props.fileName;

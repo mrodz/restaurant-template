@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
-import App from './components/App/App';
+import App, { DocumentDimensions } from './components/App/App';
 import { BrowserRouter } from 'react-router-dom';
 import styles from './designs.scss';
 import { WEBSITE_TITLE } from './RESTAURANT_CONFIG';
@@ -48,7 +48,7 @@ const throttle = (callback: () => void, time: number) => {
 /**
  * Function that accepts an object containing the window's new `width` and `height`.
  */
-type WindowResizeCallback = ((newDim: { width: number, height: number }) => void)
+type WindowResizeCallback = (newDim: DocumentDimensions) => void
 
 let windowResizeFunctionCallbacks: WindowResizeCallback[] = []
 window.onresize = () => {
@@ -69,9 +69,11 @@ window.onresize = () => {
  * If called in a Functional Component, do so in a `useEffect` hook so 
  * the listener is added only once on mount (as opposed to every frame).
  * @param fn callback function that will be called on window resize.
+ * @param trace whether or not to trace this function's calls. This should be limited
  */
-export function onWindowResize(fn: WindowResizeCallback) {
-  windowResizeFunctionCallbacks = [...windowResizeFunctionCallbacks, fn];
+export function onWindowResize(fn: WindowResizeCallback, trace: boolean = false) {
+  if (trace) console.trace()
+  windowResizeFunctionCallbacks.push(fn) // insert `fn` into `windowResizeFunctionCallbacks`
 }
 
 /**
@@ -85,25 +87,26 @@ export function onWindowResize(fn: WindowResizeCallback) {
  *   - [DEBUG] >> isCool = true
  */
 export function lvar(strings: TemplateStringsArray, ...args: any[]) {
+  if (args.length === 0) {
+    console.log(strings[0])
+    return
+  }
+
   let result: string = ''
+  const filteredStrings = strings.raw.filter(str => str !== '')
+  const prefix = '[DEBUG] >> ';
 
-  if (args.length !== 0) {
+  if (filteredStrings.length !== args.length) throw new Error("too many variables; not enough lables.")
 
-    let filteredStrings = strings.raw.filter(c => c !== '')
+  if (filteredStrings[0].charAt(filteredStrings[0].length - 1) === ':')
+    result = `${prefix}${filteredStrings[0].slice(0, filteredStrings[0].length - 1)} = ${args[0]}\n`
 
-    if (filteredStrings.length !== args.length) throw new Error("too many variables; not enough lables.")
-
-    if (filteredStrings[0].charAt(filteredStrings[0].length - 1) === ':')
-      result = `[DEBUG] >> ${filteredStrings[0].slice(0, filteredStrings[0].length - 1)} = ${args[0]}\n`
-
-    for (let i = 1; i < filteredStrings.length; i++) {
-      const str = filteredStrings[i];
-      if (str.charAt(str.length - 1) === ':' && str.charAt(0) === ',')
-        result += `DEBUG >> ${str.slice(1, str.length - 1)} = ${args[i]}\n`
-    }
-  } else {
-    result = strings[0]
+  for (let i = 1; i < filteredStrings.length; i++) {
+    const str = filteredStrings[i];
+    if (str.charAt(str.length - 1) === ':' && str.charAt(0) === ',')
+      result += `${prefix}${str.slice(1, str.length - 1)} = ${args[i]}\n`
   }
 
   console.log(result);
+
 }

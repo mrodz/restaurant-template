@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useContext, useEffect, useState } from 'react';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import {
 	Rating,
@@ -14,7 +14,7 @@ import boba from './pictures/boba.jpeg';
 import reviews from './reviews.json';
 import './Landing.sass';
 
-import { onWindowResize } from '../..';
+import { AppDimensionContext } from '../../components/App/App';
 
 type rating = 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5
 
@@ -93,25 +93,12 @@ function ParallaxImageTextSection(props: ParallaxImageTextSectionProps) {
 		)
 	];
 
-	// true if the device's width is less than a constant
-	// declared in `designs.scss`
-	const [mobile, setMobile] = useState(document.body.clientWidth <= styles.switchToMobileView);
-
-	useEffect(() => {
-		onWindowResize((d) => {
-			if (!mobile && d.width <= styles.switchToMobileView) {
-				setMobile(true)
-			} else if (mobile && d.width > styles.switchToMobileView) {
-				setMobile(false)
-			}
-		})
-	}, [])
-
+	let dim = useContext(AppDimensionContext)
 	let fin: ReactElement[] = [...components];
 
 	// if the device is not mobile, select every "even" element
 	// and reverse the order (to fit with the grid columns).
-	if (!mobile && !props?.even) {
+	if (dim.width > styles.switchToMobileView && !props?.even) {
 		fin[0] = components[1];
 		fin[1] = components[0];
 	}
@@ -128,8 +115,6 @@ function ParallaxImageTextSection(props: ParallaxImageTextSectionProps) {
  * maybe add squares like the ones on your portfolio website and splash text.
  * 
  * <h1> elements HAVE A PURPOSE!
- * 
- * FUCK the boba shit doesn't work
  * 
  * @returns JSX 
  */
