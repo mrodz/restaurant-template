@@ -8,7 +8,7 @@ import { onWindowResize } from '../..';
 /**
  * Denotes which half of the image you're referring to: L(eft) or R(ight).
  */
-export type dir = 'L' | 'R';
+type dir = 'L' | 'R';
 
 interface ParallaxImageSplitProps {
 	/**
@@ -104,10 +104,8 @@ const ParallaxImageSplit: FC<ParallaxImageSplitPropsWidth | ParallaxImageSplitPr
 			canvas.width = img.width / 2;
 			canvas.height = img.height;
 
-			const ctx = canvas.getContext('2d');
-
-			// to get rid of typescript warnings.
-			if (ctx === null) throw new Error("this will never be thrown");
+			// casting to get rid of typescript warnings.
+			const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
 			ctx.setTransform(1, 0, 0, 1, 0, 0);
 			ctx.imageSmoothingQuality = 'high';

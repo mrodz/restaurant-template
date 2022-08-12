@@ -14,10 +14,10 @@ const _assert: (arg0: boolean) => void = (bool: boolean) => {
 }
 
 export const LOREM_IPSUM: string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt "
-								 + "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco "
-								 + "laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in "
-								 + "voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat "
-								 + "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+	+ "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco "
+	+ "laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in "
+	+ "voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat "
+	+ "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
 /*
 interface CustomLinkProps extends LinkProps {
@@ -49,9 +49,9 @@ export const NEEDS_WEBSITE_TITLE: boolean = true;
 /**
  * If the business has ony main phone number they take all their calls with.
  */
-export const HAS_MAIN_PHONE: [boolean, string] = [true, buildPhoneNumber(1, 310, 5598868)]
+export const HAS_MAIN_PHONE: readonly [boolean, string] = [true, buildPhoneNumber(1, 310, 5598868)]
 
-export const BANNER_TOP_DESC: React.ReactElement[] = [
+export const BANNER_TOP_DESC: readonly React.ReactElement[] = [
 	(
 		<div data-hide-on="600">
 			<i className="fa-solid fa-angles-right"></i> Cafe &amp; Lounge
@@ -100,7 +100,7 @@ export function buildPhoneNumber(countryCode: number = 1, areaCode: number, numb
  */
 export interface Location {
 	city: string,
-	hours: Hours[],
+	hours: readonly Hours[],
 	address: string,
 	phone: string,
 	specialHoursJSX: boolean,
@@ -160,7 +160,7 @@ class DaysOfWeekBuilder {
 	 * Collect all days added thus far.
 	 * @returns an array of {@link Hours}
 	 */
-	thatsAll(): Hours[] {
+	thatsAll(): readonly Hours[] {
 		if (this?._hours === undefined) throw new Error();
 		return this._hours;
 	}

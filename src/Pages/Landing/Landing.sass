@@ -103,7 +103,7 @@ $padding: 1rem
 
 .review-cards
 	display: grid
-	grid-template-columns: 1fr 1fr 1fr
+	grid-template-columns: 33% 33% 33%
 	width: 100%
 	margin:
 		top: $padding * 2
@@ -189,16 +189,29 @@ div.review-card-review:hover
 
 @media only screen and (max-width: #{designs.$switch-to-mobile-view}px)
 	.review-cards
-		grid-template-columns: 1fr
-		grid-template-rows: 1fr 1fr 1fr
+		grid-template-columns: 50% 50%
+		grid-template-rows: 1fr 1fr
+
+		max-width: 100%
+
+		$p: $padding * 5
 
 		.review-card
-			margin-left: $padding * 10
-			margin-right: $padding * 10
+			margin-left: $p
+			margin-right: $p
 			margin-bottom: $padding * 3
 
 			&:last-child
+				max-width: 50%
+				// margin-left: auto
+				// margin-right: auto
+				padding-left: $p
+				padding-right: $p
+				// margin-bottom: $padding * 3
+
+				background-color: red
 				margin-bottom: unset
+				grid-column: span 2
 
 	.business-blurbs>div
 		grid-template-rows: 1fr

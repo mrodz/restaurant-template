@@ -19,24 +19,20 @@ root.render(
 );
 
 
-
 // set the browser theme to the color of the banner + footer.
 // NATIVE DOM MANIPULATION: maybe find a better way to do this ( works for now :D )
+// setHead();
+
+// export function setHead(content: string = WEBSITE_TITLE): void {
 let head = document.querySelector('head');
 
-export function setHead(content: string = WEBSITE_TITLE): void {
-  if (!!head && 'querySelector' in head) {
-    let title = head.querySelector('title');
-    if (!!title) {
-      title.innerHTML = content;
-    }
-  }
-}
+if (!!head) {
+  head.innerHTML += `<meta name="theme-color" content="${styles.primaryColor}" />`;
 
-if (head !== undefined && head !== null) {
-  if ('innerHTML' in head) head.innerHTML += `<meta name="theme-color" content="${styles.primaryColor}" />`;
-  setHead()
+  let title = head.querySelector('title') as HTMLElement;
+  title.innerHTML = WEBSITE_TITLE ?? 'MYD Web Design';
 }
+// }
 
 let throttlePause = false
 const throttle = (callback: () => void, time: number) => {
