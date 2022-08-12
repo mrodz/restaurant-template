@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import Check from '@mui/icons-material/Check';
 import './ProductPicker.sass';
-import styles from '../../designs.scss';
+import { styles } from '../..';
 
 export interface MenuItem {
 	name: string,

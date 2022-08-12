@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { Context, createContext, FC, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
 import App from './components/App/App';
@@ -20,19 +20,12 @@ root.render(
 
 
 // set the browser theme to the color of the banner + footer.
-// NATIVE DOM MANIPULATION: maybe find a better way to do this ( works for now :D )
-// setHead();
+document.title = WEBSITE_TITLE ?? 'MYD Web Design'
 
-// export function setHead(content: string = WEBSITE_TITLE): void {
-let head = document.querySelector('head');
-
-if (!!head) {
-  head.innerHTML += `<meta name="theme-color" content="${styles.primaryColor}" />`;
-
-  let title = head.querySelector('title') as HTMLElement;
-  title.innerHTML = WEBSITE_TITLE ?? 'MYD Web Design';
-}
-// }
+let metaThemeColor = document.createElement('meta');
+metaThemeColor.name = 'theme-color';
+metaThemeColor.content = styles.primaryColor
+document.head.appendChild(metaThemeColor)
 
 let throttlePause = false
 const throttle = (callback: () => void, time: number) => {
@@ -81,6 +74,10 @@ export type DocumentDimensions = {
   height: number
 }
 
+/**
+ * 
+ * @returns {DocumentDimensions} 
+ */
 function getBodyDims(): DocumentDimensions {
   return {
     width: document.body.clientWidth,
@@ -88,33 +85,47 @@ function getBodyDims(): DocumentDimensions {
   }
 }
 
-export const AppDimensionContext = createContext<DocumentDimensions>(getBodyDims())
+export const AppDimensionContextBuilder: () => [Context<DocumentDimensions>, FC<any>] = () => {
+  const Context = createContext<DocumentDimensions>(getBodyDims())
 
-export const AppDimensionProvider = (props: any) => {
-  const [dim, setDim] = useState(getBodyDims());
+  const Provider = (props: any) => {
+    const [dim, setDim] = useState(getBodyDims());
 
-  useEffect(() => {
-    onWindowResize(() => {
-      setDim(getBodyDims());
-    })
-  }, [])
+    useEffect(() => {
+      onWindowResize(() => {
+        setDim(getBodyDims());
+      })
+    }, [])
 
-  return (
-    <AppDimensionContext.Provider value={dim}>
-      {props?.children}
-    </AppDimensionContext.Provider>
-  )
+    return (
+      <Context.Provider value={dim}>
+        {props?.children}
+      </Context.Provider>
+    )
+  }
+
+  return [
+    Context,
+    Provider
+  ]
 }
+
+export const [AppDimensionContext, AppDimensionProvider] = AppDimensionContextBuilder()
 
 /**
  * ### Logging function
  * Examples:
  * 
- * * `` lvar`a:${5}` `` produces:
- *   - [DEBUG] >> a = 5
- * * `` lvar`account:${{ name: "@mrodz", pass: 1234 }},isCool:${true}` `` produces:
- *   - [DEBUG] >> account = { name: "@mrodz", pass: 1234 }
- *   - [DEBUG] >> isCool = true
+ * ```js
+ * lvar`a:${5}` 
+ * // produces:
+ * // [DEBUG] >> a = 5
+ * 
+ * lvar`account:${{ name: "@mrodz", pass: 1234 }},isCool:${true}`
+ * // produces:
+ * // [DEBUG] >> account = { name: "@mrodz", pass: 1234 }
+ * // [DEBUG] >> isCool = true
+ * ```
  */
 export function lvar(strings: TemplateStringsArray, ...args: any[]) {
   if (args.length === 0) {
@@ -138,5 +149,6 @@ export function lvar(strings: TemplateStringsArray, ...args: any[]) {
   }
 
   console.log(result);
-
 }
+
+export { styles }

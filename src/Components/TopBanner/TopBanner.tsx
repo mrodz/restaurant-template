@@ -21,7 +21,7 @@ import {
 import { ROUTE_MAPPINGS } from '../App/App';
 
 import './TopBanner.scss';
-import styles from '../../designs.scss';
+import { styles } from '../..';
 import '../../designs.scss';
 
 // house SVG
@@ -59,7 +59,7 @@ const TopBanner: FC<{}> = React.memo(() => {
 	}, [/* run ONLY on component mount/unmount */]);
 
 	const closeBurger = () => {
-		setHamburgerOpen(false); 
+		setHamburgerOpen(false);
 		document.dispatchEvent(new Event('maincontent:loosefocus'));
 
 	};
@@ -139,7 +139,7 @@ const TopBanner: FC<{}> = React.memo(() => {
 					</div>
 				</div>
 			</header>
-			<Nav/>
+			<Nav />
 		</>
 	);
 });
